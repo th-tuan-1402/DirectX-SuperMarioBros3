@@ -102,14 +102,14 @@ void CGame::InitDirectX(HWND hWnd, int scrWidth, int scrHeight, int fps)
 
 void CGame::Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
-	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
+	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
+	Point3D pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
 	spriteHandler->Draw(texture, &rect, &pCenter, &pInt, transcolor);
 }
 
 void CGame::Draw(Point position, Texture texture, RECT rect, int alpha)
 {
-	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
+	Point3D pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
 	spriteHandler->Draw(texture, &rect, NULL, &pInt, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
@@ -190,9 +190,9 @@ void CGame::Clean()
 
 void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
+	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(-1, 1);
-	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0);
+	Point3D pInt((int)(position.x), (int)(position.y), 0);
 	D3DXMATRIX oldMatrix, newMatrix; 
 
 	spriteHandler->GetTransform(&oldMatrix);
@@ -206,9 +206,9 @@ void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT r
 
 void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
+	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(1, -1);
-	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0);
+	Point3D pInt((int)(position.x), (int)(position.y), 0);
 	D3DXMATRIX oldMatrix, newMatrix;
 	
 	spriteHandler->GetTransform(&oldMatrix);
