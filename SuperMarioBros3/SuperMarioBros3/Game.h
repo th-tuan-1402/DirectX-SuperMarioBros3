@@ -41,11 +41,11 @@ public:
 	static CGame* GetInstance();
 	~CGame();
 	void InitDirectX(HWND hWnd, int scrWidth, int scrHeight, int fps);
-	void Draw(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255,0,255));
-	void Draw(Point position, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha = 253);
+	void Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255,0,255));
+	void Draw(Point position, Texture texture, RECT rect, int alpha = 253);
 
-	void DrawFlipX(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
-	void DrawFlipY(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
+	void DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
+	void DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
 	
 	void Init();
 	void Request();

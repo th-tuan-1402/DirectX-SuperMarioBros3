@@ -1,4 +1,4 @@
-﻿
+
 #include <string>
 
 #include "TextureManager.h"
@@ -38,7 +38,7 @@ void CTextureManager::Clear()
 {
 	for (auto t : textures)
 	{
-		LPDIRECT3DTEXTURE9 tex = t.second;
+		Texture tex = t.second;
 		if (tex != NULL) tex->Release();
 	}
 	textures.clear();
@@ -60,7 +60,7 @@ void CTextureManager::LoadTexture(string  texName, string texPath)
 	Add(texName, texPath, D3DCOLOR_XRGB(255, 255, 255));
 }
 
-LPDIRECT3DTEXTURE9 CTextureManager::GetTexture(std::string id)
+Texture CTextureManager::GetTexture(std::string id)
 {
 	if (textures.find(id) == textures.end())
 		return nullptr;
@@ -79,7 +79,7 @@ void CTextureManager::Add(string id, std::string filePath, D3DCOLOR transparentC
 	}
 
 	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3DDevice();
-	LPDIRECT3DTEXTURE9 texture;
+	Texture texture;
 
 	result = D3DXCreateTextureFromFileEx(
 		d3ddv,								// Pointer to Direct3D device object

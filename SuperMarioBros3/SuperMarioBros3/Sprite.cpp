@@ -3,7 +3,7 @@
 
 #include "Ultis.h"
 
-CSprite::CSprite(std::string id, int xPivot, RECT rect, LPDIRECT3DTEXTURE9 tex, D3DXCOLOR transcolor)
+CSprite::CSprite(std::string id, int xPivot, RECT rect, Texture tex, D3DXCOLOR transcolor)
 {
 	this->id = id;
 	this->rect = rect;

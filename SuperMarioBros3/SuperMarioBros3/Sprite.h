@@ -14,11 +14,11 @@ class CSprite
 	int width;
 	int height;
 	Point pointCenter;
-	LPDIRECT3DTEXTURE9 texture;
+	Texture texture;
 	D3DXCOLOR transcolor;
 	
 public:
-	CSprite(std::string id, int xPivot, RECT rect = RECT(), LPDIRECT3DTEXTURE9 tex = NULL, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255)); // texture là bên Texture manager giữ
+	CSprite(std::string id, int xPivot, RECT rect = RECT(), Texture tex = NULL, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255)); // texture là bên Texture manager giữ
 	void Draw(Point position, Point scale, float rotation, D3DXCOLOR transcolor = D3DXCOLOR(254, 255, 255, 255));
 
 	RECT GetRect();

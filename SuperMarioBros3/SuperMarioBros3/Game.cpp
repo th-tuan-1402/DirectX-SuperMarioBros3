@@ -100,14 +100,14 @@ void CGame::InitDirectX(HWND hWnd, int scrWidth, int scrHeight, int fps)
 	DebugOut(L"[INFO] Init DirectX Done \n");
 }
 
-void CGame::Draw(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor)
+void CGame::Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
 	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
 	spriteHandler->Draw(texture, &rect, &pCenter, &pInt, transcolor);
 }
 
-void CGame::Draw(Point position, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha)
+void CGame::Draw(Point position, Texture texture, RECT rect, int alpha)
 {
 	D3DXVECTOR3 pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
 	spriteHandler->Draw(texture, &rect, NULL, &pInt, D3DCOLOR_ARGB(alpha, 255, 255, 255));
@@ -188,7 +188,7 @@ void CGame::Clean()
 		activeScene->DestroyObject();
 }
 
-void CGame::DrawFlipX(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor)
+void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
 	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(-1, 1);
@@ -204,7 +204,7 @@ void CGame::DrawFlipX(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 text
 	spriteHandler->SetTransform(&oldMatrix);
 }
 
-void CGame::DrawFlipY(Point position, Point pointCenter, LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXCOLOR transcolor)
+void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
 	D3DXVECTOR3 pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(1, -1);

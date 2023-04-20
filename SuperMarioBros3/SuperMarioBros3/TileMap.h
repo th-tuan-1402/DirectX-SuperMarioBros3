@@ -100,7 +100,7 @@ struct TileSet
 	Point tileSize;
 	int tileCount;
 	int columns;
-	LPDIRECT3DTEXTURE9 texture;
+	Texture texture;
 	std::string textureID;
 	void Clear()
 	{

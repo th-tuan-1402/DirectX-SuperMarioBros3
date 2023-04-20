@@ -28,7 +28,7 @@ void CSpriteManager::Init()
 	LoadSprite(TEXTURE_PIPE, root->GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_PIPE));
 }
 
-void CSpriteManager::Add(string id, RECT rect, LPDIRECT3DTEXTURE9 tex, int xPivot, D3DXCOLOR transcolor)
+void CSpriteManager::Add(string id, RECT rect, Texture tex, int xPivot, D3DXCOLOR transcolor)
 {
 	LPSprite s = new CSprite(id, xPivot, rect, tex, transcolor);
 	sprites.insert(make_pair(id, s));
@@ -52,7 +52,7 @@ bool CSpriteManager::LoadSprite(std::string texName, std::string filePath)
 		string textureID = texture->Attribute("id");
 		if (textureID != texName)
 			continue;
-		LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->GetTexture(textureID);
+		Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
 
 		if (tex != nullptr)
 			OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));

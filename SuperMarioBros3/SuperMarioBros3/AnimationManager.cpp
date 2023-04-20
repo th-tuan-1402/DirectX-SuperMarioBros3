@@ -107,7 +107,7 @@ bool CAnimationManager::LoadAnimation(std::string texName, std::string filePath)
 		if (textureID != texName)
 			continue;
 
-		LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->GetTexture(textureID);
+		Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
 		if (tex != nullptr)
 			OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
 		else
