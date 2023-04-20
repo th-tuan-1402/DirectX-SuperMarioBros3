@@ -6,7 +6,7 @@
 CGreenParaKoopa::CGreenParaKoopa()
 {
 	isJump = false;
-	physiscBody->SetVelocity(D3DXVECTOR2(KOOPA_SPEED, 0.0f));
+	physiscBody->SetVelocity(Point(KOOPA_SPEED, 0.0f));
 	LoadAnimation();
 	SetState(PARAKOOPA_STATE_FLY);
 

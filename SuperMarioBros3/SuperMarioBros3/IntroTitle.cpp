@@ -7,7 +7,7 @@
 #include "SceneManager.h"
 
 using namespace std;
-const D3DXVECTOR2 DESTINATION_POS = D3DXVECTOR2(400, 200);
+const Point DESTINATION_POS = Point(400, 200);
 const int MOVEMENT_DURATION = 800;
 CIntroTitle::CIntroTitle()
 {
@@ -17,7 +17,7 @@ CIntroTitle::CIntroTitle()
 	titleSprites[2] = spriteManager->Get("spr-title-0");
 	titleSprites[3] = spriteManager->Get("spr-three-1");
 	isEnabled = true;
-	transform.position = D3DXVECTOR2(400, -200); 
+	transform.position = Point(400, -200); 
 	titleAppearingState = 0;
 	startPos = transform.position;
 }
@@ -39,7 +39,7 @@ void CIntroTitle::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 			{
 				auto distance = DESTINATION_POS - startPos;
 				auto vel = sqrt(distance.x * distance.x + distance.y * distance.y) / MOVEMENT_DURATION;
-				pos += D3DXVECTOR2(0, vel * dt);
+				pos += Point(0, vel * dt);
 				SetPosition(pos);
 			}
 			break;
@@ -47,7 +47,7 @@ void CIntroTitle::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 		case 1:
 		{
 			CThreeAnimation* three = new CThreeAnimation();
-			three->SetPosition(transform.position  + D3DXVECTOR2(14, 140));
+			three->SetPosition(transform.position  + Point(14, 140));
 			CSceneManager::GetInstance()->GetActiveScene()->AddObject(three);
 			titleAppearingState++;
 			break;
@@ -58,19 +58,19 @@ void CIntroTitle::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 void CIntroTitle::Render(CCamera* cam, int alpha)
 {
 	auto titlePos = transform.position - cam->GetPositionCam();
-	titleSprites[2]->Draw(titlePos, D3DXVECTOR2(1,1), 0);
+	titleSprites[2]->Draw(titlePos, Point(1,1), 0);
 
-	auto cloudPos0 = titlePos + D3DXVECTOR2(-265, -50);
-	titleSprites[0]->Draw(cloudPos0, D3DXVECTOR2(1, 1), 0);
+	auto cloudPos0 = titlePos + Point(-265, -50);
+	titleSprites[0]->Draw(cloudPos0, Point(1, 1), 0);
 
-	auto cloudPos1 = titlePos + D3DXVECTOR2(260, -104);
-	titleSprites[0]->Draw(cloudPos1, D3DXVECTOR2(1, 1), 0);
+	auto cloudPos1 = titlePos + Point(260, -104);
+	titleSprites[0]->Draw(cloudPos1, Point(1, 1), 0);
 
-	auto cloudPos2 = titlePos + D3DXVECTOR2(-350, 75);
-	titleSprites[1]->Draw(cloudPos2, D3DXVECTOR2(1, 1), 0);
+	auto cloudPos2 = titlePos + Point(-350, 75);
+	titleSprites[1]->Draw(cloudPos2, Point(1, 1), 0);
 
-	auto versionPos = titlePos + D3DXVECTOR2(14, 156);
-	titleSprites[3]->Draw(versionPos, D3DXVECTOR2(1, 1), 0);
+	auto versionPos = titlePos + Point(14, 156);
+	titleSprites[3]->Draw(versionPos, Point(1, 1), 0);
 }
 
 int CIntroTitle::GetAppearState()

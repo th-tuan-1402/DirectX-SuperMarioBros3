@@ -50,7 +50,7 @@ void CScene::Load()
 		if (name.compare("Player") == 0)
 		{
 			DebugOut(L"[INFO] Load player \n");
-			D3DXVECTOR2 startPosition;
+			Point startPosition;
 			scene->QueryFloatAttribute("pos_x", &startPosition.x);
 			scene->QueryFloatAttribute("pos_y", &startPosition.y);
 			player = new CMarioController();
@@ -125,7 +125,7 @@ void CScene::Load()
 			{
 				int id, disX, disY, autoX;
 				RectF bound;
-				D3DXVECTOR2 pos;
+				Point pos;
 				boundary->QueryIntAttribute("id", &id);
 
 				boundary->QueryFloatAttribute("pos_x", &pos.x);
@@ -157,7 +157,7 @@ void CScene::Load()
 		if (name.compare("Player-Map") == 0)
 		{
 			DebugOut(L"[INFO] Load player in map\n");
-			D3DXVECTOR2 startPosition;
+			Point startPosition;
 			scene->QueryFloatAttribute("pos_x", &startPosition.x);
 			scene->QueryFloatAttribute("pos_y", &startPosition.y);
 
@@ -267,7 +267,7 @@ void CScene::Update(DWORD dt)
 	}
 	auto uiCam = CSceneManager::GetInstance()->GetUICamera();
 	if (updateObjects.size() == 0) return;
-	D3DXVECTOR2 oldPosition;
+	Point oldPosition;
 	for (auto obj : updateObjects)
 	{
 		if (obj->IsIgnoreTimeScale() == false && CGame::GetTimeScale() == 0)

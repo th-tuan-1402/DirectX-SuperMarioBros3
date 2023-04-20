@@ -94,7 +94,7 @@ void CCamera::Update()
         auto mario = static_cast<CMario*>(gameObject);
         mario->OnDie();
     }
-    gameObject->SetPosition(D3DXVECTOR2(x, y));
+    gameObject->SetPosition(Point(x, y));
 }
 
 void CCamera::Render()
@@ -104,14 +104,14 @@ void CCamera::Render()
 
 
 
-D3DXVECTOR2 CCamera::Transform(D3DXVECTOR2 posWorld)
+Point CCamera::Transform(Point posWorld)
 {
-    return D3DXVECTOR2(posWorld.x - posCam.x, posWorld.y - posCam.y);
+    return Point(posWorld.x - posCam.x, posWorld.y - posCam.y);
 }
 
-D3DXVECTOR2 CCamera::TransformCamToWorld(D3DXVECTOR2 posInCam)
+Point CCamera::TransformCamToWorld(Point posInCam)
 {
-    return D3DXVECTOR2(posInCam.x + posCam.x, posInCam.y + posCam.y);
+    return Point(posInCam.x + posCam.x, posInCam.y + posCam.y);
 }
 
 bool CCamera::CheckObjectInCamera(LPGameObject gO) // Thông tin của object
@@ -120,7 +120,7 @@ bool CCamera::CheckObjectInCamera(LPGameObject gO) // Thông tin của object
         return true;
     if (gO->MarioTag(gO->GetTag()))
         return true;
-    D3DXVECTOR2 posObject = gO->GetPosition();
+    Point posObject = gO->GetPosition();
     auto size = CGameObject::GetGameObjectSize(gO);
     auto translate = 48 * 6;
 
@@ -153,7 +153,7 @@ int CCamera::GetSpeedXCam()
     return vx;
 }
 
-D3DXVECTOR2 CCamera::GetPositionCam()
+Point CCamera::GetPositionCam()
 {
     return posCam;
 }
@@ -195,7 +195,7 @@ void CCamera::SetSpeedXCam(float v)
     vx = v;
 }
 
-void CCamera::SetPositionCam(D3DXVECTOR2 pos)
+void CCamera::SetPositionCam(Point pos)
 {
     posCam.x = pos.x;
     posCam.y = pos.y;
@@ -223,7 +223,7 @@ CameraPropertieSet CCamera::GetCameraProperties(int id)
     return CameraPropertieSet::Empty();
 }
 
-void CCamera::AddCameraProperties(int id, D3DXVECTOR2 pos, RectF boundary, bool isDisableX, bool isDiableY)
+void CCamera::AddCameraProperties(int id, Point pos, RectF boundary, bool isDisableX, bool isDiableY)
 {
     this->cameraPropertieSets.insert(make_pair(id, CameraPropertieSet{ pos, boundary, isDisableX, isDiableY }));
 }

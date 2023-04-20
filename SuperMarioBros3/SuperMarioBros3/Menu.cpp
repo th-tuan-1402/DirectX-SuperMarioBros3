@@ -9,7 +9,7 @@ CMenu::CMenu()
 {
 	tag = GameObjectTags::Menu;
 	selection1 = new CFont();
-	auto pos = D3DXVECTOR2(250,440);
+	auto pos = Point(250,440);
 	selection1->SetCurrentText("1 PLAYER GAME");
 	selection1->SetPosition(pos);
 
@@ -25,8 +25,8 @@ CMenu::CMenu()
 	bottomCurtain = spriteManager->Get("spr-bottom-curtain-0");
 	isEnabled = true;
 
-	direction.insert(make_pair("up", D3DXVECTOR2(200, 440)));
-	direction.insert(make_pair("down", D3DXVECTOR2(200, 490)));
+	direction.insert(make_pair("up", Point(200, 440)));
+	direction.insert(make_pair("down", Point(200, 490)));
 	currentDirection = direction.at("up");
 }
 
@@ -34,11 +34,11 @@ void CMenu::Render(CCamera* cam, int alpha)
 {
 	selection1->Render();
 	selection2->Render();
-	treeLeft->Draw(D3DXVECTOR2(50, 433) - cam->GetPositionCam(), D3DXVECTOR2(1, 1), 0);
-	treeRight->Draw(D3DXVECTOR2(680, 384) - cam->GetPositionCam(), D3DXVECTOR2(1, 1), 0);
-	bottomCurtain->Draw(D3DXVECTOR2(150, 20) - cam->GetPositionCam(), D3DXVECTOR2(1, 1), 0);
-	bottomCurtain->Draw(D3DXVECTOR2(500, 20) - cam->GetPositionCam(), D3DXVECTOR2(1, 1), 0);
-	arrow->Draw(currentDirection, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+	treeLeft->Draw(Point(50, 433) - cam->GetPositionCam(), Point(1, 1), 0);
+	treeRight->Draw(Point(680, 384) - cam->GetPositionCam(), Point(1, 1), 0);
+	bottomCurtain->Draw(Point(150, 20) - cam->GetPositionCam(), Point(1, 1), 0);
+	bottomCurtain->Draw(Point(500, 20) - cam->GetPositionCam(), Point(1, 1), 0);
+	arrow->Draw(currentDirection, Point(1.0f, 1.0f), 0.0f);
 }
 
 void CMenu::OnKeyDown(int KeyCode)

@@ -3,7 +3,7 @@
 #include "UICameraConst.h"
 #include "PMeterConst.h"
 #include "Game.h"
-CPMeter::CPMeter(D3DXVECTOR2 pos)
+CPMeter::CPMeter(Point pos)
 {
 this->pos = pos;
 auto startPos = pos;

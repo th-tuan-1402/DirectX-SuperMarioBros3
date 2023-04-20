@@ -26,6 +26,6 @@ public:
 	void SetStartAction();
 	void MarioScript(DWORD dt, CCamera* cam, CCamera* uiCam);
 	void LuigiScript(DWORD dt, CCamera* cam, CCamera* uiCam);
-	D3DXVECTOR2 GetLuigiPosition();
+	Point GetLuigiPosition();
 };
 

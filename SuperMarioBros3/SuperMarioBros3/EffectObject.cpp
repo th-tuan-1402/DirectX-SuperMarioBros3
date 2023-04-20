@@ -5,7 +5,7 @@ CEffectObject::CEffectObject()
 	tag = GameObjectTags::Effect;
 }
 
-void CEffectObject::SetStartPosition(D3DXVECTOR2 pos)
+void CEffectObject::SetStartPosition(Point pos)
 {
 	this->transform.position = pos;
 	this->startPosition = pos;

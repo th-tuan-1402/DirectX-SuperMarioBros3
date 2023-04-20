@@ -35,16 +35,16 @@ void CCollisionBox::Render(CCamera* camera, int distance)
 	bbRect.right = sizeBox.x;
 	bbRect.bottom = sizeBox.y;
 
-	D3DXVECTOR2 posInCam, camPos;
+	Point posInCam, camPos;
 	camPos = camera->GetPositionCam();
 
 	posInCam.x = trunc(pos.x - camPos.x);
 	posInCam.y = trunc(pos.y - camPos.y + COLLISIONBOX_ALPHA_COLOR);
 
-	CGame::GetInstance()->Draw(posInCam,D3DXVECTOR2(sizeBox.x*0.5f, sizeBox.y*0.5f) ,tex, bbRect, D3DCOLOR_ARGB(COLLISIONBOX_ALPHA_COLOR,255,255,255));
+	CGame::GetInstance()->Draw(posInCam,Point(sizeBox.x*0.5f, sizeBox.y*0.5f) ,tex, bbRect, D3DCOLOR_ARGB(COLLISIONBOX_ALPHA_COLOR,255,255,255));
 }
 
-void CCollisionBox::CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisions, LPPhysicsBody phyBody, D3DXVECTOR2 vel, int mintx, int minty, float nx, float ny)
+void CCollisionBox::CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisions, LPPhysicsBody phyBody, Point vel, int mintx, int minty, float nx, float ny)
 {
 	if (nx != 0)
 	{
@@ -70,37 +70,37 @@ LPGameObject CCollisionBox::GetGameObjectAttach()
 	return gameObject;
 }
 
-void CCollisionBox::SetSizeBox(D3DXVECTOR2 size)
+void CCollisionBox::SetSizeBox(Point size)
 {
 	sizeBox = size;
 }
 
-D3DXVECTOR2 CCollisionBox::GetSizeBox()
+Point CCollisionBox::GetSizeBox()
 {
 	return sizeBox;
 }
 
-void CCollisionBox::SetPosition(D3DXVECTOR2 pos)
+void CCollisionBox::SetPosition(Point pos)
 {
 	this->localPosition = pos;
 }
 
-D3DXVECTOR2 CCollisionBox::GetPosition()
+Point CCollisionBox::GetPosition()
 {
 	return localPosition;
 }
 
-void CCollisionBox::SetDistance(D3DXVECTOR2 d)
+void CCollisionBox::SetDistance(Point d)
 {
 	distance = d;
 }
 
-D3DXVECTOR2 CCollisionBox::GetDistance()
+Point CCollisionBox::GetDistance()
 {
 	return distance;
 }
 
-D3DXVECTOR2 CCollisionBox::GetWorldPosition()
+Point CCollisionBox::GetWorldPosition()
 {
 	auto worldPos = gameObject->GetPosition() + localPosition;
 	return worldPos;

@@ -9,7 +9,7 @@ private:
 	std::vector<CArrowItemIcon*> arrowItemIcons;
 	// p button
 	CPIcon* pIcon;
-	D3DXVECTOR2 pos;
+	Point pos;
 	float pMeterCounting;
 	int pMeterState;
 	int feverState;
@@ -18,7 +18,7 @@ private:
 	int previousFeverState, previousPMeterState;
 	bool isDecrease;
 public:
-	CPMeter(D3DXVECTOR2 pos);
+	CPMeter(Point pos);
 	void Update();
 	void Render();
 

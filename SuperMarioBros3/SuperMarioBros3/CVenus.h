@@ -4,7 +4,7 @@
 class CVenus :  public CPlant
 {
 	int countFireBalls;
-	D3DXVECTOR2 vectorShootFireBall;
+	Point vectorShootFireBall;
 	CObjectPool fireBalls;
 public:
 	CVenus();

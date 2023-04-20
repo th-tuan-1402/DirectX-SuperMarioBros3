@@ -29,11 +29,11 @@ void CMovingPlatform::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 {
 	if (isFall == false)
 	{
-		this->physiscBody->SetVelocity(D3DXVECTOR2(MOVING_PLATFORM_SPEED, 0));
+		this->physiscBody->SetVelocity(Point(MOVING_PLATFORM_SPEED, 0));
 	}
 	else
 	{
-		this->physiscBody->SetVelocity(D3DXVECTOR2(0, fallForce));
+		this->physiscBody->SetVelocity(Point(0, fallForce));
 	}
 }
 

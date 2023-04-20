@@ -7,19 +7,19 @@ CMarioScript::CMarioScript()
 	auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 
 	marioController = new CMarioAuto();
-	marioController->SetPosition(D3DXVECTOR2(743, 450));
+	marioController->SetPosition(Point(743, 450));
 	marioController->AddStateObjectsToScene(activeScene);
 	marioController->SwitchToState(SUPER_MARIO_STATE);
-	marioController->GetCurrentStateObject()->SetPosition(D3DXVECTOR2(743, 450));
-	marioController->GetCurrentStateObject()->GetPhysiscBody()->SetNormal(D3DXVECTOR2(-1, 1));
+	marioController->GetCurrentStateObject()->SetPosition(Point(743, 450));
+	marioController->GetCurrentStateObject()->GetPhysiscBody()->SetNormal(Point(-1, 1));
 	activeScene->AddObject(marioController);
 
 	luigi = new CLuigiAuto();
-	luigi->SetPosition(D3DXVECTOR2(24, 450));
+	luigi->SetPosition(Point(24, 450));
 
 	activeScene->AddObject(luigi);
 
-	transform.position = D3DXVECTOR2(350, 300);
+	transform.position = Point(350, 300);
 	marioStage = -1;
 	luigiStage = -1;
 	isEnabled = true;
@@ -177,7 +177,7 @@ void CMarioScript::LuigiScript(DWORD dt, CCamera* cam, CCamera* uiCam)
 	}
 }
 
-D3DXVECTOR2 CMarioScript::GetLuigiPosition()
+Point CMarioScript::GetLuigiPosition()
 {
 	return luigi->GetPosition();
 }

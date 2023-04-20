@@ -2,8 +2,8 @@
 #define VENUS_STATE_HEAD_UP			"HEAD-UP"
 #define VENUS_STATE_HEAD_DOWN		"HEAD-DOWN"
 
-const D3DXVECTOR2 VENUS_BBOX(16 * 3, 32 * 3);
-const D3DXVECTOR2 VENUS_GREEN_BBOX(16 * 3, 24 * 3);
+const Point VENUS_BBOX(16 * 3, 32 * 3);
+const Point VENUS_GREEN_BBOX(16 * 3, 24 * 3);
 const float VENUS_HEIGHT = 32 * 3;
 const int DART_OUT_TIME = 2500;
 const int TIME_TO_IDLE = 800;

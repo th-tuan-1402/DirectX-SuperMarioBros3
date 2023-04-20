@@ -17,10 +17,10 @@ public:
     void Render(CCamera* cam, int alpha) override;
     virtual void Update(DWORD dt, CCamera* cam, CCamera* uiCam) override;
     CObjectPool GetObjectPool();
-    void OnAttack(D3DXVECTOR2 normal);
-    void OnMovingForward(D3DXVECTOR2 normal);
-    void OnMovingBackwards(D3DXVECTOR2 normal);
-    void OnHoldBoomerang(D3DXVECTOR2 normal);
+    void OnAttack(Point normal);
+    void OnMovingForward(Point normal);
+    void OnMovingBackwards(Point normal);
+    void OnHoldBoomerang(Point normal);
     void OnDie() override;
 };
 

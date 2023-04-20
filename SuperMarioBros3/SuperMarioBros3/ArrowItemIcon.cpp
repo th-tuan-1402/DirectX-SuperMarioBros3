@@ -47,20 +47,20 @@ void CArrowItemIcon::Render()
 	size.x = currentSprite->GetWidth();
 	size.y = currentSprite->GetHeight();
 
-	currentSprite->Draw(pos, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+	currentSprite->Draw(pos, Point(1.0f, 1.0f), 0.0f);
 }
 
-D3DXVECTOR2 CArrowItemIcon::GetPosition()
+Point CArrowItemIcon::GetPosition()
 {
 	return pos;
 }
 
-void CArrowItemIcon::SetPosition(D3DXVECTOR2 pos)
+void CArrowItemIcon::SetPosition(Point pos)
 {
 	this->pos = pos;
 }
 
-D3DXVECTOR2 CArrowItemIcon::GetSize()
+Point CArrowItemIcon::GetSize()
 {
 	return size;
 }

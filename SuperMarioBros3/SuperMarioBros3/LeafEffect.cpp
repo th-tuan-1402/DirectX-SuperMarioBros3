@@ -19,14 +19,14 @@ CLeafEffect::CLeafEffect()
 	box->SetEnable(true);
 	this->collisionBoxs->push_back(box);
 	physiscBody->SetGravity(LEAF_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, -LEAF_BOUNCE_FORCE));
+	physiscBody->SetVelocity(Point(0.0f, -LEAF_BOUNCE_FORCE));
 	physiscBody->SetDynamic(true);
 
 	isBounce = false;
 	isFall = false;
 
 	startFallTime = 0;
-	SetScale(D3DXVECTOR2(0.4f, 1.0f));
+	SetScale(Point(0.4f, 1.0f));
 }
 
 void CLeafEffect::LoadAnimation()
@@ -44,7 +44,7 @@ void CLeafEffect::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	{
 		if (abs(startPosition.y) - abs(transform.position.y) <= BOUNCE_MAX_HEIGHT)
 		{
-			physiscBody->SetVelocity(D3DXVECTOR2(0.0f, -LEAF_BOUNCE_FORCE));
+			physiscBody->SetVelocity(Point(0.0f, -LEAF_BOUNCE_FORCE));
 		}
 		else
 		{
@@ -54,7 +54,7 @@ void CLeafEffect::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	}
 	if (isFall == true && isBounce == false)
 	{
-		physiscBody->SetVelocity(D3DXVECTOR2(0.0f, LEAF_BOUNCE_FORCE/2));
+		physiscBody->SetVelocity(Point(0.0f, LEAF_BOUNCE_FORCE/2));
 		// Chiếc lá khi rơi xuống sẽ rơi theo dao động điều hòa (Harmonic Motion)
 		// Dùng công thức x = Acos(omega*t) với omega = 2 * pi * f
 		// A là biên độ dao động, f là tần số
@@ -72,7 +72,7 @@ void CLeafEffect::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 
 void CLeafEffect::Render(CCamera* cam, int alpha)
 {
-	SetScale(D3DXVECTOR2(physiscBody->GetNormal().x, 1.0f));
+	SetScale(Point(physiscBody->GetNormal().x, 1.0f));
 	CGameObject::Render(cam, alpha);
 }
 

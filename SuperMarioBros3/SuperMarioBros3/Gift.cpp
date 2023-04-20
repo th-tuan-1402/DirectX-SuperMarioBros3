@@ -57,7 +57,7 @@ void CGift::PowerUp(CCollisionBox* otherCollisionBox)
 	isEnabled = false;
 	if (physiscBody->IsDynamic() == true)
 	{
-		GetPhysiscBody()->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+		GetPhysiscBody()->SetVelocity(Point(0.0f, 0.0f));
 		GetPhysiscBody()->SetGravity(0.0f);
 	}
 	this->collisionBoxs->at(0)->SetEnable(false);

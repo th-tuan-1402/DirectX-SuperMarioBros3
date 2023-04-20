@@ -1,8 +1,5 @@
 ﻿#include "Map.h"
 
-#include <d3dx9.h>
-#include <d3d9.h>
-
 #include "TextureManager.h"
 #include "MapConst.h"
 #include "Ultis.h"

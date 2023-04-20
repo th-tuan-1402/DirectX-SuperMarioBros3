@@ -9,7 +9,7 @@ CScoreEffect::CScoreEffect()
 	currentScore = 100;
 	SetState("100");
 	physiscBody->SetGravity(SCORE_FX_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, -SCORE_FX_VELOCITY));
+	physiscBody->SetVelocity(Point(0.0f, -SCORE_FX_VELOCITY));
 	physiscBody->SetDynamic(false);
 	isEnabled = true;
 	scoreState = 0;

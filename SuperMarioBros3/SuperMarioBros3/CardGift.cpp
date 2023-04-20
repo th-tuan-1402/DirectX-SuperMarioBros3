@@ -7,7 +7,7 @@ CCardGift::CCardGift()
 	state = "EMPTY";
 }
 
-CCardGift::CCardGift(D3DXVECTOR2 cardPos)
+CCardGift::CCardGift(Point cardPos)
 {
 	LoadSprite();
 	pos = cardPos;
@@ -37,7 +37,7 @@ void CCardGift::Update()
 void CCardGift::Render()
 {
 	if (cardSprites.find(state) != cardSprites.end())
-		cardSprites.at(state)->Draw(pos, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+		cardSprites.at(state)->Draw(pos, Point(1.0f, 1.0f), 0.0f);
 }
 
 void CCardGift::SetState(std::string state)
@@ -45,7 +45,7 @@ void CCardGift::SetState(std::string state)
 	this->state = state;
 }
 
-void CCardGift::SetPosition(D3DXVECTOR2 pos)
+void CCardGift::SetPosition(Point pos)
 {
 	this->pos = pos;
 }

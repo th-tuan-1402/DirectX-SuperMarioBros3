@@ -16,13 +16,13 @@ CMarioFireBall::CMarioFireBall()
 	collisionBox->SetSizeBox(FIRE_BALL_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName(FIRE_BALL_NAME);
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(FIRE_BALL_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 	physiscBody->SetBounceForce(FIRE_BALL_BOUNCE_FORCE);
 
 	pool = NULL;
@@ -104,5 +104,5 @@ void CMarioFireBall::OnDisappearing()
 	hitFX->SetStartPosition(this->transform.position);
 	hitFX->SetStartHitTime(GetTickCount64());
 	hitFX->Enable(true);
-	activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), hitFX);
+	activeScene->GetGrid()->Move(Point(-1, -1), hitFX);
 }

@@ -11,7 +11,7 @@
 CEnemy::CEnemy()
 {
 	this->SetTag(GameObjectTags::Enemy);
-	this->SetScale(D3DXVECTOR2(1.0f, 1.0f));
+	this->SetScale(Point(1.0f, 1.0f));
 	countDeadCallback = 0;
 	countBeated = 0;
 	isHeadShot = false;
@@ -40,12 +40,12 @@ EnemyTag CEnemy::GetEnemyTag()
 	return enemyTag;
 }
 
-void CEnemy::SetStartPosition(D3DXVECTOR2 sT)
+void CEnemy::SetStartPosition(Point sT)
 {
 	this->startPosition = sT;
 }
 
-D3DXVECTOR2 CEnemy::GetStartPosition()
+Point CEnemy::GetStartPosition()
 {
 	return startPosition;
 }

@@ -6,7 +6,7 @@ CFont::CFont()
 {
 	LoadSprite();
 	currentText = "Hello World";
-	currentPosition = D3DXVECTOR2(100, 360);
+	currentPosition = Point(100, 360);
 	space.x = 8*3;
 	space.y = 0;
 }
@@ -56,14 +56,14 @@ void CFont::LoadSprite()
 
 void CFont::Render()
 {
-	D3DXVECTOR2 previousPos = currentPosition;
+	Point previousPos = currentPosition;
 	vector<LPSprite> spriteStrings;
 	spriteStrings = StringToSprites(currentText);
 	if (spriteStrings.size() != 0)
 	{
 		for (auto s : spriteStrings)
 		{
-			s->Draw(currentPosition, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+			s->Draw(currentPosition, Point(1.0f, 1.0f), 0.0f);
 			currentPosition.x += space.x;
 		}
 	}
@@ -136,12 +136,12 @@ void CFont::SetCurrentText(std::string text)
 	this->currentText = text;
 }
 
-void CFont::SetPosition(D3DXVECTOR2 pos)
+void CFont::SetPosition(Point pos)
 {
 	currentPosition = pos;
 }
 
-void CFont::SetSpace(D3DXVECTOR2 space)
+void CFont::SetSpace(Point space)
 {
 	this->space = space;
 }

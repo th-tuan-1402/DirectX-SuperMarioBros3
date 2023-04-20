@@ -5,7 +5,7 @@
 class CHUD
 {
 private:
-    D3DXVECTOR2 pos;
+    Point pos;
     CPMeter* pMeter;
     CCardGift* card1;
     CCardGift* card2;
@@ -17,13 +17,13 @@ private:
     int score, coin;
     bool isEnable;
 public:
-    CHUD(D3DXVECTOR2 hudPos);
+    CHUD(Point hudPos);
     void LoadSprite();
     void Update();
     void Render();
 
-    void SetPosition(D3DXVECTOR2 pos);
-    D3DXVECTOR2 GetPosition();
+    void SetPosition(Point pos);
+    Point GetPosition();
 
     void SetPMeter(CPMeter* pMeter);
     CPMeter* GetPMeter();

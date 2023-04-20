@@ -12,12 +12,12 @@ CSprite::CSprite(std::string id, int xPivot, RECT rect, LPDIRECT3DTEXTURE9 tex, 
 	this->height = rect.bottom - rect.top;
 	this->transcolor = transcolor;
 	if (xPivot == -3)
-		this->pointCenter = D3DXVECTOR2(width *0.5, height * 0.5);
+		this->pointCenter = Point(width *0.5, height * 0.5);
 	else
-		this->pointCenter = D3DXVECTOR2(xPivot, height*0.5);
+		this->pointCenter = Point(xPivot, height*0.5);
 }
 
-void CSprite::Draw(D3DXVECTOR2 position, D3DXVECTOR2 scale, float rotation, D3DXCOLOR transcolor)
+void CSprite::Draw(Point position, Point scale, float rotation, D3DXCOLOR transcolor)
 {
 	CGame* game = CGame::GetInstance();
 	if (scale.x < 0)
@@ -58,12 +58,12 @@ void CSprite::SetHeight(int h)
 	height = h;
 }
 
-D3DXVECTOR2 CSprite::GetPointCenter()
+Point CSprite::GetPointCenter()
 {
 	return pointCenter;
 }
 
-void CSprite::SetPointCenter(D3DXVECTOR2 pointCenter)
+void CSprite::SetPointCenter(Point pointCenter)
 {
 	this->pointCenter = pointCenter;
 }

@@ -3,9 +3,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "Type.h"
 #include <unordered_map>
 
 #include "Animation.h"
@@ -51,7 +49,7 @@ protected:
 	Index currentCellIndex;
 
 	Transform transform; // position ( dời hình ), scale, rotate
-	D3DXVECTOR2 relativePositionOnScreen = D3DXVECTOR2(0.0f, 0.0f);
+	Point relativePositionOnScreen = Point(0.0f, 0.0f);
 
 	std::string currentState, lastState;
 
@@ -70,7 +68,7 @@ public:
 	CGameObject();
 	~CGameObject();
 
-	static D3DXVECTOR2 GetGameObjectSize(CGameObject* gO);
+	static Point GetGameObjectSize(CGameObject* gO);
 	virtual void Init();
 	bool IsDestroyed();
 	void SetDestroy(bool isDes);
@@ -97,7 +95,7 @@ public:
 
 	std::string GetCurrentState();
 	void AddAnimation(std::string stateName, LPAnimation animation, bool isLoop = true); // một số animation như quăng lửa k cần lặp
-	void SetRelativePositionOnScreen(D3DXVECTOR2); // Dùng khi ví dụ chuyển từ idle -> crouch, dời hình xuống
+	void SetRelativePositionOnScreen(Point); // Dùng khi ví dụ chuyển từ idle -> crouch, dời hình xuống
 	virtual void EndAnimation();
 	LPAnimation GetAnimationByState(std::string state);
 
@@ -111,14 +109,14 @@ public:
 	bool IsIgnoreTimeScale();
 	void SetIgnoreTimeSCale(bool isIgnoreTimeScale);
 
-	D3DXVECTOR2 GetScale();
-	void SetScale(D3DXVECTOR2 s);
+	Point GetScale();
+	void SetScale(Point s);
 
 	float GetRotation();
 	void SetRotation(float r);
 
-	D3DXVECTOR2 GetPosition();
-	void SetPosition(D3DXVECTOR2 p);
+	Point GetPosition();
+	void SetPosition(Point p);
 
 	LPPhysicsBody GetPhysiscBody();
 	void SetPhysiscBody(LPPhysicsBody p);

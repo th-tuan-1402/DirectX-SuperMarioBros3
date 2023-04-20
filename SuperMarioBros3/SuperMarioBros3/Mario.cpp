@@ -200,16 +200,16 @@ void CMario::Init()
 	this->SetState(MARIO_STATE_IDLE); 
 	CMarioCollisionBox* collisionBox = new CMarioCollisionBox();
 	collisionBox->SetSizeBox(SUPER_MARIO_BBOX); // Big
-	collisionBox->SetPosition(D3DXVECTOR2(0.0f, 0.0f)); // Local Position
+	collisionBox->SetPosition(Point(0.0f, 0.0f)); // Local Position
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Mario");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 }
 
 void CMario::InitProperties()
 {
-	this->physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	this->physiscBody->SetVelocity(Point(0.0f, 0.0f));
 	this->physiscBody->SetDynamic(true); // có chuyển động
 	this->physiscBody->SetGravity(MARIO_GRAVITY);
 
@@ -257,10 +257,10 @@ void CMario::InitProperties()
 	isDie = false;
 	label = NULL;
 	powerupItem = PowerupTag::None;
-	this->SetScale(D3DXVECTOR2(1.0f, 1.0f));
+	this->SetScale(Point(1.0f, 1.0f));
 	ventDirection = { 0, 0, 0, 0 };
 	uiCamera = NULL;
-	previousPosition = D3DXVECTOR2(0.0f, 0.0f);
+	previousPosition = Point(0.0f, 0.0f);
 }
 
 void CMario::LoadAnimation()
@@ -293,7 +293,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	previousVelocity = velocity;
 	float acceleration = 0.0f;
 
-	D3DXVECTOR2 drag = physiscBody->GetDragForce();
+	Point drag = physiscBody->GetDragForce();
 	if (isAutogo == false)
 	{
 		// Horizontal Movement: Walk, Run, Idle
@@ -536,7 +536,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 
 void CMario::Render(CCamera* cam, int alpha)
 {
-	SetScale(D3DXVECTOR2(physiscBody->GetNormal().x, 1.0f));
+	SetScale(Point(physiscBody->GetNormal().x, 1.0f));
 
 #pragma region Update State
 	if (isSmokeEffectAnimation == false && isGoToWarpPipe == false)
@@ -573,7 +573,7 @@ void CMario::Render(CCamera* cam, int alpha)
 				if (isHold == false)
 				{
 					auto normal = physiscBody->GetNormal();
-					SetScale(D3DXVECTOR2(-normal.x, 1.0f));
+					SetScale(Point(-normal.x, 1.0f));
 					SetState(MARIO_STATE_SKID);
 					break;
 				}
@@ -706,7 +706,7 @@ void CMario::OnCollisionEnter(CCollisionBox* selfCollisionBox, std::vector<Colli
 			if (collisionEvent->nx != 0) // vừa ấn nhảy vừa ấn qua trái phải
 			{
 				auto v = physiscBody->GetVelocity();
-				physiscBody->SetVelocity(D3DXVECTOR2(0, v.y));
+				physiscBody->SetVelocity(Point(0, v.y));
 				if (canFly == false)
 				{
 					pMeterCounting = 0;
@@ -823,18 +823,18 @@ void CMario::CrouchProcess(CKeyboardManager* keyboard)
 		// HỤP
 		collisionBoxs->at(0)->SetSizeBox(SUPER_MARIO_CROUCH_BBOX);
 		float transformY = SUPER_MARIO_BBOX.y - SUPER_MARIO_CROUCH_BBOX.y;
-		collisionBoxs->at(0)->SetPosition(D3DXVECTOR2(0.0f, transformY*0.5f));
+		collisionBoxs->at(0)->SetPosition(Point(0.0f, transformY*0.5f));
 		currentPhysicsState.move = MoveOnGroundStates::Crouch;
 	}
 	else
 	{
 		// KHÔNG HỤP
 		collisionBoxs->at(0)->SetSizeBox(SUPER_MARIO_BBOX);
-		collisionBoxs->at(0)->SetPosition(D3DXVECTOR2(0.0f, 0.0f));
+		collisionBoxs->at(0)->SetPosition(Point(0.0f, 0.0f));
 	}
 }
 
-void CMario::SkidProcess(D3DXVECTOR2 velocity)
+void CMario::SkidProcess(Point velocity)
 {
 	auto keyboard = CKeyboardManager::GetInstance();
 	int sign = keyboard->GetKeyStateDown(DIK_RIGHT) ? 1 : -1;
@@ -852,7 +852,7 @@ void CMario::HoldProcess()
 	{
 		if (keyboard->GetKeyStateDown(DIK_A) == true) // Vẫn đang ấn giữ phím A
 		{
-			D3DXVECTOR2 posHoldable = transform.position;
+			Point posHoldable = transform.position;
 			// Chưa xét trường hợp small mario
 			posHoldable.x += (SUPER_MARIO_BBOX.x + objectHolding->GetHoldableCollisionBox().x) * normal.x*0.4f;
 			objectHolding->SetHoldablePosition(posHoldable);
@@ -879,7 +879,7 @@ void CMario::ResetHolding()
 
 void CMario::JumpProcess(float jumpForce, bool bounceAfterJumpOnEnemy)
 {
-	physiscBody->SetVelocity(D3DXVECTOR2(physiscBody->GetVelocity().x, jumpForce));
+	physiscBody->SetVelocity(Point(physiscBody->GetVelocity().x, jumpForce));
 	isJump = true;
 	isOnGround = false;
 	this->bounceAfterJumpOnEnemy = bounceAfterJumpOnEnemy;
@@ -1044,7 +1044,7 @@ void CMario::WarpPipeProcess(CCamera* cam)
 	if (isGoToWarpPipe == true)
 	{
 		this->physiscBody->SetGravity(0.0f);
-		this->physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+		this->physiscBody->SetVelocity(Point(0.0f, 0.0f));
 		if (ventDirection.bottom == 1)
 			transform.position.y += MARIO_VENT_SPEED * CGame::GetInstance()->GetDeltaTime();
 		if (ventDirection.top == 1)
@@ -1075,7 +1075,7 @@ void CMario::GoalRouletteProcess(CCamera* cam)
 		{
 			currentPhysicsState.jump = JumpOnAirStates::Stand;
 			currentPhysicsState.move = MoveOnGroundStates::Walk;
-			physiscBody->SetVelocity(D3DXVECTOR2(MARIO_WALKING_SPEED, 0.0f));
+			physiscBody->SetVelocity(Point(MARIO_WALKING_SPEED, 0.0f));
 			cam->SetDisablePosX(true);
 		}
 	}
@@ -1097,14 +1097,14 @@ void CMario::DieProcess(CCamera* cam)
 			}
 			case 1:
 			{
-				physiscBody->SetVelocity(D3DXVECTOR2(0, -DIE_VELOCITY_Y));
+				physiscBody->SetVelocity(Point(0, -DIE_VELOCITY_Y));
 				if (transform.position.y < previousPosition.y - DIE_JUMP)
 					dieState = 2;
 				break;
 			}
 			case 2:
 			{
-				physiscBody->SetVelocity(D3DXVECTOR2(0, DIE_VELOCITY_Y));
+				physiscBody->SetVelocity(Point(0, DIE_VELOCITY_Y));
 				if (transform.position.y >= cam->GetCurrentBoundary().bottom - DIE_FALL)
 				{
 					auto sceneManager = CSceneManager::GetInstance();

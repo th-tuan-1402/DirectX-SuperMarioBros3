@@ -3,8 +3,8 @@
 class CArrowItemIcon
 {
 private:
-	D3DXVECTOR2 pos;
-	D3DXVECTOR2 size;
+	Point pos;
+	Point size;
 
 	LPSprite blackArrowSprite;
 	LPSprite whiteArrowSprite;
@@ -18,10 +18,10 @@ public:
 	void Update();
 	void Render();
 
-	D3DXVECTOR2 GetPosition();
-	void SetPosition(D3DXVECTOR2 pos);
+	Point GetPosition();
+	void SetPosition(Point pos);
 
-	D3DXVECTOR2 GetSize();
+	Point GetSize();
 	void SetWidth(float w);
 	void SetHeight(float h);
 };

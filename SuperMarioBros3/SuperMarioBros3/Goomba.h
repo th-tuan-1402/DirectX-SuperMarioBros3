@@ -5,7 +5,7 @@ class CGoomba : public CEnemy
 {
 protected:
 	GoombaState currentPhysicsState;
-	D3DXVECTOR2 beforeHitPosition;
+	Point beforeHitPosition;
 	bool isJumpMaxHeight;
 public:
 	CGoomba();

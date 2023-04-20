@@ -5,7 +5,7 @@ class CLabel :
 {
     RectF pushDirection; // top: 1, right, left, bottom : 0 => đẩy hướng top
 public:
-    CLabel(D3DXVECTOR2 size);
+    CLabel(Point size);
     void SetPushDirection(RectF pushDirect);
     RectF GetPushDirection();
     bool CanCollisionWithThisObject(LPGameObject gO, GameObjectTags tag) override;

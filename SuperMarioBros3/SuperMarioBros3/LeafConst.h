@@ -9,4 +9,4 @@
 
 #define BOUNCE_MAX_HEIGHT 100.0f
 
-const D3DXVECTOR2 LEAF_BBOX(48, 48);
+const Point LEAF_BBOX(48, 48);

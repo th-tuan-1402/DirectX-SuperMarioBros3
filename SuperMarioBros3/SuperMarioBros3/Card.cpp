@@ -8,10 +8,10 @@ CCard::CCard()
 {
 	LoadAnimation();
 	CCollisionBox* collisionBox = new CCollisionBox();
-	collisionBox->SetSizeBox(D3DXVECTOR2(48,48));
+	collisionBox->SetSizeBox(Point(48,48));
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Card");
-	collisionBox->SetPosition(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetPosition(Point(0.0f, 0.0f));
 
 	this->collisionBoxs->push_back(collisionBox);
 	physiscBody->SetDynamic(true);
@@ -111,7 +111,7 @@ void CCard::HitGoalRoulette()
 		goalFX->SetState(currentState);
 		auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 		activeScene->AddObject(goalFX);
-		activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), goalFX);
+		activeScene->GetGrid()->Move(Point(-1, -1), goalFX);
 	}
 	// Set State Goals FX
 	isTouched = true;

@@ -19,19 +19,19 @@ void CVenus::Init()
 	collisionBox->SetSizeBox(VENUS_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Venus");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
-	physiscBody->SetNormal(D3DXVECTOR2(1.0f, 1.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
+	physiscBody->SetNormal(Point(1.0f, 1.0f));
 
 	maxHeight = VENUS_HEIGHT;
 	timeToStopDartOut = DART_OUT_TIME;
 	timeToIdle = TIME_TO_IDLE;
 
 	countFireBalls = 0;
-	vectorShootFireBall = D3DXVECTOR2(0.0f, 0.0f);
+	vectorShootFireBall = Point(0.0f, 0.0f);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -68,7 +68,7 @@ void CVenus::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 			auto currentFireBall = fireBalls.Init();
 			if (currentFireBall != NULL)
 			{
-				D3DXVECTOR2 pos = currentFireBall->GetPosition();
+				Point pos = currentFireBall->GetPosition();
 				currentFireBall->SetPosition(transform.position);
 				auto firePhyBody = currentFireBall->GetPhysiscBody();
 				firePhyBody->SetGravity(0.0f);
@@ -80,7 +80,7 @@ void CVenus::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 				vectorShootFireBall.x = cos(SHOOT_FIRE_BALL_ANGLE);
 				vectorShootFireBall.y = sin(SHOOT_FIRE_BALL_ANGLE);
 
-				firePhyBody->SetVelocity(D3DXVECTOR2(FIRE_BALL_SPEED * normal.x * vectorShootFireBall.x, FIRE_BALL_SPEED * vectorShootFireBall.y * normal.y));
+				firePhyBody->SetVelocity(Point(FIRE_BALL_SPEED * normal.x * vectorShootFireBall.x, FIRE_BALL_SPEED * vectorShootFireBall.y * normal.y));
 			}
 		}
 	}
@@ -91,7 +91,7 @@ void CVenus::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 void CVenus::Render(CCamera* cam, int alpha)
 {
 	auto normal = physiscBody->GetNormal();
-	SetScale(D3DXVECTOR2(-normal.x, 1.0f));
+	SetScale(Point(-normal.x, 1.0f));
 	if (normal.y == 1)
 		SetState(VENUS_STATE_HEAD_DOWN);
 	else 

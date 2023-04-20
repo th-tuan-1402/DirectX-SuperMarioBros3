@@ -10,7 +10,7 @@
 #include "MovingPlatform.h"
 #include "Brick.h"
 
-void CMarioCollisionBox::CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisionEvents, LPPhysicsBody phyBody, D3DXVECTOR2 vel, int mintx, int minty, float nx, float ny)
+void CMarioCollisionBox::CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisionEvents, LPPhysicsBody phyBody, Point vel, int mintx, int minty, float nx, float ny)
 {
 	CCollisionBox::CollisionHandle(dt, collisionEvents, phyBody, vel, mintx, minty, nx, ny);
 
@@ -70,7 +70,7 @@ void CMarioCollisionBox::CollisionHandle(DWORD dt, std::vector<CollisionEvent*>&
 					{
 						mario->OnDamaged();
 						auto normal = mario->GetPhysiscBody()->GetNormal();
-						mario->GetPhysiscBody()->SetVelocity(D3DXVECTOR2(MARIO_WALKING_SPEED * normal.x, 0.0f)); // Khi bị nhảy lên trúng Venus => bị damaged và đẩy ra
+						mario->GetPhysiscBody()->SetVelocity(Point(MARIO_WALKING_SPEED * normal.x, 0.0f)); // Khi bị nhảy lên trúng Venus => bị damaged và đẩy ra
 					}
 					case EnemyTag::BoomerangBrother:
 					{

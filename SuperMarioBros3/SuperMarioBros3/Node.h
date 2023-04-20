@@ -1,6 +1,7 @@
 ﻿#pragma once
-#include <d3dx9math.h>
 #include <vector>
+#include "Type.h"
+
 #ifndef NODE_H
 #define NODE_H
 #include "Graph.h"
@@ -21,7 +22,7 @@ protected:
 	NodeTag nodeTag;
 public:
 	CNode();
-	CNode(D3DXVECTOR2 size);
+	CNode(Point size);
 	std::vector<int> GetAdjacencyNodes();
 	int GetNodeID();
 	void SetNodeID(int id);

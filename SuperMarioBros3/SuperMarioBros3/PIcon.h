@@ -3,7 +3,7 @@
 class CPIcon
 {
 private:
-	D3DXVECTOR2 pos;
+	Point pos;
 	LPSprite whitePowerIconSprite;
 	LPSprite blackPowerIconSprite;
 	LPSprite currentSprite;
@@ -12,7 +12,7 @@ public:
 	CPIcon();
 	void LoadSprite();
 	void Render();
-	void SetPosition(D3DXVECTOR2 pos);
+	void SetPosition(Point pos);
 	void SetCharged(bool isCharged);
 	bool IsCharged();
 };

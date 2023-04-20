@@ -5,15 +5,15 @@ class CCardGift
 {
 private:
 	std::map<std::string, LPSprite> cardSprites;
-	D3DXVECTOR2 pos;
+	Point pos;
 	std::string state;
 public:
 	CCardGift();
-	CCardGift(D3DXVECTOR2 cardPos);
+	CCardGift(Point cardPos);
 	void LoadSprite();
 	void Update();
 	void Render();
 	void SetState(std::string state);
-	void SetPosition(D3DXVECTOR2 pos);
+	void SetPosition(Point pos);
 	std::string GetState();
 };

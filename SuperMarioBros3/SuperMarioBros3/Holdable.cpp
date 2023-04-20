@@ -15,12 +15,12 @@ void CHoldable::SetHolder(CGameObject* holder)
 	this->holder = holder;
 }
 
-D3DXVECTOR2 CHoldable::GetHoldableNormal()
+Point CHoldable::GetHoldableNormal()
 {
 	return normal;
 }
 
-void CHoldable::SetHoldableNormal(D3DXVECTOR2 normal)
+void CHoldable::SetHoldableNormal(Point normal)
 {
 	this->normal = normal;
 }

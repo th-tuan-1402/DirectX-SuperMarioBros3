@@ -3,11 +3,11 @@
 class CEffectObject: public CGameObject
 {
 protected:
-	D3DXVECTOR2 startPosition;
+	Point startPosition;
 
 public:
 	CEffectObject();
-	void SetStartPosition(D3DXVECTOR2 pos);
+	void SetStartPosition(Point pos);
 	bool CanCollisionWithThisObject(LPGameObject gO, GameObjectTags tag) override;
 };
 

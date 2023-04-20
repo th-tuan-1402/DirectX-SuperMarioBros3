@@ -7,7 +7,7 @@ CMushroomEffect::CMushroomEffect()
 {
 	LoadAnimation();
 	SetState(MUSHROOM_EFFECT);
-	SetScale(D3DXVECTOR2(0.4f, 1.0f));
+	SetScale(Point(0.4f, 1.0f));
 	SetTag(GameObjectTags::SuperMushroom);
 	itemTag = ItemTag::PowerUp;
 	powerupTag = PowerupTag::SuperMushroom;
@@ -19,7 +19,7 @@ CMushroomEffect::CMushroomEffect()
 	box->SetEnable(true);
 	this->collisionBoxs->push_back(box);
 	physiscBody->SetGravity(MUSHROOM_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 	physiscBody->SetDynamic(true);
 
 	appearingCounting = 0;

@@ -9,7 +9,7 @@ CCurtain::CCurtain()
 	auto spriteManager = CSpriteManager::GetInstance();
 	curtainSprite = spriteManager->Get("spr-full-curtain-0");
 	isEnabled = true;
-	transform.position = D3DXVECTOR2(384, 300);
+	transform.position = Point(384, 300);
 }
 
 void CCurtain::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
@@ -21,6 +21,6 @@ void CCurtain::Render(CCamera* cam, int alpha)
 {
 
 	auto curtainPos = transform.position - cam->GetPositionCam();
-	curtainSprite->Draw(curtainPos , D3DXVECTOR2(1.0f, 1.0f), 0);
+	curtainSprite->Draw(curtainPos , Point(1.0f, 1.0f), 0);
 
 }

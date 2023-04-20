@@ -13,16 +13,16 @@ private:
 	std::vector <CCell*> activeCells; // các cell được active trong viewport
 public:
 	CGrid();
-	CGrid(D3DXVECTOR2 mapSize);
+	CGrid(Point mapSize);
 	void Insert(CGameObject* gameObject);
 	void Remove(CGameObject* gameObject);
-	void Move(D3DXVECTOR2 oldPosition, CGameObject* gameObject);
+	void Move(Point oldPosition, CGameObject* gameObject);
 	std::vector <CCell*>  FindActiveCells(CCamera* camera);
 	std::vector <CGameObject*> FindActiveGameObjects(CCamera* camera);
-	RECT GetRectByPosition(D3DXVECTOR2 pos, D3DXVECTOR2 size);
-	Index GetCellIndexByPosition(D3DXVECTOR2 pos);
+	RECT GetRectByPosition(Point pos, Point size);
+	Index GetCellIndexByPosition(Point pos);
 	CCell* GetCell(Index index);
-	CCell* GetCell(D3DXVECTOR2 position);
+	CCell* GetCell(Point position);
 	~CGrid();
 };
 

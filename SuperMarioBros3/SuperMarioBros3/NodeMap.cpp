@@ -6,13 +6,13 @@ CNodeMap::CNodeMap()
 	nodeTag = NodeTag::Normal;
 }
 
-CNodeMap::CNodeMap(D3DXVECTOR2 size)
+CNodeMap::CNodeMap(Point size)
 {
 	CCollisionBox* box = new CCollisionBox();
 	box->SetSizeBox(size);
 	box->SetGameObjectAttach(this);
 	box->SetName("Portal");
-	box->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	box->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(box);
 	this->isEnabled = true;
 
@@ -22,7 +22,7 @@ CNodeMap::CNodeMap(D3DXVECTOR2 size)
 	nodeTag = NodeTag::Normal;
 }
 
-RECT CNodeMap::DirectionMarioCanMove(D3DXVECTOR2 posMario)
+RECT CNodeMap::DirectionMarioCanMove(Point posMario)
 {
 	RECT direction = { 0, 0, 0, 0 };
 	if (graph == NULL)

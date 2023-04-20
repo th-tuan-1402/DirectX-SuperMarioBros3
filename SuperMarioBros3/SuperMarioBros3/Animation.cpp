@@ -12,7 +12,7 @@ CAnimation::CAnimation(string aniID, DWORD defaultTime)
 	id = aniID;
 	currentFrame = -1;
 	this->defaultFrameTime = defaultTime;
-	transform.position = D3DXVECTOR2(0.0f, 0.0f);
+	transform.position = Point(0.0f, 0.0f);
 	isLoop = true;
 	isPlaying = true;
 }
@@ -39,7 +39,7 @@ void CAnimation::Add(LPSprite sprite, DWORD frameTime)
 	animFrames.push_back(frame);
 }
 
-void CAnimation::Render(D3DXVECTOR2 position, int alpha)
+void CAnimation::Render(Point position, int alpha)
 {
 	if (animFrames.size() == 0) return;
 	

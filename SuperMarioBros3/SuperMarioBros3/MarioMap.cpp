@@ -23,10 +23,10 @@ CMarioMap::CMarioMap()
 	currentDirection = { 0, 0, 0, 0 };
 
 	CCollisionBox* collisionBox = new CCollisionBox();
-	collisionBox->SetSizeBox(D3DXVECTOR2(14*3,16*3));
+	collisionBox->SetSizeBox(Point(14*3,16*3));
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Small-Mario-Map"); // SmallMario
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	sceneID = "";
@@ -225,7 +225,7 @@ void CMarioMap::OnKeyDown(int KeyCode)
 		canEnterScene = true;
 }
 
-void CMarioMap::SetStartPosition(D3DXVECTOR2 pos)
+void CMarioMap::SetStartPosition(Point pos)
 {
 	startPos = pos;
 }

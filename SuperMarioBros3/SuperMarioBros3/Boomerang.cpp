@@ -14,12 +14,12 @@ CBoomerang::CBoomerang()
 	collisionBox->SetSizeBox(BOOMERANG_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Boomerang");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(0.0f);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 
 	attackState = -1;
 }
@@ -154,12 +154,12 @@ void CBoomerang::LinkToPool(CObjectPool* pool)
 	this->pool = pool;
 }
 
-void CBoomerang::SetGoalPosition(D3DXVECTOR2 goal)
+void CBoomerang::SetGoalPosition(Point goal)
 {
 	goalPosition = goal;
 }
 
-void CBoomerang::SetStartPosition(D3DXVECTOR2 start)
+void CBoomerang::SetStartPosition(Point start)
 {
 	startPosition = start;
 }

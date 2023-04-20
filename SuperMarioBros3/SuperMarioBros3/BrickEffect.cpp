@@ -6,7 +6,7 @@ CBrickEffect::CBrickEffect()
 {
 	LoadAnimation();
 	SetState("BRICK");
-	SetScale(D3DXVECTOR2(0.70f, 0.70f));
+	SetScale(Point(0.70f, 0.70f));
 	physiscBody->SetGravity(DEBRIS_GRAVITY);
 	isEnabled = false;
 }

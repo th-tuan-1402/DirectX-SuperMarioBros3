@@ -5,12 +5,12 @@ CPortal::CPortal()
 {
 }
 
-CPortal::CPortal(D3DXVECTOR2 size)
+CPortal::CPortal(Point size)
 {
 	Init(size);
 }
 
-void CPortal::Init(D3DXVECTOR2 size)
+void CPortal::Init(Point size)
 {
 	this->SetTag(GameObjectTags::Portal);
 
@@ -18,7 +18,7 @@ void CPortal::Init(D3DXVECTOR2 size)
 	box->SetSizeBox(size);
 	box->SetGameObjectAttach(this);
 	box->SetName("Portal");
-	box->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	box->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(box);
 	this->isEnabled = true;
 

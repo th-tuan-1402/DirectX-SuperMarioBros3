@@ -19,10 +19,10 @@ void CPIcon::Render()
 		currentSprite = blackPowerIconSprite;
 	else 
 		currentSprite = whitePowerIconSprite;
-	currentSprite->Draw(pos, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+	currentSprite->Draw(pos, Point(1.0f, 1.0f), 0.0f);
 }
 
-void CPIcon::SetPosition(D3DXVECTOR2 pos)
+void CPIcon::SetPosition(Point pos)
 {
 	this->pos = pos;
 }

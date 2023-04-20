@@ -13,7 +13,7 @@ CPSwitch::CPSwitch()
 	collisionBox->SetSizeBox(PSWITCH_SIZE_BOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Swtich-Block");
-	collisionBox->SetPosition(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetPosition(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
@@ -37,8 +37,8 @@ void CPSwitch::Render(CCamera* cam, int alpha)
 	{
 		SetState("INACTIVE");
 		collisionBoxs->at(0)->SetSizeBox(PSWITCH_SIZE_BOX_INACTIVE);
-		collisionBoxs->at(0)->SetDistance(D3DXVECTOR2(0.0f, PSWITCH_SIZE_BOX.y*0.5f - PSWITCH_SIZE_BOX_INACTIVE.y * 0.5f));
-		SetRelativePositionOnScreen(D3DXVECTOR2(0.0f, PSWITCH_SIZE_BOX.y * 0.5f - PSWITCH_SIZE_BOX_INACTIVE.y * 0.5f));
+		collisionBoxs->at(0)->SetDistance(Point(0.0f, PSWITCH_SIZE_BOX.y*0.5f - PSWITCH_SIZE_BOX_INACTIVE.y * 0.5f));
+		SetRelativePositionOnScreen(Point(0.0f, PSWITCH_SIZE_BOX.y * 0.5f - PSWITCH_SIZE_BOX_INACTIVE.y * 0.5f));
 	}
 	CGameObject::Render(cam, alpha);
 }

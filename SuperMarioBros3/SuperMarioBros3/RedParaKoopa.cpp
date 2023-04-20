@@ -1,7 +1,7 @@
 #include "RedParaKoopa.h"
 #include "AnimationManager.h"
 #include "ParaKoopaConst.h"
-const D3DXVECTOR2 PARAKOOPA_VELOCITY = D3DXVECTOR2(0, 0.1f);
+const Point PARAKOOPA_VELOCITY = Point(0, 0.1f);
 CRedParaKoopa::CRedParaKoopa()
 {
 	LoadAnimation();

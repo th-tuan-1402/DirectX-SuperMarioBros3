@@ -17,13 +17,13 @@ void CKoopa::Init()
 	collisionBox->SetSizeBox(KOOPA_SHELL_ON_KOOPA_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Koopa");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
-	collisionBox->SetPosition(D3DXVECTOR2(0.0f, KOOPA_SHELL_ON_KOOPA_BBOX.y / 2 - DISTANCE_BETWEEN_KOOPA_PIVOT_AND_KOOPA_SHELL_PIVOT));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
+	collisionBox->SetPosition(Point(0.0f, KOOPA_SHELL_ON_KOOPA_BBOX.y / 2 - DISTANCE_BETWEEN_KOOPA_PIVOT_AND_KOOPA_SHELL_PIVOT));
 	this->collisionBoxs->push_back(collisionBox);
 	
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(KOOPA_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 }
 
 void CKoopa::LoadAnimation()
@@ -43,7 +43,7 @@ void CKoopa::Render(CCamera* cam, int alpha)
 {
 	auto normal = physiscBody->GetNormal();
 	
-	SetScale(D3DXVECTOR2(-normal.x, normal.y));
+	SetScale(Point(-normal.x, normal.y));
 	CGameObject::Render(cam, alpha);
 }
 

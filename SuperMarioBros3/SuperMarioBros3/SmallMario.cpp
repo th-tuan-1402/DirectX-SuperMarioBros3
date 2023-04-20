@@ -23,8 +23,8 @@ void CSmallMario::Init()
 	collisionBox->SetSizeBox(SMALL_MARIO_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Small-Mario"); // SmallMario
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
-	SetRelativePositionOnScreen(D3DXVECTOR2(0.0f, SUPER_MARIO_BBOX.y/2 - SMALL_MARIO_BBOX.y/2));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
+	SetRelativePositionOnScreen(Point(0.0f, SUPER_MARIO_BBOX.y/2 - SMALL_MARIO_BBOX.y/2));
 	this->collisionBoxs->push_back(collisionBox);
 }
 

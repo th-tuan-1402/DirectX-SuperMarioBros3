@@ -7,8 +7,8 @@ class CFont
 private:
 	std::map<char, LPSprite> fonts;
 	std::string currentText;
-	D3DXVECTOR2 currentPosition;
-	D3DXVECTOR2 space;
+	Point currentPosition;
+	Point space;
 public:
 	CFont();
 	void LoadSprite();
@@ -18,7 +18,7 @@ public:
 	bool InScope(char character);
 	bool IsLetterLowerCase(char character);
 	void SetCurrentText(std::string text);
-	void SetPosition(D3DXVECTOR2 pos);
-	void SetSpace(D3DXVECTOR2 space);
+	void SetPosition(Point pos);
+	void SetSpace(Point space);
 };
 

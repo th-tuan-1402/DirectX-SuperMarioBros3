@@ -22,12 +22,12 @@ CBoomerangBrother::CBoomerangBrother()
 	collisionBox->SetSizeBox(BOOMERANG_BROTHER__BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Boomerang-Brother");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(BOOMERANG_BROTHER_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 
 	moveState = 1;
 	canAttack = false;
@@ -47,7 +47,7 @@ void CBoomerangBrother::LoadAnimation()
 void CBoomerangBrother::Render(CCamera* cam, int alpha)
 {
 	auto normal = physiscBody->GetNormal();
-	SetScale(D3DXVECTOR2(-normal.x, 1.0f));
+	SetScale(Point(-normal.x, 1.0f));
 
 	if (isHoldBoomerang == true)
 		SetState(BOOMERANG_STATE_ATTACK);
@@ -65,7 +65,7 @@ void CBoomerangBrother::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 		canThrowSecondBoomerang = true;
 
 	auto normal = physiscBody->GetNormal();
-	auto targetPos = D3DXVECTOR2(0, 0);
+	auto targetPos = Point(0, 0);
 	if (target != NULL)
 	{
 		normal.x = (target->GetPosition().x < this->transform.position.x) ? -1 : 1;
@@ -138,7 +138,7 @@ CObjectPool CBoomerangBrother::GetObjectPool()
 	return boomerangs;
 }
 
-void CBoomerangBrother::OnAttack(D3DXVECTOR2 normal)
+void CBoomerangBrother::OnAttack(Point normal)
 {
 	if (onHoldObject != NULL)
 	{
@@ -149,7 +149,7 @@ void CBoomerangBrother::OnAttack(D3DXVECTOR2 normal)
 	}
 }
 
-void CBoomerangBrother::OnMovingForward(D3DXVECTOR2 normal)
+void CBoomerangBrother::OnMovingForward(Point normal)
 {
 	if (transform.position.x >= startPosition.x + BOUNDARY)
 	{
@@ -189,7 +189,7 @@ void CBoomerangBrother::OnMovingForward(D3DXVECTOR2 normal)
 	}
 }
 
-void CBoomerangBrother::OnMovingBackwards(D3DXVECTOR2 normal)
+void CBoomerangBrother::OnMovingBackwards(Point normal)
 {
 	auto distanceBetweenTargetAndBoomerang = target->GetPosition().x - this->transform.position.x;
 	if (abs(distanceBetweenTargetAndBoomerang) <= DISTANCE_CAN_THROW_TWICE)
@@ -250,7 +250,7 @@ void CBoomerangBrother::OnMovingBackwards(D3DXVECTOR2 normal)
 	}
 }
 
-void CBoomerangBrother::OnHoldBoomerang(D3DXVECTOR2 normal)
+void CBoomerangBrother::OnHoldBoomerang(Point normal)
 {
 	
 	if (onHoldObject == NULL)
@@ -261,7 +261,7 @@ void CBoomerangBrother::OnHoldBoomerang(D3DXVECTOR2 normal)
 			return;
 
 		auto currentBoomerang = static_cast<CBoomerang*>(onHoldObject);
-		D3DXVECTOR2 pos = currentBoomerang->GetPosition();
+		Point pos = currentBoomerang->GetPosition();
 		auto boomPhyBody = currentBoomerang->GetPhysiscBody();
 
 		auto posBoomerangBrother = transform.position + relativePositionOnScreen;

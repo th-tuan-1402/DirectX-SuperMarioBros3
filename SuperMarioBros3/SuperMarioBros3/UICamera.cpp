@@ -10,7 +10,7 @@ CUICamera::CUICamera()
 {
 }
 
-CUICamera::CUICamera(int wid, int hei, D3DXVECTOR2 hudPos)
+CUICamera::CUICamera(int wid, int hei, Point hudPos)
 {
 	hud = new CHUD(hudPos);
     this->widthCam = wid;
@@ -44,12 +44,12 @@ void CUICamera::Render()
     if (disableBlackTexture == false)
     {
         auto tex = CTextureManager::GetInstance()->GetTexture(TEXTURE_BLACK);
-        D3DXVECTOR2 posInCam;
+        Point posInCam;
         posInCam.x = trunc(hud->GetPosition().x - this->posCam.x);
         posInCam.y = trunc(hud->GetPosition().y - this->posCam.y) + BLACK_RECTANGLE_HEIGHT;
         float surfaceWidth = surfaceRect.right - surfaceRect.left;
         float surfaceHeight = surfaceRect.bottom - surfaceRect.top;
-        CGame::GetInstance()->Draw(posInCam, D3DXVECTOR2(surfaceWidth * 0.5f, surfaceHeight * 0.5f), tex, surfaceRect, D3DCOLOR_XRGB(0, 0, 0));
+        CGame::GetInstance()->Draw(posInCam, Point(surfaceWidth * 0.5f, surfaceHeight * 0.5f), tex, surfaceRect, D3DCOLOR_XRGB(0, 0, 0));
     }
 	if (hud != NULL)
     {
@@ -80,7 +80,7 @@ void CUICamera::AddText(CFont* text)
     texts.push_back(text);
 }
 
-void CUICamera::SetPositionCam(D3DXVECTOR2 pos)
+void CUICamera::SetPositionCam(Point pos)
 {
     CCamera::SetPositionCam(pos);
     surfaceRect.left = 0;
@@ -168,16 +168,16 @@ void CUICamera::GoalRouletteProcess()
 void CUICamera::FontResult()
 {
     CFont* font = new CFont();
-    font->SetPosition(D3DXVECTOR2(250,150));
+    font->SetPosition(Point(250,150));
     font->SetCurrentText("COURSE CLEAR !");
     AddText(font);
     CFont* font1 = new CFont();
-    font1->SetPosition(D3DXVECTOR2(200, 200));
+    font1->SetPosition(Point(200, 200));
     font1->SetCurrentText("YOU GOT A CARD");
     AddText(font1);
     giftInFont = new CCardGift();
     giftInFont->SetState(goalState);
-    giftInFont->SetPosition(D3DXVECTOR2(580, 220));
+    giftInFont->SetPosition(Point(580, 220));
     fontResultDisplayed = true;
 
 }

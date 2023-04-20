@@ -15,11 +15,11 @@ void CRaccoonTailBox::Init()
 	collisionBox->SetSizeBox(RACCOON_TAIL_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Raccoon-Tail"); 
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
 
-	this->SetScale(D3DXVECTOR2(1.0f, 1.0f));
+	this->SetScale(Point(1.0f, 1.0f));
 }
 

@@ -19,14 +19,14 @@ void CGoomba::Init()
 	collisionBox->SetSizeBox(GOOMBA_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Goomba");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(GOOMBA_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
-	beforeHitPosition = D3DXVECTOR2(0.0f, 0.0f);
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
+	beforeHitPosition = Point(0.0f, 0.0f);
 
 	currentPhysicsState = GoombaState::Walk;
 	enemyTag = EnemyTag::Goomba;
@@ -59,7 +59,7 @@ void CGoomba::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 void CGoomba::Render(CCamera* cam, int alpha)
 {
 	auto normal = physiscBody->GetNormal();
-	SetScale(D3DXVECTOR2(1.0f, normal.y));
+	SetScale(Point(1.0f, normal.y));
 	switch (currentPhysicsState)
 	{
 		case GoombaState::Walk: 
@@ -103,7 +103,7 @@ void CGoomba::OnDie()
 			v.y = -GOOMBA_HIT_FORCE;
 			auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 			activeScene->AddObject(hitFX);
-			activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), hitFX);
+			activeScene->GetGrid()->Move(Point(-1, -1), hitFX);
 			hitFX->Enable(true);
 		}
 	}
@@ -118,7 +118,7 @@ void CGoomba::OnDie()
 		if (countDeadCallback == 1)
 			startDeadTime = GetTickCount64();
 
-		SetRelativePositionOnScreen(D3DXVECTOR2(0, (GOOMBA_BBOX.y - GOOMBA_DIE_BBOX.y) * 0.5f));
+		SetRelativePositionOnScreen(Point(0, (GOOMBA_BBOX.y - GOOMBA_DIE_BBOX.y) * 0.5f));
 		collisionBoxs->at(0)->SetSizeBox(GOOMBA_DIE_BBOX);
 		physiscBody->SetGravity(0.0f);
 

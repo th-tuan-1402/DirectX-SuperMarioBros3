@@ -46,35 +46,35 @@ public:
 	CTileMap* LoadMap(std::string filePath, std::string fileMap, std::vector<LPGameObject>& listGameObjects, CGameObject* player, CScene* scene);
 	Layer* LoadLayer(TiXmlElement* layerElement);
 
-	CGameObject* LoadSolidBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string name, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadGhostBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string name, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadSolidBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadGhostBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadEnemy(D3DXVECTOR2 position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadKoopa(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadParakoopa(D3DXVECTOR2 position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadGoomba(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadParagoomba(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadPiranha(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadVenus(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadBoomerangBrother(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadEnemy(Point position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadKoopa(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadParakoopa(Point position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadGoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadParagoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPiranha(Point position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadVenus(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadBoomerangBrother(Point position, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadQuestionBlock(D3DXVECTOR2 position, int type, std::string name, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadBrick(D3DXVECTOR2 position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadCoin(D3DXVECTOR2 position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadQuestionBlock(Point position, int type, std::string name, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadBrick(Point position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadCoin(Point position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadPipe(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string direction, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadPortal(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadLabel(D3DXVECTOR2 position, std::string labelName, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPipe(Point position, Point size, std::string direction, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPortal(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadLabel(Point position, std::string labelName, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadWorldItem(D3DXVECTOR2 position, std::string itemName, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadPortalScene(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadSceneGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadNodeGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadWorldItem(Point position, std::string itemName, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPortalScene(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadSceneGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadNodeGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadSwitchBlock(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadEmptyBlock(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadCard(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadMovingPlatform(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadSwitchBlock(Point position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadEmptyBlock(Point position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadCard(Point position, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadMovingPlatform(Point position, std::vector<LPGameObject>& listGameObjects);
 
 	void Render(CCamera* camera, bool isRenderForeground);
 	void RenderLayer(Layer* layer, int i, int j, int x, int y);
@@ -97,7 +97,7 @@ public:
 struct TileSet
 {
 	int firstgid; // Có thể dùng để đại diện tileset (ID tileset)
-	D3DXVECTOR2 tileSize;
+	Point tileSize;
 	int tileCount;
 	int columns;
 	LPDIRECT3DTEXTURE9 texture;

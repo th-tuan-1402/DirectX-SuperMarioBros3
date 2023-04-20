@@ -88,7 +88,7 @@ void CPhysicsBody::Update(LPGameObject gameObject)
 	auto collisionBoxs = gameObject->GetCollisionBox();
 	auto physiscBody = gameObject->GetPhysiscBody();
 	
-	D3DXVECTOR2 distance;
+	Point distance;
 	distance.x = physiscBody->GetVelocity().x * dt;
 	distance.y = physiscBody->GetVelocity().y * dt;
 	collisionBoxs->at(0)->SetDistance(distance);
@@ -315,7 +315,7 @@ void CPhysicsBody::CalcPotentialCollisions(
 	{
 		for (auto prevCollision : coEvents)
 		{
-			D3DXVECTOR2 distance(cO->GetDistance());
+			Point distance(cO->GetDistance());
 			auto dt = CGame::GetInstance()->GetDeltaTime() * CGame::GetTimeScale();
 			auto dist = distance - latterCollision->obj->GetGameObjectAttach()->GetPhysiscBody()->GetVelocity() * dt;
 
@@ -330,7 +330,7 @@ void CPhysicsBody::CalcPotentialCollisions(
 				dist.x -= 0.1f;
 			}
 
-			float time; D3DXVECTOR2 direction;
+			float time; Point direction;
 			auto mBox = cO->GetBoundingBox();
 			auto sBox = latterCollision->obj->GetBoundingBox();
 			SweptAABB(mBox.left, mBox.top, mBox.right, mBox.bottom, dist.x, dist.y, sBox.left, sBox.top, sBox.right, sBox.bottom, time, direction.x, direction.y, latterCollision->obj->GetGameObjectAttach()->GetTag());
@@ -387,7 +387,7 @@ void CPhysicsBody::FilterCollision(
 
 }
 
-D3DXVECTOR2 CPhysicsBody::GetVelocity()
+Point CPhysicsBody::GetVelocity()
 {
 	return velocity;
 }
@@ -402,12 +402,12 @@ float CPhysicsBody::GetAcceleration()
 	return acceleration;
 }
 
-D3DXVECTOR2 CPhysicsBody::GetDragForce()
+Point CPhysicsBody::GetDragForce()
 {
 	return dragForce;
 }
 
-D3DXVECTOR2 CPhysicsBody::GetNormal()
+Point CPhysicsBody::GetNormal()
 {
 	return normal;
 }
@@ -417,7 +417,7 @@ bool CPhysicsBody::IsDynamic()
 	return isDynamic;
 }
 
-void CPhysicsBody::SetVelocity(D3DXVECTOR2 s)
+void CPhysicsBody::SetVelocity(Point s)
 {
 	velocity = s;
 }
@@ -437,12 +437,12 @@ void CPhysicsBody::SetTrigger(bool isTrigg)
 	this->isTrigger = isTrigg;
 }
 
-D3DXVECTOR2 CPhysicsBody::GetBounceForce()
+Point CPhysicsBody::GetBounceForce()
 {
 	return bounceForce;
 }
 
-void CPhysicsBody::SetBounceForce(D3DXVECTOR2 bF)
+void CPhysicsBody::SetBounceForce(Point bF)
 {
 	bounceForce = bF;
 }
@@ -457,12 +457,12 @@ void CPhysicsBody::SetAcceleration(float acc)
 	acceleration = acc;
 }
 
-void CPhysicsBody::SetDragForce(D3DXVECTOR2 drag)
+void CPhysicsBody::SetDragForce(Point drag)
 {
 	dragForce = drag;
 }
 
-void CPhysicsBody::SetNormal(D3DXVECTOR2 n)
+void CPhysicsBody::SetNormal(Point n)
 {
 	this->normal = n;
 }

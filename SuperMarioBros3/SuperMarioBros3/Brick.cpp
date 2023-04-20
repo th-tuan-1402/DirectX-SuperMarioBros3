@@ -144,7 +144,7 @@ void CBrick::Debris()
 		if (brickFX != NULL)
 		{
 			auto pos = brickFX->GetPosition();
-			brickFX->GetPhysiscBody()->SetVelocity(D3DXVECTOR2(velx[i], vely[i]));
+			brickFX->GetPhysiscBody()->SetVelocity(Point(velx[i], vely[i]));
 			brickFX->Enable(true);
 			brickFX->SetPosition(this->GetPosition());
 			auto FX = static_cast<CBrickEffect*>(brickFX);
@@ -178,7 +178,7 @@ void CBrick::Bounce()
 			coinObtainedFX->SetStartPosition(transform.position);
 			auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 			activeScene->AddObject(coinObtainedFX);
-			activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), coinObtainedFX);
+			activeScene->GetGrid()->Move(Point(-1, -1), coinObtainedFX);
 			OnScoreEffect();
 			break;
 		}
@@ -203,7 +203,7 @@ void CBrick::Bounce()
 					mushroomObtainedFX->StartEffect(mario->GetPhysiscBody()->GetNormal().x);
 					auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 					activeScene->AddObject(mushroomObtainedFX);
-					activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), mushroomObtainedFX);
+					activeScene->GetGrid()->Move(Point(-1, -1), mushroomObtainedFX);
 					break;
 				}
 				case MarioStates::SuperMario:
@@ -217,18 +217,18 @@ void CBrick::Bounce()
 						leafObtainedFX->StartEffect();
 						auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 						activeScene->AddObject(leafObtainedFX);
-						activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), leafObtainedFX);
+						activeScene->GetGrid()->Move(Point(-1, -1), leafObtainedFX);
 
 					}
 					if (res == 1)
 					{
 						CFireFlower* fireFlower = new CFireFlower();
-						D3DXVECTOR2 firePos = transform.position;
+						Point firePos = transform.position;
 						firePos.y -= BLOCK_BBOX.y;
 						fireFlower->SetStartPosition(firePos);
 						auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 						activeScene->AddObject(fireFlower);
-						activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), fireFlower);
+						activeScene->GetGrid()->Move(Point(-1, -1), fireFlower);
 					}
 					break;
 				}
@@ -239,18 +239,18 @@ void CBrick::Bounce()
 					leafObtainedFX->StartEffect();
 					auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 					activeScene->AddObject(leafObtainedFX);
-					activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), leafObtainedFX);
+					activeScene->GetGrid()->Move(Point(-1, -1), leafObtainedFX);
 					break;
 				}
 				case MarioStates::RacoonMario:
 				{
 					CFireFlower* fireFlower = new CFireFlower();
-					D3DXVECTOR2 firePos = transform.position;
+					Point firePos = transform.position;
 					firePos.y -= BLOCK_BBOX.y;
 					fireFlower->SetStartPosition(firePos);
 					auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 					activeScene->AddObject(fireFlower);
-					activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), fireFlower);
+					activeScene->GetGrid()->Move(Point(-1, -1), fireFlower);
 					break;
 				}
 				}
@@ -266,7 +266,7 @@ void CBrick::Bounce()
 			pSwitch->SetPosition(pos);
 			auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 			activeScene->AddObject(pSwitch);
-			activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), pSwitch);
+			activeScene->GetGrid()->Move(Point(-1, -1), pSwitch);
 			break;
 		}
 		}

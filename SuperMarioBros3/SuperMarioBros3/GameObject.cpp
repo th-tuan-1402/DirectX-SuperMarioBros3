@@ -30,9 +30,9 @@ CGameObject::~CGameObject()
 }
 
 
-D3DXVECTOR2 CGameObject::GetGameObjectSize(CGameObject* gO)
+Point CGameObject::GetGameObjectSize(CGameObject* gO)
 {
-	D3DXVECTOR2 size = D3DXVECTOR2(0, 0);
+	Point size = Point(0, 0);
 	if (gO->GetCollisionBox()->size() > 0)
 	{
 		auto colBox = gO->GetCollisionBox()->at(0);
@@ -108,7 +108,7 @@ void CGameObject::Render(CCamera* cam, int alpha)
 	animations.find(currentState)->second->SetScale(transform.scale);
 	animations.find(currentState)->second->SetRotation(transform.rotationAngle);
 
-	D3DXVECTOR2 posInCam = cam->Transform(transform.position + relativePositionOnScreen);
+	Point posInCam = cam->Transform(transform.position + relativePositionOnScreen);
 	posInCam.x = trunc(posInCam.x);
 	posInCam.y = trunc(posInCam.y) + Small_Player_Distance;
 	animations.at(currentState)->Render(posInCam, alpha);
@@ -166,7 +166,7 @@ void CGameObject::OnScoreEffect()
 	if (activeScene)
 	{
 		activeScene->AddObject(scoreFX);
-		activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), scoreFX);
+		activeScene->GetGrid()->Move(Point(-1, -1), scoreFX);
 	}
 }
 
@@ -182,7 +182,7 @@ void CGameObject::AddAnimation(std::string stateName, LPAnimation animation, boo
 	animations.insert(make_pair(stateName, animation));
 }
 
-void CGameObject::SetRelativePositionOnScreen(D3DXVECTOR2 rP)
+void CGameObject::SetRelativePositionOnScreen(Point rP)
 {
 	this->relativePositionOnScreen = rP;
 }
@@ -223,12 +223,12 @@ void CGameObject::SetIgnoreTimeSCale(bool isIgnoreTimeScale)
 	this->ignoreTimeScale = isIgnoreTimeScale;
 }
 
-D3DXVECTOR2 CGameObject::GetScale()
+Point CGameObject::GetScale()
 {
 	return transform.scale;
 }
 
-void CGameObject::SetScale(D3DXVECTOR2 s)
+void CGameObject::SetScale(Point s)
 {
 	this->transform.scale = s;
 }
@@ -243,12 +243,12 @@ void CGameObject::SetRotation(float r)
 	this->transform.rotationAngle = r;
 }
 
-D3DXVECTOR2 CGameObject::GetPosition()
+Point CGameObject::GetPosition()
 {
 	return this->transform.position;
 }
 
-void CGameObject::SetPosition(D3DXVECTOR2 p)
+void CGameObject::SetPosition(Point p)
 {
 	this->transform.position = p;
 }

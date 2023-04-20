@@ -3,8 +3,7 @@
 #ifndef SPRITEMANAGER_H
 #define SPRITEMANAGER_H
 
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "Type.h"
 #include <unordered_map>
 #include "Sprite.h"
 

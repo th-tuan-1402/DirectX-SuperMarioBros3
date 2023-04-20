@@ -20,7 +20,7 @@ class CMario : public CGameObject, public IState
 protected:
 	bool isInIntro;
 	MarioStates marioStateTag;
-	D3DXVECTOR2 targetVelocity, previousVelocity; 
+	Point targetVelocity, previousVelocity; 
 	MarioStateSet currentPhysicsState, previousPhysicsState; // state vật lý, còn currentState ở GameObject là state animation
 	bool isOnGround;
 	bool isHighSpeed; // horizontal
@@ -28,8 +28,8 @@ protected:
 	bool isHighJump, canHighJump, isJump; 
 	int isSkid;
 	bool canCrouch;
-	D3DXVECTOR2 previousNormal;
-	D3DXVECTOR2 previousPosition;
+	Point previousNormal;
+	Point previousPosition;
 	bool canAttack, isAttack, canAttackContinious;
 	bool isJumpAttack;
 	int feverState; // - 1, 0, 1, 2 : -1 là disable đối với Raccoon vì Raccoon bay kiểu khác
@@ -118,7 +118,7 @@ public:
 	bool CanCollisionWithThisObject(LPGameObject gO, GameObjectTags tag) override;
 
 	void CrouchProcess(CKeyboardManager* keyboard);
-	void SkidProcess(D3DXVECTOR2 velocity);
+	void SkidProcess(Point velocity);
 	void HoldProcess();
 	void ResetHolding();
 	void JumpProcess(float jumpForce, bool bounceAfterJumpOnEnemy);

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-CHUD::CHUD(D3DXVECTOR2 hudPos)
+CHUD::CHUD(Point hudPos)
 {
 	isEnable = true;
 	this->pos = hudPos;
@@ -78,7 +78,7 @@ void CHUD::Render()
 {
 	if (isEnable == false)
 		return;
-	hudSprite->Draw(pos, D3DXVECTOR2(1.0f, 1.0f), 0.0f);
+	hudSprite->Draw(pos, Point(1.0f, 1.0f), 0.0f);
 	pMeter->Render();
 	card1->Render();
 	card2->Render();
@@ -88,12 +88,12 @@ void CHUD::Render()
 	scoreText->Render();
 }
 
-void CHUD::SetPosition(D3DXVECTOR2 pos)
+void CHUD::SetPosition(Point pos)
 {
 	this->pos = pos;
 }
 
-D3DXVECTOR2 CHUD::GetPosition()
+Point CHUD::GetPosition()
 {
 	return pos;
 }

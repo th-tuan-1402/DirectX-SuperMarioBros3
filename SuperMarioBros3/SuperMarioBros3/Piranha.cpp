@@ -25,11 +25,11 @@ void CPiranha::Init()
 	collisionBox->SetSizeBox(PIRANHA_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Piranha");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 }
 
 void CPiranha::LoadAnimation()
@@ -58,12 +58,12 @@ void CPiranha::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 			if (timeStartIdle == 0) // Đứng yên
 			{
 				timeStartIdle = CGame::GetInstance()->GetDeltaTime() * CGame::GetTimeScale();
-				physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+				physiscBody->SetVelocity(Point(0.0f, 0.0f));
 				isIdle = true;
 			}
 			if (timeStartIdle > timeToIdle) // Đi xuống
 			{
-				physiscBody->SetVelocity(D3DXVECTOR2(0.0f, PIRANHA_PUSH_FORCE));
+				physiscBody->SetVelocity(Point(0.0f, PIRANHA_PUSH_FORCE));
 				isIdle = false;
 			}
 		}
@@ -76,20 +76,20 @@ void CPiranha::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	{
 		// Mới vô đợi 0.8s để được ngoi lên
 		canDartOut = true;
-		physiscBody->SetVelocity(D3DXVECTOR2(0.0f, -PIRANHA_PUSH_FORCE));
+		physiscBody->SetVelocity(Point(0.0f, -PIRANHA_PUSH_FORCE));
 		return;
 	}
 	if (canDartOut == false && timeStopDartOut == 0)
 	{
 		// Ở dưới cái pipe
 		timeStopDartOut = CGame::GetInstance()->GetDeltaTime() * CGame::GetTimeScale();
-		physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+		physiscBody->SetVelocity(Point(0.0f, 0.0f));
 		timeStartIdle = 0;
 		
 	}
 	if (isIdle == false && timeStartIdle != 0)
 	{
-		physiscBody->SetVelocity(D3DXVECTOR2(0.0f, PIRANHA_PUSH_FORCE));
+		physiscBody->SetVelocity(Point(0.0f, PIRANHA_PUSH_FORCE));
 		transform.position.y += PIRANHA_PUSH_FORCE * dt;
 	}
 }

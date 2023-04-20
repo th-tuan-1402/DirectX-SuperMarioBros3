@@ -5,7 +5,7 @@ class CNodeMap :
 {
 public:
     CNodeMap();
-    CNodeMap(D3DXVECTOR2 size);
-    RECT DirectionMarioCanMove(D3DXVECTOR2 posMario);
+    CNodeMap(Point size);
+    RECT DirectionMarioCanMove(Point posMario);
 };
 

@@ -6,7 +6,7 @@ CGrid::CGrid()
 {
 }
 
-CGrid::CGrid(D3DXVECTOR2 mapSize)
+CGrid::CGrid(Point mapSize)
 {
 	columns = (int)ceil((float)mapSize.x / (float)CELL_WIDTH);
 	rows = (int)ceil((float)mapSize.y / (float)CELL_WIDTH);
@@ -39,7 +39,7 @@ void CGrid::Remove(CGameObject* gameObject)
 	cell->RemoveObject(gameObject);
 }
 
-void CGrid::Move(D3DXVECTOR2 oldPosition, CGameObject* gameObject)
+void CGrid::Move(Point oldPosition, CGameObject* gameObject)
 {
 	if (gameObject == NULL)
 		return;
@@ -96,7 +96,7 @@ std::vector <CGameObject*>  CGrid::FindActiveGameObjects(CCamera* camera)
 	return activeObjects;
 }
 
-RECT CGrid::GetRectByPosition(D3DXVECTOR2 pos, D3DXVECTOR2 size)
+RECT CGrid::GetRectByPosition(Point pos, Point size)
 {
 	RECT rect;
 	rect.left = (int)pos.x / CELL_WIDTH;
@@ -106,7 +106,7 @@ RECT CGrid::GetRectByPosition(D3DXVECTOR2 pos, D3DXVECTOR2 size)
 	return rect;
 }
 
-Index CGrid::GetCellIndexByPosition(D3DXVECTOR2 pos)
+Index CGrid::GetCellIndexByPosition(Point pos)
 {
 	return { (int) (pos.x / CELL_WIDTH), (int) (pos.y / CELL_HEIGHT) };
 }
@@ -125,7 +125,7 @@ CCell* CGrid::GetCell(Index index)
 	return cells.at(index.x).at(index.y); // IMPORTANT
 }
 
-CCell* CGrid::GetCell(D3DXVECTOR2 position)
+CCell* CGrid::GetCell(Point position)
 {
 	auto index = GetCellIndexByPosition(position);
 	return GetCell(index);

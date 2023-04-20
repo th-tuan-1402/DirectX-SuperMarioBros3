@@ -19,9 +19,9 @@ class CCollisionBox
 {
 protected:
 	LPGameObject gameObject;
-	D3DXVECTOR2 sizeBox;
-	D3DXVECTOR2 localPosition; 
-	D3DXVECTOR2 distance;  //dx = vx*dt 
+	Point sizeBox;
+	Point localPosition; 
+	Point distance;  //dx = vx*dt 
 	std::string name;
 	int id;
 	bool isEnable;
@@ -29,21 +29,21 @@ public:
 	CCollisionBox();
 	~CCollisionBox();
 	void Render(CCamera* camera, int distance);
-	virtual void CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisions, LPPhysicsBody phyBody, D3DXVECTOR2 vel, int mintx, int minty, float nx, float ny);
+	virtual void CollisionHandle(DWORD dt, std::vector<CollisionEvent*>& collisions, LPPhysicsBody phyBody, Point vel, int mintx, int minty, float nx, float ny);
 
 	virtual void SetGameObjectAttach(LPGameObject gO);
 	LPGameObject GetGameObjectAttach();
 	
-	void SetSizeBox(D3DXVECTOR2 size);
-	D3DXVECTOR2 GetSizeBox();
+	void SetSizeBox(Point size);
+	Point GetSizeBox();
 
-	void SetPosition(D3DXVECTOR2 pos); // Local Position
-	D3DXVECTOR2 GetPosition();
+	void SetPosition(Point pos); // Local Position
+	Point GetPosition();
 
-	void SetDistance(D3DXVECTOR2 d);
-	D3DXVECTOR2 GetDistance();
+	void SetDistance(Point d);
+	Point GetDistance();
 
-	D3DXVECTOR2 GetWorldPosition();
+	Point GetWorldPosition();
 
 	bool IsEnabled();
 	void SetEnable(bool isEnable);

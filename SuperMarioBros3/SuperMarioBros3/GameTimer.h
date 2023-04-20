@@ -2,7 +2,7 @@
 #include "Font.h"
 class CGameTimer
 {
-	D3DXVECTOR2 pos;
+	Point pos;
 	CFont* timerFont;
 	int currentTime;
 	int timerState;
@@ -10,8 +10,8 @@ public:
 	CGameTimer();
 	void Update();
 	void Render();
-	void SetPosition(D3DXVECTOR2 pos);
-	D3DXVECTOR2 GetPosition();
+	void SetPosition(Point pos);
+	Point GetPosition();
 	void StartTimer();
 	void ResetTimer(); // Reset to 300
 	void ResetToZero(); // Reset to 0

@@ -2,8 +2,7 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "Type.h"
 #include <string>
 
 class CSprite;
@@ -14,13 +13,13 @@ class CSprite
 	RECT rect;
 	int width;
 	int height;
-	D3DXVECTOR2 pointCenter;
+	Point pointCenter;
 	LPDIRECT3DTEXTURE9 texture;
 	D3DXCOLOR transcolor;
 	
 public:
 	CSprite(std::string id, int xPivot, RECT rect = RECT(), LPDIRECT3DTEXTURE9 tex = NULL, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255)); // texture là bên Texture manager giữ
-	void Draw(D3DXVECTOR2 position, D3DXVECTOR2 scale, float rotation, D3DXCOLOR transcolor = D3DXCOLOR(254, 255, 255, 255));
+	void Draw(Point position, Point scale, float rotation, D3DXCOLOR transcolor = D3DXCOLOR(254, 255, 255, 255));
 
 	RECT GetRect();
 	void SetRect(RECT rect);
@@ -29,8 +28,8 @@ public:
 	int GetHeight();
 	void SetHeight(int h);
 
-	D3DXVECTOR2 GetPointCenter();
-	void SetPointCenter(D3DXVECTOR2 pointCenter);
+	Point GetPointCenter();
+	void SetPointCenter(Point pointCenter);
 
 	D3DXCOLOR GetTranscolor();
 	void SetTranscolor(D3DXCOLOR transcolor);

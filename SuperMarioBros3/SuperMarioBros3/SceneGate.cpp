@@ -8,7 +8,7 @@ CSceneGate::CSceneGate()
 	nodeTag = NodeTag::Portal;
 }
 
-CSceneGate::CSceneGate(D3DXVECTOR2 size)
+CSceneGate::CSceneGate(Point size)
 {
 	Init(size);
 	LoadAnimation();
@@ -37,7 +37,7 @@ void CSceneGate::Render(CCamera* cam, int alpha)
 	CGameObject::Render(cam, alpha);
 }
 
-void CSceneGate::Init(D3DXVECTOR2 size)
+void CSceneGate::Init(Point size)
 {
 	this->SetTag(GameObjectTags::Portal);
 
@@ -45,7 +45,7 @@ void CSceneGate::Init(D3DXVECTOR2 size)
 	box->SetSizeBox(size);
 	box->SetGameObjectAttach(this);
 	box->SetName("Portal");
-	box->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	box->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(box);
 	this->isEnabled = true;
 
@@ -56,7 +56,7 @@ void CSceneGate::Init(D3DXVECTOR2 size)
 	cameraID = -1;
 }
 
-RECT CSceneGate::DirectionMarioCanMove(D3DXVECTOR2 posMario)
+RECT CSceneGate::DirectionMarioCanMove(Point posMario)
 {
 	RECT direction = { 0, 0, 0, 0 };
 

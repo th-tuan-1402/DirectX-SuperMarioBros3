@@ -5,7 +5,7 @@
 CIntroScript::CIntroScript()
 {
 	isEnabled = true;
-	transform.position = D3DXVECTOR2(200, 200); // Để được check trong camera
+	transform.position = Point(200, 200); // Để được check trong camera
 	cutSceneStages = 0;
 }
 

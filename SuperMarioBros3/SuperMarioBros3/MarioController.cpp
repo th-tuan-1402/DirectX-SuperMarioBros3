@@ -96,7 +96,7 @@ void CMarioController::SwitchToState(std::string state)
 
 		listStateObjects.at(state)->SetPosition(currentStateObject->GetPosition());
 
-		D3DXVECTOR2 transform = D3DXVECTOR2(0.0f, 0.0f);
+		Point transform = Point(0.0f, 0.0f);
 		transform.y = SUPER_MARIO_BBOX.y - SMALL_MARIO_BBOX.y; // Tính lại
 
 		// hoặc boxsize coi của nhỏ hay lớn

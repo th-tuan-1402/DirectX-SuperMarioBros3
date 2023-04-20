@@ -12,8 +12,8 @@ private:
 	CSprite* bottomCurtain;
 	
 	bool isUp;
-	std::map<std::string, D3DXVECTOR2> direction;
-	D3DXVECTOR2 currentDirection;
+	std::map<std::string, Point> direction;
+	Point currentDirection;
 public:
 	CMenu();
 

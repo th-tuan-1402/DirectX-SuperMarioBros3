@@ -10,15 +10,15 @@ CCoinEffect::CCoinEffect()
 	isEnabled = true;
 
 	CCollisionBox* box = new CCollisionBox();
-	box->SetSizeBox(D3DXVECTOR2(0.0f, 0.0f));
+	box->SetSizeBox(Point(0.0f, 0.0f));
 	box->SetGameObjectAttach(this);
 	box->SetEnable(false);
 	this->collisionBoxs->push_back(box);
 	physiscBody->SetGravity(COIN_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, -COIN_BOUNCE));
+	physiscBody->SetVelocity(Point(0.0f, -COIN_BOUNCE));
 	physiscBody->SetDynamic(true);
 
-	SetScale(D3DXVECTOR2(0.4f, 1.0f));
+	SetScale(Point(0.4f, 1.0f));
 
 }
 

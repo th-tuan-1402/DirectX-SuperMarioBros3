@@ -19,7 +19,7 @@ CKoopaShell::CKoopaShell()
 	countWithDraw = 0;
 	countShakingTime = 0;
 	timeStartHeadShot = 0;
-	centerPosition = D3DXVECTOR2(0.0f, 0.0f);
+	centerPosition = Point(0.0f, 0.0f);
 }
 
 void CKoopaShell::Init()
@@ -32,13 +32,13 @@ void CKoopaShell::Init()
 	collisionBox->SetSizeBox(KOOPA_SHELL_BBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Koopa-Shell");
-	collisionBox->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	collisionBox->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(collisionBox);
 
 	startDeadTime = 0;
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(KOOPA_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(0.0f, 0.0f));
+	physiscBody->SetVelocity(Point(0.0f, 0.0f));
 }
 
 void CKoopaShell::LoadAnimation()
@@ -112,7 +112,7 @@ void CKoopaShell::OnDie()
 			hitFX->SetStartPosition(this->transform.position);
 			hitFX->SetStartHitTime(GetTickCount64());
 			hitFX->Enable(true);
-			activeScene->GetGrid()->Move(D3DXVECTOR2(-1, -1), hitFX);
+			activeScene->GetGrid()->Move(Point(-1, -1), hitFX);
 			if (isHeadShotByFireBall == true)
 			{
 				// Off the cliffs
@@ -172,7 +172,7 @@ CKoopa* CKoopaShell::GetKoopa()
 	return koopa;
 }
 
-void CKoopaShell::SetHoldablePosition(D3DXVECTOR2 pos)
+void CKoopaShell::SetHoldablePosition(Point pos)
 {
 	SetPosition(pos);
 }
@@ -190,7 +190,7 @@ void CKoopaShell::Release(bool isFromHigher)
 	physiscBody->SetNormal(normal); // Sẽ set lại normal theo hướng bị thả ra dựa vào normal bên class cha Holdable giữ
 }
 
-D3DXVECTOR2 CKoopaShell::GetHoldableCollisionBox()
+Point CKoopaShell::GetHoldableCollisionBox()
 {
 	return collisionBoxs->at(0)->GetSizeBox();
 }
@@ -208,10 +208,10 @@ void CKoopaShell::Render(CCamera* cam, int alpha)
 	{
 		normal.y = -1.0f;
 		physiscBody->SetNormal(normal);
-		SetScale(D3DXVECTOR2(1.0f, -1.0f));
+		SetScale(Point(1.0f, -1.0f));
 	}
 	else
-		SetScale(D3DXVECTOR2(1.0f, 1.0f));
+		SetScale(Point(1.0f, 1.0f));
 	if (isRun == true)
 		SetState(KOOPA_SHELL_STATE_RUN);
 	else
@@ -250,7 +250,7 @@ void CKoopaShell::WithDrawProcess()
 		timeStartWithDraw = 0;
 		timeStartCanWithDraw = 0;
 		countWithDraw = 0;
-		SetRelativePositionOnScreen(D3DXVECTOR2(0.0f, 0.0f));
+		SetRelativePositionOnScreen(Point(0.0f, 0.0f));
 		koopa->ChangeBackToKoopa();
 	}
 
@@ -268,7 +268,7 @@ void CKoopaShell::WithDrawProcess()
 	{
 		countShakingTime++;
 		auto velocity = physiscBody->GetVelocity();
-		D3DXVECTOR2 relPos = D3DXVECTOR2(0.0f, 0.0f);
+		Point relPos = Point(0.0f, 0.0f);
 		relPos.x = rand() % SHAKING_AMPLITUDE - SHAKING_AMPLITUDE;
 		SetRelativePositionOnScreen(relPos);
 	}

@@ -122,7 +122,7 @@ void CTileMap::Render(CCamera* camera, bool isRenderForeground)
 	int row = abs(camera->GetPositionCam().y / tileHeight);
 
 	// Lấy ra viewport theo dạng grid (số ô)
-	D3DXVECTOR2 camSize = D3DXVECTOR2(camera->GetWidthCam() / tileWidth, camera->GetHeightCam() / tileHeight);
+	Point camSize = Point(camera->GetWidthCam() / tileWidth, camera->GetHeightCam() / tileHeight);
 
 	// việc +2 là do trừ hao cho khỏi bị flick ở cạnh màn hình
 	// vì sẽ có lúc tính toán làm tròn sao sao đó mà sẽ có ô mình k vẽ
@@ -168,7 +168,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 		root->QueryIntAttribute("tilewidth", &tileWidth);
 		root->QueryIntAttribute("tileheight", &tileHeight);
 
-		this->grid = new CGrid(D3DXVECTOR2(width * tileWidth, height * tileHeight));
+		this->grid = new CGrid(Point(width * tileWidth, height * tileHeight));
 		this->player = player;
 		this->scene = scene;
 		//Load tileset
@@ -229,8 +229,8 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 				object->QueryIntAttribute("height", &height);
 
 
-				D3DXVECTOR2 position = D3DXVECTOR2(x, y);
-				D3DXVECTOR2 size = D3DXVECTOR2(width, height);
+				Point position = Point(x, y);
+				Point size = Point(width, height);
 				string nameObject = std::to_string(id);
 
 				TiXmlElement* properties = object->FirstChildElement();
@@ -384,7 +384,7 @@ Layer* CTileMap::LoadLayer(TiXmlElement* element)
 	return layer;
 }
 
-CGameObject* CTileMap::LoadSolidBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string name, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadSolidBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects)
 {
 	CSolidBox* solid = new CSolidBox();
 	solid->SetPosition(position - translateConst + size * 0.5); // lấy tọa độ giữa
@@ -394,7 +394,7 @@ CGameObject* CTileMap::LoadSolidBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std:
 	return solid;
 }
 
-CGameObject* CTileMap::LoadGhostBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string name, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadGhostBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects)
 {
 	CGhostPlatform* ghostPlatform = new CGhostPlatform();
 	ghostPlatform->SetPosition(position - translateConst + size * 0.5);
@@ -404,7 +404,7 @@ CGameObject* CTileMap::LoadGhostBox(D3DXVECTOR2 position, D3DXVECTOR2 size, std:
 	return ghostPlatform;
 }
 
-CGameObject* CTileMap::LoadEnemy(D3DXVECTOR2 position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadEnemy(Point position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CGameObject* enemy = NULL;
 	if (enemyName.compare("koopa") == 0)
@@ -438,7 +438,7 @@ CGameObject* CTileMap::LoadEnemy(D3DXVECTOR2 position, std::string enemyName, st
 	return enemy;
 }
 
-CGameObject* CTileMap::LoadKoopa(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadKoopa(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
 {
 	CKoopa* koopa = NULL;
 	CKoopaShell* koopaShell = NULL;
@@ -475,7 +475,7 @@ CGameObject* CTileMap::LoadKoopa(D3DXVECTOR2 position, std::string enemyType, st
 	return koopa;
 }
 
-CGameObject* CTileMap::LoadParakoopa(D3DXVECTOR2 position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadParakoopa(Point position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 
 	if (enemyType.compare("red") == 0)
@@ -557,7 +557,7 @@ CGameObject* CTileMap::LoadParakoopa(D3DXVECTOR2 position, std::string enemyType
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadGoomba(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadGoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
 {
 	CGoomba* goomba = NULL;
 	if (enemyType.compare("tan") == 0)
@@ -579,7 +579,7 @@ CGameObject* CTileMap::LoadGoomba(D3DXVECTOR2 position, std::string enemyType, s
 	return goomba;
 }
 
-CGameObject* CTileMap::LoadParagoomba(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadParagoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
 {
 	CRedGoomba* goomba = new CRedGoomba();
 	goomba->SetPosition(position - translateConst);
@@ -596,7 +596,7 @@ CGameObject* CTileMap::LoadParagoomba(D3DXVECTOR2 position, std::string enemyTyp
 	return paragoomba;
 }
 
-CGameObject* CTileMap::LoadPiranha(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPiranha(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CPiranha* piranha = new CPiranha();
 	piranha->SetPosition(position - translateConst);
@@ -606,7 +606,7 @@ CGameObject* CTileMap::LoadPiranha(D3DXVECTOR2 position, std::vector<LPGameObjec
 	return piranha;
 }
 
-CGameObject* CTileMap::LoadVenus(D3DXVECTOR2 position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadVenus(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects)
 {
 	CVenus* venus = NULL;
 	if (enemyType.compare("green") == 0)
@@ -621,7 +621,7 @@ CGameObject* CTileMap::LoadVenus(D3DXVECTOR2 position, std::string enemyType, st
 	return venus;
 }
 
-CGameObject* CTileMap::LoadBoomerangBrother(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadBoomerangBrother(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CBoomerangBrother* boomerangBrother = new CBoomerangBrother();
 	boomerangBrother->SetPosition(position - translateConst);
@@ -632,7 +632,7 @@ CGameObject* CTileMap::LoadBoomerangBrother(D3DXVECTOR2 position, std::vector<LP
 	return boomerangBrother;
 }
 
-CGameObject* CTileMap::LoadQuestionBlock(D3DXVECTOR2 position, int type, std::string name, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadQuestionBlock(Point position, int type, std::string name, std::vector<LPGameObject>& listGameObjects)
 {
 	CQuestionBlock* solid = new CQuestionBlock();
 	solid->SetPosition(position - translateConst);
@@ -649,7 +649,7 @@ CGameObject* CTileMap::LoadQuestionBlock(D3DXVECTOR2 position, int type, std::st
 	return solid;
 }
 
-CGameObject* CTileMap::LoadBrick(D3DXVECTOR2 position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadBrick(Point position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int amount;
 	TiXmlElement* properties = object->FirstChildElement();
@@ -694,7 +694,7 @@ CGameObject* CTileMap::LoadBrick(D3DXVECTOR2 position, int type, std::string nam
 	return solid;
 }
 
-CGameObject* CTileMap::LoadCoin(D3DXVECTOR2 position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadCoin(Point position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CCoin* solid = new CCoin();
 	solid->SetPosition(position - translateConst);
@@ -714,7 +714,7 @@ CGameObject* CTileMap::LoadCoin(D3DXVECTOR2 position, int type, TiXmlElement* ob
 	return solid;
 }
 
-CGameObject* CTileMap::LoadPipe(D3DXVECTOR2 position, D3DXVECTOR2 size, std::string direction, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPipe(Point position, Point size, std::string direction, std::vector<LPGameObject>& listGameObjects)
 {
 	CPipe* pipe = new CPipe(size);
 	//auto pos = position;
@@ -773,7 +773,7 @@ CGameObject* CTileMap::LoadPipe(D3DXVECTOR2 position, D3DXVECTOR2 size, std::str
 	return pipe;
 }
 
-CGameObject* CTileMap::LoadPortal(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPortal(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int cameraID = -1;
 	std::string sceneID = "";
@@ -801,7 +801,7 @@ CGameObject* CTileMap::LoadPortal(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlE
 
 }
 
-CGameObject* CTileMap::LoadLabel(D3DXVECTOR2 position, std::string labelName, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadLabel(Point position, std::string labelName, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	if (labelName.compare("warp-pipe") == 0)
 	{
@@ -831,7 +831,7 @@ CGameObject* CTileMap::LoadLabel(D3DXVECTOR2 position, std::string labelName, D3
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadWorldItem(D3DXVECTOR2 position, std::string itemName, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadWorldItem(Point position, std::string itemName, std::vector<LPGameObject>& listGameObjects)
 {
 	if (itemName.compare("grass") == 0)
 	{
@@ -864,7 +864,7 @@ CGameObject* CTileMap::LoadWorldItem(D3DXVECTOR2 position, std::string itemName,
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadPortalScene(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPortalScene(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	std::string type = object->Attribute("type");
 	CGameObject* portal = NULL;
@@ -879,7 +879,7 @@ CGameObject* CTileMap::LoadPortalScene(D3DXVECTOR2 position, D3DXVECTOR2 size, T
 	return portal;
 }
 
-CGameObject* CTileMap::LoadSceneGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadSceneGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int cameraID = -1;
 	std::string sceneID = "";
@@ -992,7 +992,7 @@ CGameObject* CTileMap::LoadSceneGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiX
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadNodeGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadNodeGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CNodeMap* node = new CNodeMap(size);
 
@@ -1076,7 +1076,7 @@ CGameObject* CTileMap::LoadNodeGate(D3DXVECTOR2 position, D3DXVECTOR2 size, TiXm
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadSwitchBlock(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadSwitchBlock(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CPSwitch* switchBlock = new CPSwitch();
 	switchBlock->SetPosition(position - translateConst);
@@ -1084,7 +1084,7 @@ CGameObject* CTileMap::LoadSwitchBlock(D3DXVECTOR2 position, std::vector<LPGameO
 	return switchBlock;
 }
 
-CGameObject* CTileMap::LoadEmptyBlock(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadEmptyBlock(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CEmptyBlock* emptyBlock = new CEmptyBlock();
 	emptyBlock->SetPosition(position - translateConst);
@@ -1092,7 +1092,7 @@ CGameObject* CTileMap::LoadEmptyBlock(D3DXVECTOR2 position, std::vector<LPGameOb
 	return emptyBlock;
 }
 
-CGameObject* CTileMap::LoadCard(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadCard(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CCard* ca = new CCard();
 	ca->SetPosition(position - translateConst);
@@ -1101,7 +1101,7 @@ CGameObject* CTileMap::LoadCard(D3DXVECTOR2 position, std::vector<LPGameObject>&
 	return ca;
 }
 
-CGameObject* CTileMap::LoadMovingPlatform(D3DXVECTOR2 position, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadMovingPlatform(Point position, std::vector<LPGameObject>& listGameObjects)
 {
 	CMovingPlatform* platform = new CMovingPlatform();
 	platform->SetPosition(position);
@@ -1128,7 +1128,7 @@ void CTileMap::RenderLayer(Layer* layer, int i, int j, int x, int y)
 		r.top = ((id - firstGid) / columns) * tileSize.y;
 		r.right = r.left + tileSize.x;
 		r.bottom = r.top + tileSize.y;
-		CGame::GetInstance()->Draw(D3DXVECTOR2(x, y), D3DXVECTOR2(tileSize.x / 2, tileSize.y / 2), texture, r, D3DCOLOR_ARGB(255, 255, 255, 255));
+		CGame::GetInstance()->Draw(Point(x, y), Point(tileSize.x / 2, tileSize.y / 2), texture, r, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }
 

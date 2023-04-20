@@ -5,7 +5,7 @@ CNode::CNode()
 	graph = NULL;
 	nodeTag = NodeTag::None;
 }
-CNode::CNode(D3DXVECTOR2 size)
+CNode::CNode(Point size)
 {
 	graph = NULL;
 	nodeTag = NodeTag::None;

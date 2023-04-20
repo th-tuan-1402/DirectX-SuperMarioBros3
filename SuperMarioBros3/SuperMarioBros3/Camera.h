@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <d3dx9.h>
+#include "Type.h"
 #include "GameObject.h"
 #include "RectF.h"
 
@@ -14,7 +14,7 @@ class CCamera
 protected:
 	DWORD dt; // deltatime
 	float vx;
-	D3DXVECTOR2 posCam;
+	Point posCam;
 	float widthCam;
 	float heightCam;
 
@@ -32,16 +32,16 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	D3DXVECTOR2 Transform(D3DXVECTOR2 posWorld);
-	D3DXVECTOR2 TransformCamToWorld(D3DXVECTOR2 posInCam);
+	Point Transform(Point posWorld);
+	Point TransformCamToWorld(Point posInCam);
 	bool CheckObjectInCamera(LPGameObject gO); //Kiểm tra xem obj truyền vào có nằm trong camera không để ta xử lý update / renderm
 	bool CheckRectInCamera(RECT rect);
 
 	int GetSpeedXCam();
 	void SetSpeedXCam(float v);
 
-	D3DXVECTOR2 GetPositionCam();
-	virtual void SetPositionCam(D3DXVECTOR2 pos);
+	Point GetPositionCam();
+	virtual void SetPositionCam(Point pos);
 
 	float GetWidthCam();
 	void SetWidthCam(float w);
@@ -53,7 +53,7 @@ public:
 	void SetCurrentBoundary(RectF bound);
 
 	CameraPropertieSet GetCameraProperties(int id);
-	void AddCameraProperties(int id, D3DXVECTOR2 pos, RectF boundary, bool isDisableX, bool isDiableY);
+	void AddCameraProperties(int id, Point pos, RectF boundary, bool isDisableX, bool isDiableY);
 	void AddCameraProperties(int id, CameraPropertieSet camProps);
 
 	LPGameObject GetGameObject();
@@ -71,13 +71,13 @@ public:
 
 struct CameraPropertieSet
 {
-	D3DXVECTOR2 camPosition; // tọa độ trái trên
+	Point camPosition; // tọa độ trái trên
 	RectF boundarySet;
 	bool disableX;
 	bool disableY;
 	static CameraPropertieSet Empty()
 	{
-		D3DXVECTOR2 pos(-1, -1);
+		Point pos(-1, -1);
 		RectF rect;
 		rect.left = -1;
 		rect.right = -1;

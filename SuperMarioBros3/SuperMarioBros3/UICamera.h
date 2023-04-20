@@ -23,7 +23,7 @@ class CUICamera :  public CCamera
     bool presentedCardGift;
 public:
     CUICamera();
-    CUICamera(int wid, int hei, D3DXVECTOR2 hudPos);
+    CUICamera(int wid, int hei, Point hudPos);
     void Update();
     void Render();
 
@@ -32,7 +32,7 @@ public:
 
     void AddText(CFont* text);
 
-    void SetPositionCam(D3DXVECTOR2 pos) override;
+    void SetPositionCam(Point pos) override;
     void SetDisableBlackTexture(bool disT);
 
     void OnGoalRoulette(std::string cardState);

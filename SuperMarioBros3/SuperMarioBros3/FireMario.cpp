@@ -121,13 +121,13 @@ void CFireMario::OnKeyDown(int KeyCode)
 
 		if (currentFireBall != NULL)
 		{
-			D3DXVECTOR2 pos = currentFireBall->GetPosition();
+			Point pos = currentFireBall->GetPosition();
 			auto firePhyBody = currentFireBall->GetPhysiscBody();
 
 			auto posMario = transform.position + relativePositionOnScreen;
 			posMario.x += SUPER_MARIO_BBOX.x * 0.5f * normal.x;
 			currentFireBall->SetPosition(posMario);
-			firePhyBody->SetVelocity(D3DXVECTOR2(FIRE_BALL_SPEED * normal.x, 0));
+			firePhyBody->SetVelocity(Point(FIRE_BALL_SPEED * normal.x, 0));
 
 			auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 			auto grid = activeScene->GetGrid();

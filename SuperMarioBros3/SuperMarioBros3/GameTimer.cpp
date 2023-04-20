@@ -9,7 +9,7 @@ CGameTimer::CGameTimer()
 	timerState = 0;
 	currentTime = 300 * 1000;
 	timerFont = new CFont();
-	timerFont->SetSpace(D3DXVECTOR2(8*3, 0));
+	timerFont->SetSpace(Point(8*3, 0));
 	timerFont->SetCurrentText("000");
 }
 
@@ -44,13 +44,13 @@ void CGameTimer::Render()
 	timerFont->Render();
 }
 
-void CGameTimer::SetPosition(D3DXVECTOR2 pos)
+void CGameTimer::SetPosition(Point pos)
 {
 	this->pos = pos;
 	timerFont->SetPosition(pos);
 }
 
-D3DXVECTOR2 CGameTimer::GetPosition()
+Point CGameTimer::GetPosition()
 {
 	return pos;
 }

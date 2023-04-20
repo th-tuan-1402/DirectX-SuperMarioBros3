@@ -28,12 +28,12 @@ void CRedParaGoomba::Init()
 	collisionBox->SetSizeBox(GOOMBA_SIZEBOX);
 	collisionBox->SetGameObjectAttach(this);
 	collisionBox->SetName("Para-Goomba");
-	collisionBox->SetPosition(D3DXVECTOR2(0.0f, GOOMBA_SIZEBOX.y / 2 - DISTANCE_BETWEEN_PARA_GOOMBA_PIVOT_AND_GOOMBA_PIVOT));
+	collisionBox->SetPosition(Point(0.0f, GOOMBA_SIZEBOX.y / 2 - DISTANCE_BETWEEN_PARA_GOOMBA_PIVOT_AND_GOOMBA_PIVOT));
 	this->collisionBoxs->push_back(collisionBox);
 
 	physiscBody->SetDynamic(true);
 	physiscBody->SetGravity(RED_PARAGOOMBA_GRAVITY);
-	physiscBody->SetVelocity(D3DXVECTOR2(RED_PARAGOOMBA_SPEED, 0.0f));
+	physiscBody->SetVelocity(Point(RED_PARAGOOMBA_SPEED, 0.0f));
 }
 
 void CRedParaGoomba::Render(CCamera* cam, int alpha)

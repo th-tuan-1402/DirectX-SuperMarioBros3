@@ -1,14 +1,14 @@
 #include "Label.h"
 #include "Ultis.h"
 
-CLabel::CLabel(D3DXVECTOR2 size)
+CLabel::CLabel(Point size)
 {
 	this->SetTag(GameObjectTags::Label);
 	CCollisionBox* box = new CCollisionBox();
 	box->SetSizeBox(size);
 	box->SetGameObjectAttach(this);
 	box->SetName("Label");
-	box->SetDistance(D3DXVECTOR2(0.0f, 0.0f));
+	box->SetDistance(Point(0.0f, 0.0f));
 	this->collisionBoxs->push_back(box);
 	this->isEnabled = true;
 

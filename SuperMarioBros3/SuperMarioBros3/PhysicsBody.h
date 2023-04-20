@@ -1,8 +1,7 @@
 ﻿#pragma once
 //#include "GameObject.h"
 #include "CollisionBox.h"
-#include <d3d9.h>
-#include <d3d9.h>
+
 #include "GameObjectTags.h"
 struct CollisionEvent;
 typedef CollisionEvent* LPCollisionEvent;
@@ -28,13 +27,13 @@ typedef CGameObject* LPGameObject;
 class CPhysicsBody
 {
 private:
-	D3DXVECTOR2 velocity; // vận tốc
+	Point velocity; // vận tốc
 	float gravity; // trọng lực (gia tốc trọng trường)
 	float acceleration; // gia tốc
-	D3DXVECTOR2 bounceForce; // lực nảy
+	Point bounceForce; // lực nảy
 
-	D3DXVECTOR2 dragForce; // lực kéo: tăng theo vận tốc: F = ma
-	D3DXVECTOR2 normal; // nx, ny [ Để xác định hướng trái / phải, trên / dưới ]
+	Point dragForce; // lực kéo: tăng theo vận tốc: F = ma
+	Point normal; // nx, ny [ Để xác định hướng trái / phải, trên / dưới ]
 
 	bool isDynamic; // phân biệt body tĩnh và body động (Mario, Goomba: dynamic) (Pipe, Block: k dynamic)
 	bool isTrigger; // biến dùng để xét trả về OnCollisionEnter với OnTriggerEnter
@@ -72,8 +71,8 @@ public:
 		float& nx,
 		float& ny);
 
-	D3DXVECTOR2 GetVelocity();
-	void SetVelocity(D3DXVECTOR2 s);
+	Point GetVelocity();
+	void SetVelocity(Point s);
 
 	float GetGravity();
 	void SetGravity(float gravity);
@@ -81,11 +80,11 @@ public:
 	float GetAcceleration();
 	void SetAcceleration(float acc);
 
-	D3DXVECTOR2 GetDragForce();
-	void SetDragForce(D3DXVECTOR2 drag);
+	Point GetDragForce();
+	void SetDragForce(Point drag);
 
-	D3DXVECTOR2 GetNormal();
-	void SetNormal(D3DXVECTOR2 n);
+	Point GetNormal();
+	void SetNormal(Point n);
 
 	bool IsDynamic();
 	void SetDynamic(bool isDynamic);
@@ -93,8 +92,8 @@ public:
 	bool IsTrigger();
 	void SetTrigger(bool isTrigg);
 
-	D3DXVECTOR2 GetBounceForce();
-	void SetBounceForce(D3DXVECTOR2 bF);
+	Point GetBounceForce();
+	void SetBounceForce(Point bF);
 };
 
 

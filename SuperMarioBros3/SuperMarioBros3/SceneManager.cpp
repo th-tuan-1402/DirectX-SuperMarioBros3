@@ -34,7 +34,7 @@ void CSceneManager::Init()
 			int screenWidth = CGame::GetInstance()->GetScreenWidth();
 			int screenHeight = CGame::GetInstance()->GetScreenHeight();
 
-			D3DXVECTOR2 pos, posHUD;
+			Point pos, posHUD;
 			ui->QueryFloatAttribute("pos_x", &pos.x);
 			ui->QueryFloatAttribute("pos_y", &pos.y);
 
