@@ -193,7 +193,7 @@ void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT r
 	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(-1, 1);
 	Point3D pInt((int)(position.x), (int)(position.y), 0);
-	D3DXMATRIX oldMatrix, newMatrix; 
+	Matrix oldMatrix, newMatrix; 
 
 	spriteHandler->GetTransform(&oldMatrix);
 
@@ -209,7 +209,7 @@ void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT r
 	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
 	Point pScale(1, -1);
 	Point3D pInt((int)(position.x), (int)(position.y), 0);
-	D3DXMATRIX oldMatrix, newMatrix;
+	Matrix oldMatrix, newMatrix;
 	
 	spriteHandler->GetTransform(&oldMatrix);
 
