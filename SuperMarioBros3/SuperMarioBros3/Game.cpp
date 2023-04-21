@@ -1,18 +1,20 @@
 ﻿#include "Game.h"
 #include "GameConst.h"
+#include "Ultis.h"
+#include "XMLHelper.h"
+
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "SceneManager.h"
 #include "AnimationManager.h"
-#include "Ultis.h"
 #include "GameKeyEventHandler.h"
 
 #include "Scene1.h"
-#include "tinyxml.h"
 #include <string>
 #include "WorldMap1.h"
 #include "Scene4.h"
 #include "Intro.h"
+
 CGame* CGame::instance = NULL;
 DWORD CGame::deltaTime = 0;
 float CGame::timeScale = 1.0f;
@@ -188,34 +190,33 @@ void CGame::Update()
 
 bool CGame::ImportGameSource()
 {
-	auto path = "Resources/root.xml";
-	TiXmlDocument doc(path);
-	if (doc.LoadFile() == false)
-	{
-		OutputDebugStringW(ToLPCWSTR(doc.ErrorDesc()));
-		return false;
-	}
-	TiXmlElement* root = doc.RootElement();
-	for (TiXmlElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
-	{
-		std::string category = element->Attribute("name");
-		OutputDebugStringW(ToLPCWSTR(category + '\n'));
+	String path = "Resources/root.xml";
 
-		std::unordered_map<std::string, std::string> bucket;
+	return XMLHelper::forEach(
+        path,
 
-		for (auto item = element->FirstChildElement(); item != nullptr; item = item->NextSiblingElement())
-		{
-			std::string id = item->Attribute("id");
-			std::string source = item->Attribute("source");
-			bucket.insert(make_pair(id, source)); 
-			OutputDebugStringW(ToLPCWSTR("|--" + id + ":" + source + '\n'));
-		}
-		gameSource.insert(make_pair(category, bucket));
-	}
-	return true;
+        // Read config
+        [&](XMLElement *element)
+            {
+				std::string category = element->Attribute("name");
+				OutputDebugStringW(ToLPCWSTR(category + '\n'));
+
+				std::unordered_map<std::string, std::string> bucket;
+
+				for (auto item = element->FirstChildElement(); item != nullptr; item = item->NextSiblingElement())
+				{
+					std::string id = item->Attribute("id");
+					std::string source = item->Attribute("source");
+					bucket.insert(make_pair(id, source)); 
+					OutputDebugStringW(ToLPCWSTR("|--" + id + ":" + source + '\n'));
+				}
+				
+				gameSource.insert(make_pair(category, bucket));
+			}
+	);
 }
 
-std::string CGame::GetFilePathByCategory(std::string category, std::string id)
+String CGame::GetFilePathByCategory(String category, String id)
 {
 	if (gameSource.find(category) != gameSource.end())
 	{

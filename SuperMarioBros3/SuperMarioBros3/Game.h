@@ -63,7 +63,7 @@ public:
 	DWORD GetDeltaTime() { return deltaTime;  }
 
 	bool ImportGameSource();
-	std::string GetFilePathByCategory(std::string category, std::string id);
+	String GetFilePathByCategory(String category, String id);
 };
 
 #endif

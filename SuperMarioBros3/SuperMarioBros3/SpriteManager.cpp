@@ -3,8 +3,9 @@
 #include "Const.h"
 #include "GraphicConst.h"
 #include "Ultis.h"
-#include "tinyxml.h"
 #include "TextureManager.h"
+#include "XMLHelper.h"
+
 using namespace std;
 
 LPSpriteManager CSpriteManager::instance = NULL;
@@ -39,51 +40,46 @@ bool CSpriteManager::LoadSprite(std::string texName, std::string filePath)
 	DebugOut(L"[INFO] Load Sprite From XML \n");
 	OutputDebugStringW(ToLPCWSTR(filePath.c_str()));
 	DebugOut(L"\n");
-	TiXmlDocument document(filePath.c_str());
-	if (!document.LoadFile())
-	{
-		OutputDebugStringW(ToLPCWSTR(document.ErrorDesc()));
-		return false;
-	}
 
-	TiXmlElement* root = document.RootElement();
-	for (TiXmlElement* texture = root->FirstChildElement(); texture != nullptr; texture = texture->NextSiblingElement())
-	{
-		string textureID = texture->Attribute("id");
-		if (textureID != texName)
-			continue;
-		Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
+	return XMLHelper::forEach(
+        filePath,
 
-		if (tex != nullptr)
-			OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
-		else
-			return false;
-		for (TiXmlElement* node = texture->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+        // Read config
+        [&](XMLElement *texture)
 		{
+			string textureID = texture->Attribute("id");
+			if (textureID == texName) {
+				Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
 
-			string spriteID = node->Attribute("id");
-			int left, top, width, height, pivotX, transcolor;
-			D3DXCOLOR color;
-			node->QueryIntAttribute("left", &left);
-			node->QueryIntAttribute("top", &top);
-			node->QueryIntAttribute("width", &width);
-			node->QueryIntAttribute("height", &height);
-			if (node->QueryIntAttribute("xPivot", &pivotX) != TIXML_SUCCESS)
-				pivotX = -1;
-			pivotX *= 3;
-			OutputDebugStringW(ToLPCWSTR(spriteID + ':' + to_string(left) + ':' + to_string(top) + ':' + to_string(width) + ':' + to_string(height) + ':' + to_string(pivotX) + '\n'));
+				if (tex != nullptr)
+					OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
+				else
+					return false;
+				for (XMLElement* node = texture->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+				{
+					string spriteID = node->Attribute("id");
+					int left, top, width, height, pivotX, transcolor;
+					D3DXCOLOR color;
+					node->QueryIntAttribute("left", &left);
+					node->QueryIntAttribute("top", &top);
+					node->QueryIntAttribute("width", &width);
+					node->QueryIntAttribute("height", &height);
+					if (node->QueryIntAttribute("xPivot", &pivotX) != TIXML_SUCCESS)
+						pivotX = -1;
+					pivotX *= 3;
+					OutputDebugStringW(ToLPCWSTR(spriteID + ':' + to_string(left) + ':' + to_string(top) + ':' + to_string(width) + ':' + to_string(height) + ':' + to_string(pivotX) + '\n'));
 
-			RECT rect;
-			rect.left = left * 3;
-			rect.top = top * 3;
-			rect.right = (left + width) * 3;
-			rect.bottom = (top + height) * 3;
+					RECT rect;
+					rect.left = left * 3;
+					rect.top = top * 3;
+					rect.right = (left + width) * 3;
+					rect.bottom = (top + height) * 3;
 
-			Add(spriteID, rect, tex, pivotX);
+					Add(spriteID, rect, tex, pivotX);
+				}
+			}
 		}
-		return true;
-	}
-	
+	);
 }
 
 LPSprite CSpriteManager::Get(string id)

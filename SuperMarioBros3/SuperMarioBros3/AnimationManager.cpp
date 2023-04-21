@@ -1,11 +1,12 @@
-﻿#include "AnimationManager.h"
+﻿#include "XMLHelper.h"
 #include "Ultis.h"
-#include "tinyxml.h"
+#include "Game.h"
+
+#include "AnimationManager.h"
 #include "SpriteManager.h"
 #include "GraphicConst.h"
-#include "Game.h"
 #include "Const.h"
-using namespace std;
+
 LPAnimationManager CAnimationManager::instance = NULL;
 
 LPAnimationManager CAnimationManager::GetInstance()
@@ -75,7 +76,7 @@ bool CAnimationManager::Init()
 	return true;
 }
 
-bool CAnimationManager::InitAnAnimationSet(std::string textureName, std::string filePath)
+bool CAnimationManager::InitAnAnimationSet(String textureName, String filePath)
 {
 	if (LoadAnimation(textureName, filePath) == false)
 	{
@@ -85,68 +86,64 @@ bool CAnimationManager::InitAnAnimationSet(std::string textureName, std::string 
 	return true;
 }
 
-bool CAnimationManager::LoadAnimation(std::string texName, std::string filePath)
+bool CAnimationManager::LoadAnimation(String texName, String filePath)
 {
 	// Load from XML
-	OutputDebugStringW(ToLPCWSTR(filePath.c_str())); 
-	DebugOut(L"\n");
+	XMLHelper::forEach(
+		filePath,
 
-	TiXmlDocument document(filePath.c_str());
-	if (!document.LoadFile())
-	{
-		OutputDebugStringW(ToLPCWSTR(document.ErrorDesc()));
-		return false;
-	}
-
-	TiXmlElement* root = document.RootElement();
-
-	for (TiXmlElement* info = root->FirstChildElement(); info != nullptr; info = info->NextSiblingElement())
-	{
-		string gameObjectID = info->Attribute("gameObjectId");
-		string textureID = info->Attribute("textureId");
-		if (textureID != texName)
-			continue;
-
-		Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
-		if (tex != nullptr)
-			OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
-		else
-			return false;
-
-		OutputDebugStringW(ToLPCWSTR("Gameobject id: " + gameObjectID + '\n'));
-		OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
-
-		for (TiXmlElement* node = info->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
-		{
-			string aniId = node->Attribute("aniId");
-			int frameTime;
-			node->QueryIntAttribute("frameTime", &frameTime);
-			string name = node->Attribute("name");
-			OutputDebugStringW(ToLPCWSTR(aniId + ':' + to_string(frameTime) + ':' + name + '\n'));
-			LPAnimation animation = new CAnimation(aniId, frameTime);
-
-			// Sprite ref
-			for (TiXmlElement* sprNode = node->FirstChildElement(); sprNode != nullptr; sprNode = sprNode->NextSiblingElement())
+		// Read config
+		[&](XMLElement *element)
 			{
-				string id = sprNode->Attribute("id");
-				LPSprite sprite = CSpriteManager::GetInstance()->Get(id);
-				animation->Add(sprite, frameTime);
-				OutputDebugStringW(ToLPCWSTR("|--" + id + ':' + to_string(frameTime) + '\n'));
-			}
+				String gameObjectID = element->Attribute("gameObjectId");
+				String textureID    = element->Attribute("textureId");
 
-			AddAnimation(aniId, animation);
-		}
-		return true;
-	}
-	
+				if (textureID == texName) {
+
+					Texture tex = CTextureManager::GetInstance()->GetTexture(textureID);
+
+					if (tex != nullptr)
+						OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
+					else
+						return false;
+
+					OutputDebugStringW(ToLPCWSTR("Gameobject id: " + gameObjectID + '\n'));
+					OutputDebugStringW(ToLPCWSTR("Texture id: " + textureID + '\n'));
+
+					for (XMLElement* node = element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+					{
+						String aniId = node->Attribute("aniId");
+						int frameTime;
+						node->QueryIntAttribute("frameTime", &frameTime);
+						String name = node->Attribute("name");
+						
+						OutputDebugStringW(ToLPCWSTR(aniId + ':' + to_string(frameTime) + ':' + name + '\n'));
+						LPAnimation animation = new CAnimation(aniId, frameTime);
+
+						// Sprite ref
+						for (XMLElement* sprNode = node->FirstChildElement(); sprNode != nullptr; sprNode = sprNode->NextSiblingElement())
+						{
+							string id = sprNode->Attribute("id");
+							LPSprite sprite = CSpriteManager::GetInstance()->Get(id);
+							animation->Add(sprite, frameTime);
+							OutputDebugStringW(ToLPCWSTR("|--" + id + ':' + to_string(frameTime) + '\n'));
+						}
+
+						AddAnimation(aniId, animation);
+					}
+				}
+			}
+	);
+
+	return true;
 }
 
-void CAnimationManager::AddAnimation(std::string id, LPAnimation ani)
+void CAnimationManager::AddAnimation(String id, LPAnimation ani)
 {
 	animations.insert(make_pair(id, ani));
 }
 
-LPAnimation CAnimationManager::Get(std::string id)
+LPAnimation CAnimationManager::Get(String id)
 {
 	LPAnimation ani = animations.at(id);
 	if (ani == NULL)
@@ -157,7 +154,7 @@ LPAnimation CAnimationManager::Get(std::string id)
 	return ani;
 }
 
-LPAnimation CAnimationManager::Clone(std::string id)
+LPAnimation CAnimationManager::Clone(String id)
 {
 	LPAnimation oriAni = Get(id);
 	LPAnimation copiedAni = new CAnimation(*oriAni);

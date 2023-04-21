@@ -1,32 +1,27 @@
-﻿// SuperMarioBros3.cpp : Defines the entry point for the application.
-//
-
-#include "framework.h"
+﻿#include "framework.h"
 #include "Const.h"
 #include "Game.h"
 #include "Ultis.h"
-#include "tinyxml.h"
+#include "XMLHelper.h"
 
 #define MAX_LOADSTRING 100
 
 // Global Variables:
-HINSTANCE hInst;                                // current instance
-WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+HINSTANCE hInst;                     // current instance
+WCHAR szTitle[MAX_LOADSTRING];       // The title bar text
+WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
 
 // Forward declarations of functions included in this code module:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-HWND                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
-bool                LoadFileConfig(int& fps, int& screenWidth, int& screenHeight);
-
-
+ATOM MyRegisterClass(HINSTANCE hInstance);
+HWND InitInstance(HINSTANCE, int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
+bool LoadFileConfig(int &fps, int &screenWidth, int &screenHeight);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_ LPWSTR    lpCmdLine,
-    _In_ int       nCmdShow)
+                      _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR lpCmdLine,
+                      _In_ int nCmdShow)
 {
     int fps, screenWidth, screenHeight;
     if (LoadFileConfig(fps, screenWidth, screenHeight) == false)
@@ -46,31 +41,33 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return 0;
 }
 
-bool LoadFileConfig(int& fps, int& screenWidth, int& screenHeight)
+bool LoadFileConfig(int &fps, int &screenWidth, int &screenHeight)
 {
     CGame::GetInstance()->ImportGameSource();
-    auto configFilePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_CONFIG, CG_GLOBAL_CONFIG);
-    
-    TiXmlDocument doc(configFilePath.c_str());
-    if (doc.LoadFile() == false)
-    {
-        OutputDebugStringW(ToLPCWSTR(doc.ErrorDesc()));
-        return FALSE;
-    }
-    TiXmlElement* root = doc.RootElement();
-    for (TiXmlElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
-    {
-        std::string name = element->Attribute("name");
-        if (name.compare("frame-rate") == 0)
-            element->QueryIntAttribute("value", &fps);
-        else if (name.compare("resolution") == 0)
-        {
-            element->QueryIntAttribute("width", &screenWidth);
-            element->QueryIntAttribute("height", &screenHeight);
-        }
-    }
+    String configFilePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_CONFIG, CG_GLOBAL_CONFIG);
+
+    XMLHelper::forEach(
+        configFilePath,
+
+        // Read config
+        [&](XMLElement *element)
+            {
+                String name = element->Attribute("name");
+                if (name == "frame-rate")
+                    element->QueryIntAttribute("value", &fps);
+                else if (name.compare("resolution") == 0)
+                {
+                    element->QueryIntAttribute("width", &screenWidth);
+                    element->QueryIntAttribute("height", &screenHeight);
+                }
+            }
+    );
+
     DebugOut(L"conf: %d, %d, %d\n", fps, screenWidth, screenHeight);
+
+	return true;
 }
+
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex;

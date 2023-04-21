@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Camera.h"
 
-#include "tinyxml.h"
+#include "XMLHelper.h"
 #include <map>
 #include <vector>
 #include "TextureManager.h"
@@ -44,14 +44,14 @@ public:
 
 	TileSet* GetTileSetByTileID(int id);
 	CTileMap* LoadMap(std::string filePath, std::string fileMap, std::vector<LPGameObject>& listGameObjects, CGameObject* player, CScene* scene);
-	Layer* LoadLayer(TiXmlElement* layerElement);
+	Layer* LoadLayer(XMLElement* layerElement);
 
 	CGameObject* LoadSolidBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadGhostBox(Point position, Point size, std::string name, std::vector<LPGameObject>& listGameObjects);
 
-	CGameObject* LoadEnemy(Point position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadEnemy(Point position, std::string enemyName, std::string enemyType, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadKoopa(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadParakoopa(Point position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadParakoopa(Point position, std::string enemyType, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadGoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadParagoomba(Point position, std::string enemyType, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadPiranha(Point position, std::vector<LPGameObject>& listGameObjects);
@@ -59,17 +59,17 @@ public:
 	CGameObject* LoadBoomerangBrother(Point position, std::vector<LPGameObject>& listGameObjects);
 
 	CGameObject* LoadQuestionBlock(Point position, int type, std::string name, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadBrick(Point position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadCoin(Point position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadBrick(Point position, int type, std::string name, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadCoin(Point position, int type, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
 
 	CGameObject* LoadPipe(Point position, Point size, std::string direction, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadPortal(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadLabel(Point position, std::string labelName, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPortal(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadLabel(Point position, std::string labelName, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
 
 	CGameObject* LoadWorldItem(Point position, std::string itemName, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadPortalScene(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadSceneGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
-	CGameObject* LoadNodeGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadPortalScene(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadSceneGate(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
+	CGameObject* LoadNodeGate(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects);
 
 	CGameObject* LoadSwitchBlock(Point position, std::vector<LPGameObject>& listGameObjects);
 	CGameObject* LoadEmptyBlock(Point position, std::vector<LPGameObject>& listGameObjects);

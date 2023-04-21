@@ -1,7 +1,9 @@
 ﻿#include "SceneManager.h"
+#include "XMLHelper.h"
 #include "Ultis.h"
 #include "Game.h"
 #include "Const.h"
+
 LPSceneManager CSceneManager::instance = NULL;
 
 CSceneManager::CSceneManager()
@@ -18,39 +20,37 @@ LPSceneManager CSceneManager::GetInstance()
 void CSceneManager::Init()
 {
 	auto filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_UI_CAMERA);
-	TiXmlDocument sceneFile(filePath.c_str());
-	if (!sceneFile.LoadFile())
-	{
-		DebugOut(L"[ERROR] Cannot load file \n");
-		return;
-	}
-	TiXmlElement* root = sceneFile.RootElement();
-	for (TiXmlElement* ui = root->FirstChildElement(); ui != NULL; ui = ui->NextSiblingElement())
-	{
-		string name = ui->Attribute("name");
-		if (name.compare("UICamera") == 0)
+
+	XMLHelper::forEach(
+        filePath,
+
+        // Read config
+        [&](XMLElement *ui)
 		{
-			DebugOut(L"[INFO] Load UI camera \n");
-			int screenWidth = CGame::GetInstance()->GetScreenWidth();
-			int screenHeight = CGame::GetInstance()->GetScreenHeight();
-
-			Point pos, posHUD;
-			ui->QueryFloatAttribute("pos_x", &pos.x);
-			ui->QueryFloatAttribute("pos_y", &pos.y);
-
-			TiXmlElement* uiCam = ui->FirstChildElement();
-			std::string nameUICam = uiCam->Attribute("name");
-
-			if (nameUICam.compare("HUD") == 0)
+			string name = ui->Attribute("name");
+			if (name.compare("UICamera") == 0)
 			{
-				uiCam->QueryFloatAttribute("pos_x", &posHUD.x);
-				uiCam->QueryFloatAttribute("pos_y", &posHUD.y);
-				this->uiCamera = new CUICamera(screenWidth, screenHeight, posHUD);
-				this->uiCamera->SetPositionCam(pos);
+				DebugOut(L"[INFO] Load UI camera \n");
+				int screenWidth = CGame::GetInstance()->GetScreenWidth();
+				int screenHeight = CGame::GetInstance()->GetScreenHeight();
+
+				Point pos, posHUD;
+				ui->QueryFloatAttribute("pos_x", &pos.x);
+				ui->QueryFloatAttribute("pos_y", &pos.y);
+
+				XMLElement *uiCam = ui->FirstChildElement();
+				std::string nameUICam = uiCam->Attribute("name");
+
+				if (nameUICam.compare("HUD") == 0)
+				{
+					uiCam->QueryFloatAttribute("pos_x", &posHUD.x);
+					uiCam->QueryFloatAttribute("pos_y", &posHUD.y);
+					this->uiCamera = new CUICamera(screenWidth, screenHeight, posHUD);
+					this->uiCamera->SetPositionCam(pos);
+				}
 			}
 		}
-	}
-	
+	);
 }
 
 

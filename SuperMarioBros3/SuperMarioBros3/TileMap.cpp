@@ -156,11 +156,12 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 {
 	currentGOIndex = Index({ -1, -1 });
 	string fullPath = filePath + fileMap;
-	TiXmlDocument doc(fullPath.c_str());
-	if (doc.LoadFile())
+
+	XMLDocument *doc = XMLHelper::load(fullPath);
+	if (doc != NULL)
 	{
 		OutputDebugString(L"Loading TMX \n");
-		TiXmlElement* root = doc.RootElement();
+		XMLElement* root = doc->RootElement();
 		graph = new CGraph();
 
 		root->QueryIntAttribute("width", &width);
@@ -172,7 +173,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 		this->player = player;
 		this->scene = scene;
 		//Load tileset
-		for (TiXmlElement* element = root->FirstChildElement("tileset"); element != nullptr; element = element->NextSiblingElement("tileset"))
+		for (XMLElement* element = root->FirstChildElement("tileset"); element != nullptr; element = element->NextSiblingElement("tileset"))
 		{
 			TileSet* tileSet = new TileSet();
 			element->QueryIntAttribute("firstgid", &tileSet->firstgid);
@@ -181,7 +182,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 			element->QueryIntAttribute("tilecount", &tileSet->tileCount);
 			element->QueryIntAttribute("columns", &tileSet->columns);
 
-			TiXmlElement* imgDom = element->FirstChildElement("image");
+			XMLElement* imgDom = element->FirstChildElement("image");
 			string imgPath = imgDom->Attribute("source");
 			imgPath = filePath + imgPath;
 			tileSet->textureID = std::to_string(tileSet->firstgid);
@@ -191,7 +192,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 		}
 
 		//Load layer
-		for (TiXmlElement* element = root->FirstChildElement("layer"); element != nullptr; element = element->NextSiblingElement("layer"))
+		for (XMLElement* element = root->FirstChildElement("layer"); element != nullptr; element = element->NextSiblingElement("layer"))
 		{
 			std::string name = element->Attribute("name");
 			auto layer = LoadLayer(element);
@@ -206,7 +207,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 		}
 		// Load game objects
 		//std::unordered_map<int, CGameObject*> objectGroup;
-		for (TiXmlElement* element = root->FirstChildElement("objectgroup"); element != nullptr; element = element->NextSiblingElement("objectgroup"))
+		for (XMLElement* element = root->FirstChildElement("objectgroup"); element != nullptr; element = element->NextSiblingElement("objectgroup"))
 		{
 			std::string name = element->Attribute("name");
 			int objectGroupdID;
@@ -217,7 +218,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 			objectGroup.clear();*/
 
 			CGameObject* gameObject = NULL;
-			for (TiXmlElement* object = element->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object"))
+			for (XMLElement* object = element->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object"))
 			{
 				int id, x, y, width, height;
 				int type = 0;
@@ -233,10 +234,10 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 				Point size = Point(width, height);
 				string nameObject = std::to_string(id);
 
-				TiXmlElement* properties = object->FirstChildElement();
+				XMLElement* properties = object->FirstChildElement();
 				if (properties != NULL)
 				{
-					for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+					for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 					{
 						std::string propName = property->Attribute("name");
 						if (propName.compare("cellx") == 0)
@@ -342,7 +343,7 @@ CTileMap* CTileMap::LoadMap(std::string filePath, std::string fileMap, std::vect
 	return nullptr;
 }
 
-Layer* CTileMap::LoadLayer(TiXmlElement* element)
+Layer* CTileMap::LoadLayer(XMLElement* element)
 {
 	Layer* layer = new Layer();
 
@@ -404,7 +405,7 @@ CGameObject* CTileMap::LoadGhostBox(Point position, Point size, std::string name
 	return ghostPlatform;
 }
 
-CGameObject* CTileMap::LoadEnemy(Point position, std::string enemyName, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadEnemy(Point position, std::string enemyName, std::string enemyType, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CGameObject* enemy = NULL;
 	if (enemyName.compare("koopa") == 0)
@@ -475,14 +476,14 @@ CGameObject* CTileMap::LoadKoopa(Point position, std::string enemyType, std::vec
 	return koopa;
 }
 
-CGameObject* CTileMap::LoadParakoopa(Point position, std::string enemyType, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadParakoopa(Point position, std::string enemyType, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 
 	if (enemyType.compare("red") == 0)
 	{
 		int boundaryTop = 0, boundaryBottom = 0;
-		TiXmlElement* properties = object->FirstChildElement();
-		for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+		XMLElement* properties = object->FirstChildElement();
+		for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 		{
 			std::string propName = property->Attribute("name");
 			if (propName.compare("top") == 0)
@@ -649,11 +650,11 @@ CGameObject* CTileMap::LoadQuestionBlock(Point position, int type, std::string n
 	return solid;
 }
 
-CGameObject* CTileMap::LoadBrick(Point position, int type, std::string name, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadBrick(Point position, int type, std::string name, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int amount;
-	TiXmlElement* properties = object->FirstChildElement();
-	for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+	XMLElement* properties = object->FirstChildElement();
+	for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 	{
 		std::string propName = property->Attribute("name");
 		if (propName.compare("amount") == 0)
@@ -694,7 +695,7 @@ CGameObject* CTileMap::LoadBrick(Point position, int type, std::string name, TiX
 	return solid;
 }
 
-CGameObject* CTileMap::LoadCoin(Point position, int type, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadCoin(Point position, int type, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CCoin* solid = new CCoin();
 	solid->SetPosition(position - translateConst);
@@ -773,7 +774,7 @@ CGameObject* CTileMap::LoadPipe(Point position, Point size, std::string directio
 	return pipe;
 }
 
-CGameObject* CTileMap::LoadPortal(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPortal(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int cameraID = -1;
 	std::string sceneID = "";
@@ -781,8 +782,8 @@ CGameObject* CTileMap::LoadPortal(Point position, Point size, TiXmlElement* obje
 	CPortal* portal = new CPortal(size);
 	portal->SetPosition(position - translateConst + size * 0.5);
 
-	TiXmlElement* properties = object->FirstChildElement();
-	for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+	XMLElement* properties = object->FirstChildElement();
+	for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 	{
 		std::string propName = property->Attribute("name");
 		if (propName.compare("cameraID") == 0)
@@ -801,15 +802,15 @@ CGameObject* CTileMap::LoadPortal(Point position, Point size, TiXmlElement* obje
 
 }
 
-CGameObject* CTileMap::LoadLabel(Point position, std::string labelName, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadLabel(Point position, std::string labelName, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	if (labelName.compare("warp-pipe") == 0)
 	{
 		CLabel* label = new CLabel(size);
 		label->SetPosition(position - translateConst + size * 0.5);
 
-		TiXmlElement* properties = object->FirstChildElement();
-		for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+		XMLElement* properties = object->FirstChildElement();
+		for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 		{
 			std::string propName = property->Attribute("name");
 			if (propName.compare("direction") == 0)
@@ -864,7 +865,7 @@ CGameObject* CTileMap::LoadWorldItem(Point position, std::string itemName, std::
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadPortalScene(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadPortalScene(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	std::string type = object->Attribute("type");
 	CGameObject* portal = NULL;
@@ -879,7 +880,7 @@ CGameObject* CTileMap::LoadPortalScene(Point position, Point size, TiXmlElement*
 	return portal;
 }
 
-CGameObject* CTileMap::LoadSceneGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadSceneGate(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	int cameraID = -1;
 	std::string sceneID = "";
@@ -959,10 +960,10 @@ CGameObject* CTileMap::LoadSceneGate(Point position, Point size, TiXmlElement* o
 		portal->SetState(MUSHROOM_ANIMATION);
 		portal->AddAdjacencyNode(18);
 	}
-	TiXmlElement* properties = object->FirstChildElement();
+	XMLElement* properties = object->FirstChildElement();
 	if (properties != NULL)
 	{
-		for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+		for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 		{
 			std::string propName = property->Attribute("name");
 			if (propName.compare("cameraID") == 0)
@@ -992,15 +993,15 @@ CGameObject* CTileMap::LoadSceneGate(Point position, Point size, TiXmlElement* o
 	return NULL;
 }
 
-CGameObject* CTileMap::LoadNodeGate(Point position, Point size, TiXmlElement* object, std::vector<LPGameObject>& listGameObjects)
+CGameObject* CTileMap::LoadNodeGate(Point position, Point size, XMLElement* object, std::vector<LPGameObject>& listGameObjects)
 {
 	CNodeMap* node = new CNodeMap(size);
 
 	node->SetPosition(position - translateConst + size * 0.5);
-	TiXmlElement* properties = object->FirstChildElement();
+	XMLElement* properties = object->FirstChildElement();
 	if (properties != NULL)
 	{
-		for (TiXmlElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
+		for (XMLElement* property = properties->FirstChildElement(); property != NULL; property = property->NextSiblingElement())
 		{
 			std::string propName = property->Attribute("name");
 			if (propName.compare("nodeID") == 0)

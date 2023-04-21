@@ -1,8 +1,9 @@
 ﻿#include "Scene.h"
 #include "Ultis.h"
-#include "tinyxml.h"
-#include "Mario.h"
+#include "XMLHelper.h"
 #include "Game.h"
+
+#include "Mario.h"
 #include "MarioController.h"
 #include "SceneConst.h"
 #include "Koopa.h"
@@ -36,138 +37,138 @@ void CScene::SetRenderForeground(bool canRender)
 
 void CScene::Load()
 {
-	TiXmlDocument sceneFile(filePath.c_str());
-	if (!sceneFile.LoadFile())
-	{
-		DebugOut(L"[ERROR] Cannot load file \n");
-		return;
-	}
-	TiXmlElement* root = sceneFile.RootElement();
 	CMarioController* player = NULL;
-	for (TiXmlElement* scene = root->FirstChildElement(); scene != NULL; scene = scene->NextSiblingElement())
-	{
-		string name = scene->Attribute("name");
-		if (name.compare("Player") == 0)
+
+	XMLHelper::forEach(
+        filePath,
+
+        // Read scene config
+        [&](XMLElement *scene)
 		{
-			DebugOut(L"[INFO] Load player \n");
-			Point startPosition;
-			scene->QueryFloatAttribute("pos_x", &startPosition.x);
-			scene->QueryFloatAttribute("pos_y", &startPosition.y);
-			player = new CMarioController();
-			player->AddStateObjectsToScene(this);
-			player->SetPosition(startPosition);
-			player->GetCurrentStateObject()->SetPosition(startPosition);
-			AddObject(player);
-			marioController = player;
-		}
-		if (name.compare("Map") == 0)
-		{
-			DebugOut(L"[INFO] Load map \n");
-			string sourceMap;
-			string fileMap;
-
-			if (spaceParitioning == true)
+			string name = scene->Attribute("name");
+			if (name.compare("Player") == 0)
 			{
-				sourceMap = scene->Attribute("gridSource");
-				fileMap = scene->Attribute("gridFile");
+				DebugOut(L"[INFO] Load player \n");
+				Point startPosition;
+				scene->QueryFloatAttribute("pos_x", &startPosition.x);
+				scene->QueryFloatAttribute("pos_y", &startPosition.y);
+				player = new CMarioController();
+				player->AddStateObjectsToScene(this);
+				player->SetPosition(startPosition);
+				player->GetCurrentStateObject()->SetPosition(startPosition);
+				AddObject(player);
+				marioController = player;
 			}
-			else
+			if (name.compare("Map") == 0)
 			{
-				sourceMap = scene->Attribute("source");
-				fileMap = scene->Attribute("fileName");
-			}
-			this->map = NULL;
-			this->map = new CMap(sourceMap, fileMap, player, this); // Ham nay tu load map
-			auto tilemap = map->GetTileMap();
+				DebugOut(L"[INFO] Load map \n");
+				string sourceMap;
+				string fileMap;
 
-			bricks = tilemap->GetBricks();
-			coins = tilemap->GetCoins();
-			poolBricks = tilemap->GetPoolBricks();
-			poolCoins = tilemap->GetPoolCoins();
-			poolBricks->AddPoolToScene(this);
-			poolCoins->AddPoolToScene(this);
-			card = tilemap->GetCard();
-
-			if (spaceParitioning == true)
-			{
-				this->grid = map->GetTileMap()->GetGrid();
-			}
-			else
-			{
-				auto mapObjs = map->GetListGameObjects();
-				for (auto obj : mapObjs)
+				if (spaceParitioning == true)
 				{
-					AddObject(obj);
+					sourceMap = scene->Attribute("gridSource");
+					fileMap = scene->Attribute("gridFile");
+				}
+				else
+				{
+					sourceMap = scene->Attribute("source");
+					fileMap = scene->Attribute("fileName");
+				}
+				this->map = NULL;
+				this->map = new CMap(sourceMap, fileMap, player, this); // Ham nay tu load map
+				auto tilemap = map->GetTileMap();
+
+				bricks = tilemap->GetBricks();
+				coins = tilemap->GetCoins();
+				poolBricks = tilemap->GetPoolBricks();
+				poolCoins = tilemap->GetPoolCoins();
+				poolBricks->AddPoolToScene(this);
+				poolCoins->AddPoolToScene(this);
+				card = tilemap->GetCard();
+
+				if (spaceParitioning == true)
+				{
+					this->grid = map->GetTileMap()->GetGrid();
+				}
+				else
+				{
+					auto mapObjs = map->GetListGameObjects();
+					for (auto obj : mapObjs)
+					{
+						AddObject(obj);
+					}
+				}
+
+				DebugOut(L"[INFO] Load background color \n");
+				for (XMLElement* color = scene->FirstChildElement(); color != NULL; color = color->NextSiblingElement())
+				{
+					int R, G, B;
+					color->QueryIntAttribute("R", &R);
+					color->QueryIntAttribute("G", &G);
+					color->QueryIntAttribute("B", &B);
+					backgroundColor = D3DCOLOR_XRGB(R, G, B);
 				}
 			}
-
-			DebugOut(L"[INFO] Load background color \n");
-			for (TiXmlElement* color = scene->FirstChildElement(); color != NULL; color = color->NextSiblingElement())
+			else if (name.compare("Camera") == 0)
 			{
-				int R, G, B;
-				color->QueryIntAttribute("R", &R);
-				color->QueryIntAttribute("G", &G);
-				color->QueryIntAttribute("B", &B);
-				backgroundColor = D3DCOLOR_XRGB(R, G, B);
-			}
-		}
-		else if (name.compare("Camera") == 0)
-		{
-			DebugOut(L"[INFO] Load camera \n");
-			int viewportWidth, viewportHeight, start;
-			scene->QueryIntAttribute("start", &start);
-			scene->QueryIntAttribute("width", &viewportWidth);
-			scene->QueryIntAttribute("height", &viewportHeight);
+				DebugOut(L"[INFO] Load camera \n");
+				int viewportWidth, viewportHeight, start;
+				scene->QueryIntAttribute("start", &start);
+				scene->QueryIntAttribute("width", &viewportWidth);
+				scene->QueryIntAttribute("height", &viewportHeight);
 
-			this->camera = new CCamera(viewportWidth, viewportHeight);
+				this->camera = new CCamera(viewportWidth, viewportHeight);
 
-			for (TiXmlElement* boundary = scene->FirstChildElement(); boundary != NULL; boundary = boundary->NextSiblingElement())
-			{
-				int id, disX, disY, autoX;
-				RectF bound;
-				Point pos;
-				boundary->QueryIntAttribute("id", &id);
-
-				boundary->QueryFloatAttribute("pos_x", &pos.x);
-				boundary->QueryFloatAttribute("pos_y", &pos.y);
-				boundary->QueryFloatAttribute("left", &bound.left);
-				boundary->QueryFloatAttribute("top", &bound.top);
-				boundary->QueryFloatAttribute("right", &bound.right);
-				boundary->QueryFloatAttribute("bottom", &bound.bottom);
-
-				boundary->QueryIntAttribute("disX", &disX);
-				boundary->QueryIntAttribute("disY", &disY);
-				boundary->QueryIntAttribute("autoX", &autoX);
-
-				camera->AddCameraProperties(id, pos, bound, disX, disY);
-				if (start == id)
+				for (XMLElement* boundary = scene->FirstChildElement(); boundary != NULL; boundary = boundary->NextSiblingElement())
 				{
-					camera->SetCurrentBoundary(bound);
-					camera->SetPositionCam(pos);
-					camera->SetDisablePosX(disX);
-					camera->SetDisablePosY(disY);
-					camera->SetAutoX(autoX);
+					int id, disX, disY, autoX;
+					RectF bound;
+					Point pos;
+					boundary->QueryIntAttribute("id", &id);
+
+					boundary->QueryFloatAttribute("pos_x", &pos.x);
+					boundary->QueryFloatAttribute("pos_y", &pos.y);
+					boundary->QueryFloatAttribute("left", &bound.left);
+					boundary->QueryFloatAttribute("top", &bound.top);
+					boundary->QueryFloatAttribute("right", &bound.right);
+					boundary->QueryFloatAttribute("bottom", &bound.bottom);
+
+					boundary->QueryIntAttribute("disX", &disX);
+					boundary->QueryIntAttribute("disY", &disY);
+					boundary->QueryIntAttribute("autoX", &autoX);
+
+					camera->AddCameraProperties(id, pos, bound, disX, disY);
+					if (start == id)
+					{
+						camera->SetCurrentBoundary(bound);
+						camera->SetPositionCam(pos);
+						camera->SetDisablePosX(disX);
+						camera->SetDisablePosY(disY);
+						camera->SetAutoX(autoX);
+					}
+				}
+				if (player != NULL)
+				{
+					camera->SetGameObject(player->GetCurrentStateObject());
 				}
 			}
-			if (player != NULL)
+			if (name.compare("Player-Map") == 0)
 			{
-				camera->SetGameObject(player->GetCurrentStateObject());
+				DebugOut(L"[INFO] Load player in map\n");
+				Point startPosition;
+				scene->QueryFloatAttribute("pos_x", &startPosition.x);
+				scene->QueryFloatAttribute("pos_y", &startPosition.y);
+
+				CMarioMap* marioMap = new CMarioMap();
+				marioMap->SetPosition(startPosition);
+				marioMap->SetStartPosition(startPosition);
+				AddObject(marioMap);
+				marioController = marioMap;
 			}
 		}
-		if (name.compare("Player-Map") == 0)
-		{
-			DebugOut(L"[INFO] Load player in map\n");
-			Point startPosition;
-			scene->QueryFloatAttribute("pos_x", &startPosition.x);
-			scene->QueryFloatAttribute("pos_y", &startPosition.y);
+	);
 
-			CMarioMap* marioMap = new CMarioMap();
-			marioMap->SetPosition(startPosition);
-			marioMap->SetStartPosition(startPosition);
-			AddObject(marioMap);
-			marioController = marioMap;
-		}
-	}
 	if (marioController != NULL)
 		keyboardTargetObjects.push_back(marioController);
 	loaded = true;
