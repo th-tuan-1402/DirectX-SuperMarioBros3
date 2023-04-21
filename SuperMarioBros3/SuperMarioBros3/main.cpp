@@ -40,8 +40,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return NULL;
     }
 
-    CGame::GetInstance()->InitDirectX(hWnd, screenWidth, screenHeight, fps);
-    CGame::GetInstance()->Init();
+    CGame::GetInstance()->Init(hWnd, screenWidth, screenHeight, fps);
     CGame::GetInstance()->Run();
 
     return 0;

@@ -27,8 +27,16 @@ CGame::~CGame()
 {
 }
 
-void CGame::Init()
+void CGame::Init(HWND hWnd, int scrWidth, int scrHeight, int fps)
 {
+	// Init library helper
+	this->d3dHelper = new D3DHelper(hWnd, scrWidth, scrHeight);
+
+	this->fps = fps;
+	this->hWnd = hWnd;
+	this->screenWidth = scrWidth;
+	this->screenHeight = scrHeight;
+
 	DebugOut(L"[INFO] Init Manager \n");
 	CTextureManager::GetInstance()->Init();
 	CSpriteManager::GetInstance()->Init();
@@ -55,62 +63,24 @@ void CGame::Request()
 	}
 }
 
-void CGame::InitDirectX(HWND hWnd, int scrWidth, int scrHeight, int fps)
-{
-	this->fps = fps;
-	this->hWnd = hWnd;
-	this->screenWidth = scrWidth;
-	this->screenHeight = scrHeight;
-	DebugOut(L"[INFO] Begin Init DirectX \n");
-	d3d = Direct3DCreate9(D3D_SDK_VERSION);
-
-	D3DPRESENT_PARAMETERS d3dpp;
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
-	d3dpp.BackBufferWidth = screenWidth = scrWidth;
-	d3dpp.BackBufferHeight = screenHeight = scrHeight;
-	d3dpp.Flags = 0;
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
-	d3dpp.MultiSampleQuality = NULL;
-	d3dpp.BackBufferCount = 1;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.Windowed = true;
-	d3dpp.hDeviceWindow = hWnd;
-
-	d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING,
-		&d3dpp, &d3ddv);
-
-	if (d3ddv == NULL)
-	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
-		return;
-	}
-
-	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
-
-	
-	D3DXCreateSprite(d3ddv, &spriteHandler);
-
-	if (!spriteHandler)
-	{
-		MessageBox(hWnd, L"Creating sprite handler failed!", L"Error", MB_OK | MB_ICONERROR);
-		return;
-	}
-	DebugOut(L"[INFO] Init DirectX Done \n");
-}
-
 void CGame::Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
-	Point3D pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
-	spriteHandler->Draw(texture, &rect, &pCenter, &pInt, transcolor);
+	this->d3dHelper->Draw(position, pointCenter, texture, rect, transcolor);
 }
 
 void CGame::Draw(Point position, Texture texture, RECT rect, int alpha)
 {
-	Point3D pInt((int)(position.x), (int)(position.y), 0); // Giúp không bị viền
-	spriteHandler->Draw(texture, &rect, NULL, &pInt, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	this->d3dHelper->Draw(position, texture, rect, alpha);
+}
+
+void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
+{
+	this->d3dHelper->DrawFlipX(position, pointCenter, texture, rect, transcolor);
+}
+
+void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
+{
+	this->d3dHelper->DrawFlipY(position, pointCenter, texture, rect, transcolor);
 }
 
 void CGame::Run()
@@ -173,10 +143,7 @@ void CGame::End()
 	CSpriteManager::GetInstance()->Clear();
 	CAnimationManager::GetInstance()->Clear();
 
-	if (spriteHandler != NULL) spriteHandler->Release();
-	if (backBuffer != NULL) backBuffer->Release();
-	if (d3ddv != NULL) d3ddv->Release();
-	if (d3d != NULL) d3d->Release();
+	this->d3dHelper->Release();
 	DebugOut(L"[INFO] Bye bye \n");
 }
 
@@ -188,59 +155,23 @@ void CGame::Clean()
 		activeScene->DestroyObject();
 }
 
-void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
-{
-	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
-	Point pScale(-1, 1);
-	Point3D pInt((int)(position.x), (int)(position.y), 0);
-	Matrix oldMatrix, newMatrix; 
-
-	spriteHandler->GetTransform(&oldMatrix);
-
-	D3DXMatrixTransformation2D(&newMatrix, &position, 0.0f, &pScale, NULL, 0.0f, NULL);
-	spriteHandler->SetTransform(&newMatrix);
-
-	spriteHandler->Draw(texture, &rect, &pCenter, &pInt, transcolor);
-	spriteHandler->SetTransform(&oldMatrix);
-}
-
-void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
-{
-	Point3D pCenter((int)pointCenter.x, (int)pointCenter.y, 0);
-	Point pScale(1, -1);
-	Point3D pInt((int)(position.x), (int)(position.y), 0);
-	Matrix oldMatrix, newMatrix;
-	
-	spriteHandler->GetTransform(&oldMatrix);
-
-	D3DXMatrixTransformation2D(&newMatrix, &position, 0.0f, &pScale, NULL, 0.0f, NULL);
-	spriteHandler->SetTransform(&newMatrix);
-
-	spriteHandler->Draw(texture, &rect, &pCenter, &pInt, transcolor);
-	spriteHandler->SetTransform(&oldMatrix);
-}
-
 void CGame::Render()
 {
-	D3DCOLOR bgColor = D3DCOLOR_XRGB(0, 0, 0);
-	RECT rect = {0, 0, 600, 600};
 	auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 	auto uiCamera = CSceneManager::GetInstance()->GetUICamera();
+
+	D3DCOLOR bgColor = D3DCOLOR_XRGB(0, 0, 0);
 	if (activeScene != nullptr)
 		bgColor = activeScene->GetBackgroundColor();
-	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, bgColor, 1.0f, 0);
 
-	d3ddv->BeginScene();
-	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-	if (activeScene != nullptr)
-		activeScene->Render();
-	if (uiCamera != nullptr)
-		uiCamera->Render();
-	spriteHandler->End();
-
-	d3ddv->EndScene();
-	d3ddv->Present(NULL, NULL, NULL, NULL);
-
+	this->d3dHelper->PlayScene(bgColor);
+	{
+		if (activeScene != nullptr)
+			activeScene->Render();
+		if (uiCamera != nullptr)
+			uiCamera->Render();		
+	}
+	this->d3dHelper->StopScene();
 }
 
 void CGame::Update()

@@ -70,36 +70,11 @@ Texture CTextureManager::GetTexture(std::string id)
 
 void CTextureManager::Add(string id, std::string filePath, D3DCOLOR transparentColor)
 {
-	D3DXIMAGE_INFO info;
-	HRESULT result = D3DXGetImageInfoFromFile(ToLPCWSTR(filePath), &info);
-	if (result != D3D_OK)
+	Texture texture = CGame::GetInstance()->LoadTexture(filePath, transparentColor);
+
+	if (texture == NULL)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
-		return;
-	}
-
-	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3DDevice();
-	Texture texture;
-
-	result = D3DXCreateTextureFromFileEx(
-		d3ddv,								// Pointer to Direct3D device object
-		ToLPCWSTR(filePath),							// Path to the image to load
-		info.Width,							// Texture width
-		info.Height,						// Texture height
-		1,
-		D3DUSAGE_DYNAMIC,
-		D3DFMT_UNKNOWN,
-		D3DPOOL_DEFAULT,
-		D3DX_DEFAULT,
-		D3DX_DEFAULT,
-		transparentColor,
-		&info,
-		NULL,
-		&texture);								// Created texture pointer
-
-	if (result != D3D_OK)
-	{
-		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
+		OutputDebugStringW(ToLPCWSTR("[INFO] Texture loaded fail:  " + filePath + "\n"));
 		return;
 	}
 

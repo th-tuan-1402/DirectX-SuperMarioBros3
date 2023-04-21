@@ -3,6 +3,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "D3DHelper.h"
 #include "Type.h"
 #include <dinput.h>
 #include <unordered_map>
@@ -25,29 +26,24 @@ private:
 
 	HWND hWnd; // Window Handle
 
-	LPDIRECT3D9 d3d = NULL; // Direct3D handle
-	LPDIRECT3DDEVICE9 d3ddv = NULL; // Direct3D device handle
-	
-	/*Draw*/
-	LPDIRECT3DSURFACE9 backBuffer = NULL;
-	LPD3DXSPRITE spriteHandler = NULL; // Sprite helper libar
-
 	// Sau khi đọc file root.xml, ta sẽ lưu các thông tin file đó dưới dạng 1 map chứa 1 map
 	// Mỗi category (Textures, Sprites, Animations, Scenes, Config) sẽ có các bucket
 	// các bucket sẽ giữ id và source (filePath)
 	std::unordered_map<std::string, std::unordered_map<std::string, std::string>> gameSource;
 
+	// DirectX Helper
+	D3DHelper* d3dHelper;
+
 public:
 	static CGame* GetInstance();
 	~CGame();
-	void InitDirectX(HWND hWnd, int scrWidth, int scrHeight, int fps);
 	void Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255,0,255));
 	void Draw(Point position, Texture texture, RECT rect, int alpha = 253);
 
 	void DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
 	void DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
 	
-	void Init();
+	void Init(HWND hWnd, int scrWidth, int scrHeight, int fps);
 	void Request();
 	void Run(); // while-loop game
 	void End();
@@ -58,9 +54,8 @@ public:
 	int GetScreenWidth() { return screenWidth; }
 	int GetScreenHeight() { return screenHeight; }
 
-	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+	Texture LoadTexture(std::string filePath, D3DCOLOR transparentColor) { return this->d3dHelper->LoadTexture(filePath, transparentColor); }
+	
 	static float GetTimeScale() { return timeScale; }
 	static void SetTimeScale(float time) { timeScale = time; }
 
