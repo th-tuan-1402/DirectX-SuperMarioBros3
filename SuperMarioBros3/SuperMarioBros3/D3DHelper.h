@@ -2,29 +2,35 @@
 
 #include <d3dx9.h>
 #include <d3d9.h>
+#include <dinput.h>
 
 #include "Type.h"
 #include "Ultis.h"
+
+#define DIRECTINPUT_VERSION 0x0800
+#define KEYBOARD_BUFFER_SIZE 1024
 
 class D3DHelper
 {
 private:
 
+	HWND hWnd; // Window Handle
+
     LPDIRECT3D9 d3d = NULL; // Direct3D handle
     LPDIRECT3DDEVICE9 d3ddv = NULL; // Direct3D device handle
 
-    /*Draw*/
+    /* Draw */
 	LPDIRECT3DSURFACE9 backBuffer = NULL;
 	LPD3DXSPRITE spriteHandler = NULL; // Sprite helper libar
 
+    /* Input */
+    LPDIRECTINPUT8       dInput;		// The DirectInput object
+	LPDIRECTINPUTDEVICE8 dInputDevice;  // Device có thể là là bất kỳ thiết bị nào. Nhưng trg game của mình thì chỉ có keyboard nên đây là Keyboard device 
+
 public:
-
-    LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
-
     // Constuctor
     D3DHelper(HWND hWnd, int screenWidth, int screenHeight) {
+        this->hWnd = hWnd;
         d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
         D3DPRESENT_PARAMETERS d3dpp;
@@ -150,7 +156,6 @@ public:
         d3ddv->Present(NULL, NULL, NULL, NULL);
     }
 
-    
     // Release resource
     void Release() {
         if (spriteHandler != NULL) {
@@ -169,4 +174,73 @@ public:
             d3d->Release();
         }
     }
+
+    //==========================================
+    // Direct input
+    //==========================================
+    void InitKeyboardDevice()
+    {
+        HRESULT
+            hr = DirectInput8Create
+            (
+                (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
+                DIRECTINPUT_VERSION,
+                IID_IDirectInput8, (VOID**)&dInput, NULL
+            );
+        if (hr != DI_OK)
+        {
+            DebugOut(L"[ERROR] DirectInput8 Create failed!\n");
+            return;
+        }
+
+        hr = dInput->CreateDevice(GUID_SysKeyboard, &dInputDevice, NULL);
+        if (hr != DI_OK)
+        {
+            DebugOut(L"[ERROR] CreateDevice failed!\n");
+            return;
+        }
+
+        // Set the data format to "keyboard format" - a predefined data format 
+        //
+        // A data format specifies which controls on a device we
+        // are interested in, and how they should be reported.
+        //
+        // This tells DirectInput that we will be passing an array
+        // of 256 bytes to IDirectInputDevice::GetDeviceState.
+
+        hr = dInputDevice->SetDataFormat(&c_dfDIKeyboard);
+
+        hr = dInputDevice->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+
+
+        // IMPORTANT STEP TO USE BUFFERED DEVICE DATA!
+        //
+        // DirectInput uses unbuffered I/O (buffer size = 0) by default.
+        // If you want to read buffered data, you need to set a nonzero
+        // buffer size.
+        //
+        // Set the buffer size to DINPUT_BUFFERSIZE (defined above) elements.
+        //
+        // The buffer size is a DWORD property associated with the device.
+        DIPROPDWORD dipdw;
+
+        dipdw.diph.dwSize = sizeof(DIPROPDWORD);
+        dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+        dipdw.diph.dwObj = 0;
+        dipdw.diph.dwHow = DIPH_DEVICE;
+        dipdw.dwData = KEYBOARD_BUFFER_SIZE;
+
+        hr = dInputDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+
+        hr = dInputDevice->Acquire();
+        if (hr != DI_OK)
+        {
+            DebugOut(L"[ERROR] DINPUT8::Acquire failed!\n");
+            return;
+        }
+
+        DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
+    }
+
+    LPDIRECTINPUTDEVICE8 GetInputDevice() { return this->dInputDevice; }
 };

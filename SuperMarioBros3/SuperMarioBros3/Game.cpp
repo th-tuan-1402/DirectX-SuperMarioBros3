@@ -31,8 +31,13 @@ CGame::~CGame()
 
 void CGame::Init(HWND hWnd, int scrWidth, int scrHeight, int fps)
 {
+	// Todo: remove config import
+    ImportGameSource();
+
 	// Init library helper
 	this->d3dHelper = new D3DHelper(hWnd, scrWidth, scrHeight);
+	this->d3dHelper->InitKeyboardDevice();
+	this->SetKeyHandler(new CGameKeyEventHandler());
 
 	this->fps = fps;
 	this->hWnd = hWnd;
@@ -44,11 +49,6 @@ void CGame::Init(HWND hWnd, int scrWidth, int scrHeight, int fps)
 	CSpriteManager::GetInstance()->Init();
 	CAnimationManager::GetInstance()->Init();
 	CSceneManager::GetInstance()->Init();
-
-	CGameKeyEventHandler *keyEventHandler = new CGameKeyEventHandler();
-	auto keyboardManager = CKeyboardManager::GetInstance();
-	keyboardManager->SetHWND(hWnd);
-	keyboardManager->InitKeyboard(keyEventHandler);
 	
 	CIntro* intro = new CIntro();
 	CSceneManager::GetInstance()->Load(intro);
@@ -115,16 +115,18 @@ void CGame::Run()
 			{
 				frameStart = currentTime;
 				Request();
+
 				// Process key
-				auto keyboardManger = CKeyboardManager::GetInstance();
-				keyboardManger->ProcessKeyboard();
-				if (keyboardManger->CheckESCKey() == true)
+				// auto keyboardManger = CKeyboardManager::GetInstance();
+				ProcessKeyboard();
+				if (CheckESCKey() == true)
 					continue;
+
 				Update();
 				Render();
 				Clean();
-				
-				if (deltaTime > tickPerFrame) deltaTime = 0;
+
+				// if (deltaTime > tickPerFrame) deltaTime = 0;
 			}
 			else // chưa tới tickperframe nên cho ngủ vì xong việc cho 1 frame ròi
 			{
@@ -228,4 +230,92 @@ String CGame::GetFilePathByCategory(String category, String id)
 		return "";
 	}
 	return "";
+}
+
+void CGame::ProcessKeyboard()
+{
+	// CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	// Nếu mario đang chui vào pipe_gate hoặc chui ra khỏi pipe_des để về mặt đất trong scene 1-1
+	// Thì không có xử lý keyboard gì hết ớ, player bây giờ không có cái quyền điều khiên gì hết ớ
+	// 
+	// Trừ khi game có chức năng Pause Game, nếu không thì code như thế này là ổn rồi
+	// if (mario->IsGoingIntoPipeGate() || mario->IsGettingOutOfPipeDes() || mario->IsTailAttacking())
+	// 	return;
+
+	HRESULT hr;
+	auto didv = d3dHelper->GetInputDevice();
+
+	// Collect all key states first
+	hr = didv->GetDeviceState(sizeof(keyStates), keyStates);
+	if (FAILED(hr))
+	{
+		// If the keyboard lost focus or was not acquired then try to get control back.
+		if ((hr == DIERR_INPUTLOST) || (hr == DIERR_NOTACQUIRED))
+		{
+			HRESULT h = didv->Acquire();
+			if (h == DI_OK)
+			{
+				DebugOut(L"[INFO] Keyboard re-acquired!\n");
+			}
+			else return;
+		}
+		else
+		{
+			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			return;
+		}
+	}
+
+	// Collect all buffered events
+	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
+	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
+	if (FAILED(hr))
+	{
+		DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
+		return;
+	}
+
+	// Scan through all buffered events, check if the key is pressed or released
+	for (DWORD i = 0; i < dwElements; i++)
+	{
+		int KeyCode = keyEvents[i].dwOfs;
+		int KeyState = keyEvents[i].dwData;
+		if ((KeyState & 0x80) > 0)
+			keyHandler->OnKeyDown(KeyCode);
+		else
+			keyHandler->OnKeyUp(KeyCode);
+
+		keyHandler->KeyState();
+	}
+}
+
+bool CGame::CheckESCKey()
+{
+	// TODO: Cần chỉnh lại vì nút ESC Chỉ cần nhấn 1 lần
+	if (this->IsKeyDown(DIK_ESCAPE))
+	{
+		DebugOutTitle(L"Nhan ESC");
+		DebugOut(L"Nhan ESC \n");
+		CGame::GetInstance()->End();
+		PostQuitMessage(0);
+		return true;
+	}
+	return false;
+}
+
+bool CGame::IsKeyDown(int keyCode)
+{
+	auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
+	if (activeScene->GetSceneId() == "intro")
+	{
+		if (keyCode != DIK_Q && keyCode != DIK_W)
+			return false;
+	}
+	return (keyStates[keyCode] & 0x80) > 0; // Lấy ra nút được ấn
+}
+
+bool CGame::IsKeyUp(int keyCode)
+{
+	return (keyStates[keyCode] & 0x80) <= 0;
 }

@@ -11,7 +11,11 @@
 #include "KeyEventHandler.h"
 #include "GameConst.h"
 
-#include "KeyboardManager.h"
+#include "KeyEventHandler.h"
+
+#define KEYBOARD_STATE_SIZE 256
+#define KEYBOARD_BUFFER_SIZE 1024
+
 class CGame
 {
 private:
@@ -34,6 +38,11 @@ private:
 	// DirectX Helper
 	D3DHelper* d3dHelper;
 
+	BYTE  keyStates[KEYBOARD_STATE_SIZE];				// DirectInput keyboard state buffer
+	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];	// Buffered keyboard data
+
+	LPKeyEventHandler keyHandler;
+
 public:
 	static CGame* GetInstance();
 	~CGame();
@@ -45,7 +54,7 @@ public:
 	
 	void Init(HWND hWnd, int scrWidth, int scrHeight, int fps);
 	void Request();
-	void Run(); // while-loop game
+	void Run();
 	void End();
 	void Clean();
 	void Render();
@@ -64,6 +73,16 @@ public:
 
 	bool ImportGameSource();
 	String GetFilePathByCategory(String category, String id);
+
+	//=========================================
+	// Keyboard related functions
+	//=========================================
+	void InitKeyboard();
+	void ProcessKeyboard();
+	void SetKeyHandler(LPKeyEventHandler handler) { keyHandler = handler; }
+	bool IsKeyDown(int KeyCode);
+	bool IsKeyUp(int KeyCode);
+	bool CheckESCKey();
 };
 
 #endif

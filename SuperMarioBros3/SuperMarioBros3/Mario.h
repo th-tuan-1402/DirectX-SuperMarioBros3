@@ -3,9 +3,9 @@
 #ifndef MARIO_H
 #define MARIO_H
 
+#include "Game.h"
 #include "GameObject.h"
 #include "MarioStateSet.h"
-#include "KeyboardManager.h"
 #include "IState.h"
 #include "Holdable.h"
 #include "ItemInfo.h"
@@ -117,7 +117,7 @@ public:
 
 	bool CanCollisionWithThisObject(LPGameObject gO, GameObjectTags tag) override;
 
-	void CrouchProcess(CKeyboardManager* keyboard);
+	void CrouchProcess(CGame* gameRoot);
 	void SkidProcess(Point velocity);
 	void HoldProcess();
 	void ResetHolding();

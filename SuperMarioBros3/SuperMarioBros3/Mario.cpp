@@ -1,7 +1,6 @@
 ﻿#include "Mario.h"
 
 #include "AnimationManager.h"
-#include "Game.h"
 #include "Ultis.h"
 #include "MarioConst.h"
 #include "Const.h"
@@ -287,7 +286,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	uiCamera->GetHUD()->GetPMeter()->SetIsRaccoonMario(false);
 
 	CGameObject::Update(dt, cam, uiCam);
-	auto keyboard = CKeyboardManager::GetInstance();
+	auto gameRoot = CGame::GetInstance();
 	auto velocity = physiscBody->GetVelocity();
 	auto normal = physiscBody->GetNormal();
 	previousVelocity = velocity;
@@ -297,10 +296,10 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 	if (isAutogo == false)
 	{
 		// Horizontal Movement: Walk, Run, Idle
-		if (keyboard->GetKeyStateDown(DIK_RIGHT) || keyboard->GetKeyStateDown(DIK_LEFT))
+		if (gameRoot->IsKeyDown(DIK_RIGHT) || gameRoot->IsKeyDown(DIK_LEFT))
 		{
 			// Nhấn nút A chạy ! RUN
-			if (keyboard->GetKeyStateDown(DIK_A))
+			if (gameRoot->IsKeyDown(DIK_A))
 			{
 				currentPhysicsState.move = MoveOnGroundStates::Run;
 				acceleration = MARIO_RUNNING_ACCELERATION;
@@ -314,7 +313,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 				targetVelocity.x = MARIO_WALKING_SPEED;
 			}
 
-			normal.x = (keyboard->GetKeyStateDown(DIK_RIGHT)) ? 1 : -1;
+			normal.x = (gameRoot->IsKeyDown(DIK_RIGHT)) ? 1 : -1;
 			physiscBody->SetNormal(normal);
 			physiscBody->SetAcceleration(acceleration * normal.x);
 
@@ -421,7 +420,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 
 // Đối với ấn nút X giữ lâu => Mario sẽ nhảy liên tục
 // Ấn S giữ lâu thì chỉ nhảy cao hơn thôi
-		if (keyboard->GetKeyStateDown(DIK_X) && isOnGround == true)
+		if (gameRoot->IsKeyDown(DIK_X) && isOnGround == true)
 		{
 			// Nhảy liên tục: Chỉ cần cung cấp dy < 0 và có gravity thì ta tạo cảm giác nó nhảy liên tục chuyển động đều
 
@@ -443,7 +442,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 		}
 		if (currentPhysicsState.jump == JumpOnAirStates::Jump && canLowJumpContinous == false && canHighJump == true)
 		{
-			if ((keyboard->GetKeyStateDown(DIK_S) && isFly == false) || bounceAfterJumpOnEnemy == true)
+			if ((gameRoot->IsKeyDown(DIK_S) && isFly == false) || bounceAfterJumpOnEnemy == true)
 			{
 				float jumpMaxHeight;
 				float force = MARIO_PUSH_FORCE;
@@ -512,7 +511,7 @@ void CMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 
 
 		if (canCrouch == true) // Small Mario k thể crouch
-			CrouchProcess(keyboard);
+			CrouchProcess(gameRoot);
 		HoldProcess();
 		GoToWarpPipeProcess();
 
@@ -804,7 +803,7 @@ bool CMario::CanCollisionWithThisObject(LPGameObject gO, GameObjectTags tag)
 	return true;
 }
 
-void CMario::CrouchProcess(CKeyboardManager* keyboard)
+void CMario::CrouchProcess(CGame* gameRoot)
 {
 	// Khi chuyển qua Crouch, chiều cao của Crouch nhỏ lại => Ta phải thay dổi lại boxsize và localposition
 
@@ -813,12 +812,12 @@ void CMario::CrouchProcess(CKeyboardManager* keyboard)
 	// Còn đang nhảy (vy != 0) và ấn xuống thì vẫn crouch. Còn 1 lúc bắt k kịp trạng thái bấm qua lại khi đang nhảy (vy != 0 && vx != 0) thì nó có thể vẫn crouch. 
 
 	bool changeAniState = false;
-	if (keyboard->GetKeyStateDown(DIK_LEFT) || keyboard->GetKeyStateDown(DIK_RIGHT) || currentState == MARIO_STATE_ATTACK || currentState == MARIO_STATE_IDLE_FRONT) // thiếu xét trường hợp nhảy ******
+	if (gameRoot->IsKeyDown(DIK_LEFT) || gameRoot->IsKeyDown(DIK_RIGHT) || currentState == MARIO_STATE_ATTACK || currentState == MARIO_STATE_IDLE_FRONT) // thiếu xét trường hợp nhảy ******
 	{
 		// KHÔNG HỤP
 		changeAniState = true;
 	}
-	if ((changeAniState == false && keyboard->GetKeyStateDown(DIK_DOWN)))
+	if ((changeAniState == false && gameRoot->IsKeyDown(DIK_DOWN)))
 	{
 		// HỤP
 		collisionBoxs->at(0)->SetSizeBox(SUPER_MARIO_CROUCH_BBOX);
@@ -836,8 +835,8 @@ void CMario::CrouchProcess(CKeyboardManager* keyboard)
 
 void CMario::SkidProcess(Point velocity)
 {
-	auto keyboard = CKeyboardManager::GetInstance();
-	int sign = keyboard->GetKeyStateDown(DIK_RIGHT) ? 1 : -1;
+	auto gameRoot = CGame::GetInstance();
+	int sign = gameRoot->IsKeyDown(DIK_RIGHT) ? 1 : -1;
 	if (isOnGround == true && velocity.x * sign < 0) 
 	{
 		isSkid = true;
@@ -846,11 +845,11 @@ void CMario::SkidProcess(Point velocity)
 
 void CMario::HoldProcess()
 {
-	auto keyboard = CKeyboardManager::GetInstance();
+	auto gameRoot = CGame::GetInstance();
 	auto normal = physiscBody->GetNormal();
 	if (isHold == true && objectHolding != NULL)
 	{
-		if (keyboard->GetKeyStateDown(DIK_A) == true) // Vẫn đang ấn giữ phím A
+		if (gameRoot->IsKeyDown(DIK_A) == true) // Vẫn đang ấn giữ phím A
 		{
 			Point posHoldable = transform.position;
 			// Chưa xét trường hợp small mario
@@ -1012,7 +1011,7 @@ void CMario::GoToWarpPipeProcess()
 {
 	if (label == NULL)
 		return;
-	auto keyboard = CKeyboardManager::GetInstance();
+	auto gameRoot = CGame::GetInstance();
 	bool isOnWarpPipe = true;
 	auto labelPos = label->GetPosition();
 	auto labelSize = label->GetCollisionBox()->at(0)->GetSizeBox();
@@ -1020,12 +1019,12 @@ void CMario::GoToWarpPipeProcess()
 		isOnWarpPipe = false;
 	if (canGoToWarpPipe == true && isOnWarpPipe == true)
 	{
-		if (keyboard->GetKeyStateDown(DIK_DOWN) && ventDirection.bottom == 1)
+		if (gameRoot->IsKeyDown(DIK_DOWN) && ventDirection.bottom == 1)
 		{
 			isGoToWarpPipe = true;
 			isAutogo = true;
 		}
-		if (keyboard->GetKeyStateDown(DIK_UP) && ventDirection.top == 1)
+		if (gameRoot->IsKeyDown(DIK_UP) && ventDirection.top == 1)
 		{
 			isGoToWarpPipe = true;
 			isAutogo = true;

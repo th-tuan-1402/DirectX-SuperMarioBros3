@@ -1,7 +1,7 @@
 ﻿#include "MarioMap.h"
+#include "Game.h"
 #include "AnimationManager.h"
 #include "MarioMapConst.h"
-#include "KeyboardManager.h"
 #include "Portal.h"
 #include "SceneManager.h"
 #include "Scene1.h"
@@ -70,7 +70,7 @@ void CMarioMap::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 		}
 	}
 
-	auto keyboard = CKeyboardManager::GetInstance();
+	auto gameRoot = CGame::GetInstance();
 	switch (moveState)
 	{
 		case 0:
@@ -88,22 +88,22 @@ void CMarioMap::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 					canGoDirection = portalNode->DirectionMarioCanMove(portalNode->GetPosition());
 				}
 			}
-			if (keyboard->GetKeyStateDown(DIK_RIGHT) && canGoDirection.right == 1)
+			if (gameRoot->IsKeyDown(DIK_RIGHT) && canGoDirection.right == 1)
 			{
 				moveState = 1;
 				currentDirection.right = 1;
 			}
-			else if (keyboard->GetKeyStateDown(DIK_LEFT) && canGoDirection.left == 1)
+			else if (gameRoot->IsKeyDown(DIK_LEFT) && canGoDirection.left == 1)
 			{
 				moveState = 1;
 				currentDirection.left = 1;
 			}
-			else if (keyboard->GetKeyStateDown(DIK_UP) && canGoDirection.top == 1)
+			else if (gameRoot->IsKeyDown(DIK_UP) && canGoDirection.top == 1)
 			{
 				moveState = 1;
 				currentDirection.top = 1;
 			}
-			else if (keyboard->GetKeyStateDown(DIK_DOWN) && canGoDirection.bottom == 1)
+			else if (gameRoot->IsKeyDown(DIK_DOWN) && canGoDirection.bottom == 1)
 			{
 				moveState = 1;
 				currentDirection.bottom = 1;

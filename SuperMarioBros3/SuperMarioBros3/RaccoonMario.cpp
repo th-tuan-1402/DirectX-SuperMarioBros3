@@ -112,7 +112,7 @@ void CRaccoonMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 {
 	if (feverState == 0)
 		feverState = -1;
-	auto keyboard = CKeyboardManager::GetInstance();
+	auto gameRoot = CGame::GetInstance();
 	CMario::Update(dt, cam, uiCam);
 	if (isAttack == true && isDamaged == false) 
 	{
@@ -128,12 +128,12 @@ void CRaccoonMario::Update(DWORD dt, CCamera* cam, CCamera* uiCam)
 		}
 #pragma region Xử lý việc quay đuôi với phím tắt
 		currentPhysicsState.move = MoveOnGroundStates::Attack;
-		if (keyboard->GetKeyStateDown(DIK_Z))
+		if (gameRoot->IsKeyDown(DIK_Z))
 		{
 			// Z giữ lâu
 			isAttackContinious = true;
 		}
-		if (keyboard->GetKeyStateUp(DIK_Z))
+		if (gameRoot->IsKeyUp(DIK_Z))
 			isAttackContinious = false;
 
 		if (isOnGround == false || isJump == true || canLowJumpContinous == true)
