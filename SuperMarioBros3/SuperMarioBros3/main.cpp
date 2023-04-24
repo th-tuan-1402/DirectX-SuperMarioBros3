@@ -1,122 +1,89 @@
-﻿#include "framework.h"
-#include "Const.h"
+﻿#include <windows.h>
 #include "Game.h"
-#include "Ultis.h"
-#include "XMLHelper.h"
 
 #define MAX_LOADSTRING 100
 
-// Global Variables:
-HINSTANCE hInst;                     // current instance
-WCHAR szTitle[MAX_LOADSTRING];       // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
+#define WINDOW_CLASS_NAME L"Super Mario Bros 3"
+#define MAIN_WINDOW_TITLE L"Super Mario Bros 3"
+#define WINDOW_ICON_PATH L"Super_Mario_Bros_3.ico"
 
-// Forward declarations of functions included in this code module:
-ATOM MyRegisterClass(HINSTANCE hInstance);
-HWND InitInstance(HINSTANCE, int);
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
-bool LoadFileConfig(int &fps, int &screenWidth, int &screenHeight);
+#define SCREEN_WIDTH 768
+#define SCREEN_HEIGHT 671
+#define MAX_FRAME_RATE 120
+
+LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message) {
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+
+	return 0;
+}
+
+HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
+{
+	WNDCLASSEX wc;
+	wc.cbSize = sizeof(WNDCLASSEX);
+
+	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.hInstance = hInstance;
+
+	wc.lpfnWndProc = (WNDPROC)WinProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wc.lpszMenuName = NULL;
+	wc.lpszClassName = WINDOW_CLASS_NAME;
+	wc.hIconSm = NULL;
+
+	RegisterClassEx(&wc);
+
+	HWND hWnd =
+		CreateWindow(
+			WINDOW_CLASS_NAME,
+			MAIN_WINDOW_TITLE,
+			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
+			CW_USEDEFAULT,
+			CW_USEDEFAULT,
+			ScreenWidth,
+			ScreenHeight,
+			NULL,
+			NULL,
+			hInstance,
+			NULL);
+
+	if (!hWnd) 
+	{
+		OutputDebugString(L"[ERROR] CreateWindow failed");
+		DWORD ErrCode = GetLastError();
+		return FALSE;
+	}
+
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+
+	return hWnd;
+}
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
                       _In_ LPWSTR lpCmdLine,
                       _In_ int nCmdShow)
 {
-    int fps, screenWidth, screenHeight;
-    if (LoadFileConfig(fps, screenWidth, screenHeight) == false)
-        return NULL;
-    MyRegisterClass(hInstance);
+    HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    // Perform application initialization:
-    HWND hWnd = InitInstance(hInstance, nCmdShow);
-    if (!hWnd)
-    {
-        return NULL;
-    }
+	SetDebugWindow(hWnd);
 
-    CGame::GetInstance()->Init(hWnd, screenWidth, screenHeight, fps);
+    CGame::GetInstance()->Init(hWnd, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_FRAME_RATE);
     CGame::GetInstance()->Run();
 
-    return 0;
-}
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-bool LoadFileConfig(int &fps, int &screenWidth, int &screenHeight)
-{
-    CGame::GetInstance()->ImportGameSource();
-    String configFilePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_CONFIG, CG_GLOBAL_CONFIG);
-
-    XMLHelper::forEach(
-        configFilePath,
-
-        // Read config
-        [&](XMLElement *element)
-            {
-                String name = element->Attribute("name");
-                if (name == "frame-rate")
-                    element->QueryIntAttribute("value", &fps);
-                else if (name.compare("resolution") == 0)
-                {
-                    element->QueryIntAttribute("width", &screenWidth);
-                    element->QueryIntAttribute("height", &screenHeight);
-                }
-            }
-    );
-
-    DebugOut(L"conf: %d, %d, %d\n", fps, screenWidth, screenHeight);
-
-	return true;
-}
-
-ATOM MyRegisterClass(HINSTANCE hInstance)
-{
-    WNDCLASSEXW wcex;
-
-    wcex.cbSize = sizeof(WNDCLASSEX);
-
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = (HICON)LoadImage(NULL, L"Super_Mario_Bros_3.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-    wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = TITLE;
-    wcex.hIconSm = (HICON)LoadImage(NULL, L"Super_Mario_Bros_3.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
-
-    return RegisterClassExW(&wcex);
-}
-
-HWND InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-    hInst = hInstance; // Store instance handle in our global variable
-
-    HWND hWnd = CreateWindowW(TITLE, TITLE, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, SCREEN_WIDTH, SCREEN_HEIGHT, nullptr, nullptr, hInstance, nullptr);
-
-    if (!hWnd)
-    {
-        return NULL;
-    }
-
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
-
-    return hWnd;
-}
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-    case WM_DESTROY:
-        CGame::GetInstance()->End();
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
     return 0;
 }
