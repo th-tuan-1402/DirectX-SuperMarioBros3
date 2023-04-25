@@ -1,5 +1,4 @@
 ﻿#include "Game.h"
-#include "GameConst.h"
 #include "Ultis.h"
 #include "XMLHelper.h"
 

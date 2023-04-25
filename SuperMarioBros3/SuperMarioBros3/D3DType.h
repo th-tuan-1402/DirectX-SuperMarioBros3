@@ -1,9 +1,7 @@
 #pragma once
 
-#include <d3d9types.h>
+#include <d3dx9math.h>
 #include <d3dx10.h>
-
-#define BACKGROUND_COLOR D3DXCOLOR(200.0f / 255, 200.0f / 255, 255.0f / 255, 0.0f)
 
 using Point = D3DXVECTOR2;
 using Point3D = D3DXVECTOR3;

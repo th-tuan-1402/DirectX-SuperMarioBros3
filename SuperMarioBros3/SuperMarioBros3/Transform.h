@@ -3,6 +3,7 @@
 #define TRANSFORM_H
 
 #include "Type.h"
+#include "D3DType.h"
 
 struct Transform
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "resource.h"
-#include <string>
+#include "Type.h"
 
 #define TITLE L"Super Mario Bros 3"
 #define SCREEN_WIDTH 720

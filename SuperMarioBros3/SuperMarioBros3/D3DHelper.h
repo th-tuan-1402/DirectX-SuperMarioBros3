@@ -1,10 +1,10 @@
 #pragma once
 #include "D3DType.h"
 #include <dinput.h>
+#include "Type.h"
 #include "Ultis.h"
 
 
-#define DIRECTINPUT_VERSION 0x0800
 #define KEYBOARD_BUFFER_SIZE 1024
 
 class D3DHelper

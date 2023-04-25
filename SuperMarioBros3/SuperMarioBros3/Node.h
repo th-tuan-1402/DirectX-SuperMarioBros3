@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <vector>
-#include "Type.h"
+#include "D3DType.h"
 
 #ifndef NODE_H
 #define NODE_H

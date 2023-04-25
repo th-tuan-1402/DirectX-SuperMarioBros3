@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Type.h"
+#include "D3DType.h"
 #include "GameObject.h"
 #include "RectF.h"
 

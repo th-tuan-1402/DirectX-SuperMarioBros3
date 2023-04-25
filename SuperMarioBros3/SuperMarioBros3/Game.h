@@ -4,13 +4,8 @@
 #define GAME_H
 
 #include "D3DHelper.h"
-#include "Type.h"
 #include <dinput.h>
 #include <unordered_map>
-
-#include "KeyEventHandler.h"
-#include "GameConst.h"
-
 #include "KeyEventHandler.h"
 
 #define KEYBOARD_STATE_SIZE 256

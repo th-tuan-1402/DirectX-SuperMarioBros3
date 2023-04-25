@@ -2,7 +2,6 @@
 
 #include <string>
 #include "Ultis.h"
-#include "D3DType.h"
 
 // Primary type
 struct String : public std::string

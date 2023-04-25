@@ -3,6 +3,7 @@
 #define SPRITE_H
 
 #include "Type.h"
+#include "D3DType.h"
 #include <string>
 
 class CSprite;
