@@ -344,10 +344,11 @@ public:
     // Release resource
     void Release()
     {
-        if (spriteHandler != NULL)
-        {
-            spriteHandler->Release();
-        }
+        pBlendStateAlpha->Release();
+	    spriteHandler->Release();
+        pRenderTargetView->Release();
+        pSwapChain->Release();
+        pD3DDevice->Release();
     }
 
     //==========================================
