@@ -22,8 +22,6 @@ private:
 	int screenWidth;
 	int screenHeight;
 
-	int fps;
-
 	static CGame* instance;
 	static float timeScale;
 	static DWORD deltaTime;
@@ -52,9 +50,9 @@ public:
 	void DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
 	void DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor = D3DCOLOR_XRGB(255, 0, 255));
 	
-	void Init(HWND hWnd, int scrWidth, int scrHeight, int fps);
+	void Init(HWND hWnd, HINSTANCE hInstance);
 	void Request();
-	void Run();
+	void Run(DWORD deltaTime);
 	void End();
 	void Clean();
 	void Render();
@@ -63,7 +61,7 @@ public:
 	int GetScreenWidth() { return screenWidth; }
 	int GetScreenHeight() { return screenHeight; }
 
-	Texture LoadTexture(std::string filePath, D3DCOLOR transparentColor) { return this->d3dHelper->LoadTexture(filePath, transparentColor); }
+	Texture LoadTexture(String filePath) { return this->d3dHelper->LoadTexture(filePath); };
 	
 	static float GetTimeScale() { return timeScale; }
 	static void SetTimeScale(float time) { timeScale = time; }

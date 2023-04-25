@@ -1,13 +1,8 @@
 #pragma once
 
 #include <string>
-#include <d3dx9math.h>
-
-using Point = D3DXVECTOR2;
-using Point3D = D3DXVECTOR3;
-using Matrix = D3DXMATRIX;
-
-using Texture = LPDIRECT3DTEXTURE9;
+#include "Ultis.h"
+#include "D3DType.h"
 
 // Primary type
 struct String : public std::string
@@ -17,5 +12,9 @@ struct String : public std::string
 
     auto toArray() {
         return this->c_str();
+    }
+
+    operator LPCWSTR() {
+        return ToLPCWSTR(this->toArray());
     }
 };

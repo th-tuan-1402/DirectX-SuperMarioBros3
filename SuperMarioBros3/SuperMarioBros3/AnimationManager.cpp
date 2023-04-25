@@ -89,7 +89,7 @@ bool CAnimationManager::InitAnAnimationSet(String textureName, String filePath)
 bool CAnimationManager::LoadAnimation(String texName, String filePath)
 {
 	// Load from XML
-	XMLHelper::forEach(
+	return XMLHelper::forEach(
 		filePath,
 
 		// Read config
@@ -134,8 +134,6 @@ bool CAnimationManager::LoadAnimation(String texName, String filePath)
 				}
 			}
 	);
-
-	return true;
 }
 
 void CAnimationManager::AddAnimation(String id, LPAnimation ani)

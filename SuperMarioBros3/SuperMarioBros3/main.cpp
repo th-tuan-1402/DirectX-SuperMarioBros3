@@ -71,6 +71,42 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	return hWnd;
 }
 
+int Run()
+{
+	MSG msg;
+	int done = 0;
+	ULONGLONG frameStart = GetTickCount64();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+		ULONGLONG now = GetTickCount64();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = (DWORD)(now - frameStart);
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+
+			CGame::GetInstance()->Run(dt);
+		}
+		else
+			Sleep(tickPerFrame - dt);	
+	}
+
+	return 1;
+}
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
                       _In_ LPWSTR lpCmdLine,
@@ -80,8 +116,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	SetDebugWindow(hWnd);
 
-    CGame::GetInstance()->Init(hWnd, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_FRAME_RATE);
-    CGame::GetInstance()->Run();
+    CGame::GetInstance()->Init(hWnd, hInstance);
+	Run();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

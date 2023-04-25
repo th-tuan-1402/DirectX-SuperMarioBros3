@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Type.h";
-#include "tinyxml.h";
+#include "Type.h"
+#include "tinyxml.h"
 
 using XMLElement = TiXmlElement;
-struct XMLDocument : public TiXmlDocument
+class XMLDocument : public TiXmlDocument
 {
+public:
     template <typename Callable>
     void each(Callable callback)
     {

@@ -29,20 +29,20 @@ CGame::~CGame()
 {
 }
 
-void CGame::Init(HWND hWnd, int scrWidth, int scrHeight, int fps)
+void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
+	this->hWnd = hWnd;
+
 	// Todo: remove config import
-    ImportGameSource();
+	ImportGameSource();
 
 	// Init library helper
-	this->d3dHelper = new D3DHelper(hWnd, scrWidth, scrHeight);
+	this->d3dHelper = new D3DHelper(hWnd, hInstance);
 	this->d3dHelper->InitKeyboardDevice();
 	this->SetKeyHandler(new CGameKeyEventHandler());
 
-	this->fps = fps;
-	this->hWnd = hWnd;
-	this->screenWidth = scrWidth;
-	this->screenHeight = scrHeight;
+	this->screenWidth = 720;
+	this->screenHeight = 610;
 
 	DebugOut(L"[INFO] Init Manager \n");
 	CTextureManager::GetInstance()->Init();
@@ -67,73 +67,39 @@ void CGame::Request()
 
 void CGame::Draw(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	this->d3dHelper->Draw(position, pointCenter, texture, rect, transcolor);
+	this->d3dHelper->Draw(position.x, position.y, texture, &rect, transcolor, 0, 0);
 }
 
 void CGame::Draw(Point position, Texture texture, RECT rect, int alpha)
 {
-	this->d3dHelper->Draw(position, texture, rect, alpha);
+	this->d3dHelper->Draw(position.x, position.y, texture, &rect, (FLOAT)alpha, 0, 0);
 }
 
 void CGame::DrawFlipX(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	this->d3dHelper->DrawFlipX(position, pointCenter, texture, rect, transcolor);
+	this->d3dHelper->Draw(position.x, position.y, texture, &rect, transcolor, 0, 0);
 }
 
 void CGame::DrawFlipY(Point position, Point pointCenter, Texture texture, RECT rect, D3DXCOLOR transcolor)
 {
-	this->d3dHelper->DrawFlipY(position, pointCenter, texture, rect, transcolor);
+	this->d3dHelper->Draw(position.x, position.y, texture, &rect, transcolor, 0, 0);
 }
 
-void CGame::Run()
+void CGame::Run(DWORD deltaTime)
 {
-	MSG msg;
-	bool done = false;
+	this->deltaTime = deltaTime;
 
-	DWORD frameStart = GetTickCount64();
-	DWORD tickPerFrame = 1000 / fps;
+	Request();
 
-	// Game Loop
-	while (!done)
+	// Process key
+	// auto keyboardManger = CKeyboardManager::GetInstance();
+	ProcessKeyboard();
+
+	if (CheckESCKey() == false)
 	{
-		// Do trong game không có thời gian thực sự, để tạo cảm giác thời gian trôi qua thì ta chỉ có bộ đếm tick từ lúc start game để tạo cảm giác chân thực
-
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-				done = true;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			DWORD currentTime = GetTickCount64(); // now
-			deltaTime = currentTime - frameStart;
-
-			if (deltaTime >= tickPerFrame) // chuyển frame mới
-			{
-				frameStart = currentTime;
-				Request();
-
-				// Process key
-				// auto keyboardManger = CKeyboardManager::GetInstance();
-				ProcessKeyboard();
-				if (CheckESCKey() == true)
-					continue;
-
-				Update();
-				Render();
-				Clean();
-
-				// if (deltaTime > tickPerFrame) deltaTime = 0;
-			}
-			else // chưa tới tickperframe nên cho ngủ vì xong việc cho 1 frame ròi
-			{
-				Sleep(tickPerFrame - deltaTime);
-			}
-		}
-		
+		Update();
+		Render();
+		Clean();
 	}
 }
 
@@ -173,7 +139,7 @@ void CGame::Render()
 		if (activeScene != nullptr)
 			activeScene->Render();
 		if (uiCamera != nullptr)
-			uiCamera->Render();		
+			uiCamera->Render();
 	}
 	this->d3dHelper->StopScene();
 }
@@ -238,7 +204,7 @@ void CGame::ProcessKeyboard()
 
 	// Nếu mario đang chui vào pipe_gate hoặc chui ra khỏi pipe_des để về mặt đất trong scene 1-1
 	// Thì không có xử lý keyboard gì hết ớ, player bây giờ không có cái quyền điều khiên gì hết ớ
-	// 
+	//
 	// Trừ khi game có chức năng Pause Game, nếu không thì code như thế này là ổn rồi
 	// if (mario->IsGoingIntoPipeGate() || mario->IsGettingOutOfPipeDes() || mario->IsTailAttacking())
 	// 	return;
@@ -258,11 +224,12 @@ void CGame::ProcessKeyboard()
 			{
 				DebugOut(L"[INFO] Keyboard re-acquired!\n");
 			}
-			else return;
+			else
+				return;
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			// DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
 			return;
 		}
 	}
