@@ -27,7 +27,7 @@ class CScene
 protected:
 	std::vector<LPGameObject> gameObjects;
 	std::string id;
-	D3DCOLOR backgroundColor;
+	Color backgroundColor;
 
 	CGrid* grid;
 	CMap *map;
@@ -58,8 +58,8 @@ public:
 	virtual void Render();
 	virtual void FindUpdateObjects();
 	std::string GetSceneId() { return this->id; }
-	D3DCOLOR GetBackgroundColor() { return backgroundColor; }
-	void SetBackgroundColor(D3DCOLOR color) {
+	Color GetBackgroundColor() { return backgroundColor; }
+	void SetBackgroundColor(Color color) {
 		this->backgroundColor = color;
 	}
 	void SetCamera(int id);

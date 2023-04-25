@@ -22,7 +22,7 @@ public:
 	void ClearTextureById(std::string texname);
 	void LoadTexture(std::string texName, std::string texPath);
 	Texture GetTexture(std::string id);
-	void Add(std::string id, std::string filePath, D3DCOLOR transparentColor);
+	void Add(std::string id, std::string filePath, Color transparentColor);
 	~CTextureManager();
 };
 

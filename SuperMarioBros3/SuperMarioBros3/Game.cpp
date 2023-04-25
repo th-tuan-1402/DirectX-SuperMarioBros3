@@ -130,7 +130,7 @@ void CGame::Render()
 	auto activeScene = CSceneManager::GetInstance()->GetActiveScene();
 	auto uiCamera = CSceneManager::GetInstance()->GetUICamera();
 
-	D3DCOLOR bgColor = D3DCOLOR_XRGB(0, 0, 0);
+	Color bgColor = D3DCOLOR_XRGB(0, 0, 0);
 	if (activeScene != nullptr)
 		bgColor = activeScene->GetBackgroundColor();
 

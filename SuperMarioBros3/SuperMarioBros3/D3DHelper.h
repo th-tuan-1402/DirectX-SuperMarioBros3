@@ -1,12 +1,8 @@
 #pragma once
-
-#include <d3dx9.h>
-#include <d3d9.h>
-#include <d3dx10.h>
+#include "D3DType.h"
 #include <dinput.h>
-
-#include "Type.h"
 #include "Ultis.h"
+
 
 #define DIRECTINPUT_VERSION 0x0800
 #define KEYBOARD_BUFFER_SIZE 1024

@@ -39,7 +39,8 @@ void CTextureManager::Clear()
 	for (auto t : textures)
 	{
 		Texture tex = t.second;
-		if (tex != NULL) tex->Release();
+		//Todo: clear when refactor
+		// if (tex != NULL) tex->Release();
 	}
 	textures.clear();
 }
@@ -50,8 +51,9 @@ void CTextureManager::ClearTextureById(std::string texname)
 	if (tex != nullptr)
 	{
 		textures.erase(texname);
-		tex->Release();
-		tex = NULL;
+		//Todo: clear when refactor
+		//tex->Release();
+		//tex = NULL;
 	}
 }
 
@@ -68,9 +70,9 @@ Texture CTextureManager::GetTexture(std::string id)
 		return textures.at(id);
 }
 
-void CTextureManager::Add(string id, std::string filePath, D3DCOLOR transparentColor)
+void CTextureManager::Add(string id, std::string filePath, Color transparentColor)
 {
-	Texture texture = CGame::GetInstance()->LoadTexture(filePath, transparentColor);
+	Texture texture = CGame::GetInstance()->LoadTexture(filePath);
 
 	if (texture == NULL)
 	{
