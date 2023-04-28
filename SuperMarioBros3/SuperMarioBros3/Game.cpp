@@ -10,9 +10,13 @@
 
 #include "Scene1.h"
 #include <string>
+
+#include "Const.h"
 #include "WorldMap1.h"
 #include "Scene4.h"
 #include "Intro.h"
+
+#include <fstream>
 
 CGame* CGame::instance = NULL;
 DWORD CGame::deltaTime = 0;
@@ -32,25 +36,45 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 {
 	this->hWnd = hWnd;
 
-	// Todo: remove config import
-	ImportGameSource();
+	// TODO: remove config import
+	// Load("config/root.txt");
+	Load("Resources/root.xml");
 
 	// Init library helper
 	this->d3dHelper = new D3DHelper(hWnd, hInstance);
 	this->d3dHelper->InitKeyboardDevice();
 	this->SetKeyHandler(new CGameKeyEventHandler());
 
-	this->screenWidth = 720;
-	this->screenHeight = 610;
-
 	DebugOut(L"[INFO] Init Manager \n");
-	CTextureManager::GetInstance()->Init();
-	CSpriteManager::GetInstance()->Init();
-	CAnimationManager::GetInstance()->Init();
-	CSceneManager::GetInstance()->Init();
+	_Load("config/test.txt");
+
+	auto spriteManager = CSpriteManager::GetInstance();
+	spriteManager->LoadSprite(TEXTURE_MARIO, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_MARIO));
+	spriteManager->LoadSprite(TEXTURE_FIRE_BALL, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_FIRE_BALL));
+	spriteManager->LoadSprite(TEXTURE_REWARD, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_REWARD));
+	spriteManager->LoadSprite(TEXTURE_ENEMY, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_ENEMY));
+	spriteManager->LoadSprite(TEXTURE_EFFECT, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_EFFECT));
+	spriteManager->LoadSprite(TEXTURE_MISC, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_MISC));
+	spriteManager->LoadSprite(TEXTURE_UI, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_UI));
+	spriteManager->LoadSprite(TEXTURE_WORLD_1, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_WORLD_1));
+	spriteManager->LoadSprite(TEXTURE_INTRO, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_INTRO));
+	spriteManager->LoadSprite(TEXTURE_PIPE, GetFilePathByCategory(CATEGORY_SPRITE, DB_SPRITE_PIPE));
 	
-	CIntro* intro = new CIntro();
-	CSceneManager::GetInstance()->Load(intro);
+	auto animationManager = CAnimationManager::GetInstance();
+	animationManager->InitAnAnimationSet(TEXTURE_MARIO, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_MARIO));
+	animationManager->InitAnAnimationSet(TEXTURE_FIRE_BALL, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_FIRE_BALL));
+	animationManager->InitAnAnimationSet(TEXTURE_ENEMY, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_ENEMY));
+	animationManager->InitAnAnimationSet(TEXTURE_EFFECT, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_EFFECT));
+	animationManager->InitAnAnimationSet(TEXTURE_REWARD, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_REWARD));
+	animationManager->InitAnAnimationSet(TEXTURE_MISC, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_MISC));
+	animationManager->InitAnAnimationSet(TEXTURE_UI, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_UI));
+	animationManager->InitAnAnimationSet(TEXTURE_WORLD_1, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_WORLD_1));
+	animationManager->InitAnAnimationSet(TEXTURE_INTRO, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_INTRO));
+	animationManager->InitAnAnimationSet(TEXTURE_INTRO, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_INTRO));
+
+	CSceneManager::GetInstance()->Init(GetFilePathByCategory(CATEGORY_SCENE, SC_UI_CAMERA));
+	
+	SwitchScene();
 	DebugOut(L"[INFO] Init Manager Sucessfully \n");
 }
 
@@ -155,10 +179,8 @@ void CGame::Update()
 		uiCamera->Update();
 }
 
-bool CGame::ImportGameSource()
+bool CGame::Load(String path)
 {
-	String path = "Resources/root.xml";
-
 	return XMLHelper::forEach(
         path,
 
@@ -285,3 +307,118 @@ bool CGame::IsKeyUp(int keyCode)
 {
 	return (keyStates[keyCode] & 0x80) <= 0;
 }
+
+void CGame::_ParseSection_SETTINGS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	if (tokens[0] == "start"){
+		next_scene = tokens[1];
+	} else if (tokens[0] == "width") {
+		this->screenWidth = atoi(tokens[1].c_str());
+	} else if (tokens[0] == "height") {
+		this->screenHeight = atoi(tokens[1].c_str());
+	}
+	else
+		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
+}
+
+void CGame::_ParseSection_TEXTURES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+
+	String texID = tokens[0].c_str();
+	String path = tokens[1];
+
+	CTextureManager::GetInstance()->Add(texID, LoadTexture(path));
+}
+
+void CGame::_ParseSection_SCENES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	String id = tokens[0];
+	String path = tokens[1];   // file: ASCII format (single-byte char) => Wide Char
+
+	LPScene scene = CSceneManager::GetInstance()->Add(id, path);
+	scenes[id] = scene;
+}
+
+#define MAX_GAME_LINE 1024
+#define GAME_FILE_SECTION_UNKNOWN -1
+#define GAME_FILE_SECTION_SETTINGS 1
+#define GAME_FILE_SECTION_SCENES 2
+#define GAME_FILE_SECTION_TEXTURES 3
+/*
+	Load game campaign file and load/initiate first scene
+*/
+void CGame::_Load(String gameFile)
+{
+	DebugOut(L"[INFO] Start loading game file : %s\n", gameFile);
+
+	ifstream f;
+	f.open(gameFile);
+	char str[MAX_GAME_LINE];
+
+	// current resource section flag
+	int section = GAME_FILE_SECTION_UNKNOWN;
+
+	while (f.getline(str, MAX_GAME_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#') continue;	// skip comment lines	
+
+		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
+		if (line == "[TEXTURES]") { section = GAME_FILE_SECTION_TEXTURES; continue; }
+		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
+		if (line[0] == '[') 
+		{ 
+			section = GAME_FILE_SECTION_UNKNOWN; 
+			DebugOut(L"[ERROR] Unknown section: %s\n", ToLPCWSTR(line));
+			continue; 
+		}
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+			case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
+			case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
+			case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
+		}
+	}
+	f.close();
+
+	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+
+	// SwitchScene();
+}
+
+void CGame::SwitchScene()
+{
+	if (next_scene == "" || next_scene == current_scene) return; 
+
+	DebugOut(L"[INFO] Switching to scene %s\n", next_scene);
+
+	// scenes[current_scene]->Unload();
+
+	// CSprites::GetInstance()->Clear();
+	// CAnimations::GetInstance()->Clear();
+
+	current_scene = next_scene;
+	LPScene s = scenes[next_scene];
+	//this->SetKeyHandler(s->GetKeyEventHandler());
+	// s->Load();
+
+	CSceneManager::GetInstance()->Unload(current_scene);
+	CSceneManager::GetInstance()->Load(s);
+	// CSceneManager::GetInstance()->SwitchScene(s);
+	
+}
+

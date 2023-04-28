@@ -26,53 +26,6 @@ CAnimationManager::CAnimationManager()
 
 bool CAnimationManager::Init()
 {
-	DebugOut(L"[INFO] Load Animation from file XML \n");
-	auto root = CGame::GetInstance();
-	if (InitAnAnimationSet(TEXTURE_MARIO, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_MARIO)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Mario Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_FIRE_BALL, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_FIRE_BALL)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Fire Ball Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_ENEMY, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_ENEMY)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Fire Ball Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_EFFECT, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_EFFECT)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Effect Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_REWARD, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_REWARD)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Rewward Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_MISC, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_MISC)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load Misc Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_UI, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_UI)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load UI Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_WORLD_1, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_WORLD_1)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load UI Animation File \n");
-		return false;
-	}
-	if (InitAnAnimationSet(TEXTURE_INTRO, root->GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_INTRO)) == false)
-	{
-		DebugOut(L"[ERROR] Cannot Load UI Animation File \n");
-		return false;
-	}
 	return true;
 }
 

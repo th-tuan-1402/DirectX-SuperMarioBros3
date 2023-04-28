@@ -19,19 +19,7 @@ LPTextureManager CTextureManager::GetInstance()
 
 void CTextureManager::Init()
 {
-	auto root = CGame::GetInstance();
-	LoadTexture(TEXTURE_MARIO, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_MARIO));
-	LoadTexture(TEXTURE_BBOX, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_BBOX));
-	LoadTexture(TEXTURE_MISC, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_MISC));
-	LoadTexture(TEXTURE_REWARD, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_REWARD));
-	LoadTexture(TEXTURE_FIRE_BALL, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_FIRE_BALL));
-	LoadTexture(TEXTURE_ENEMY, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_ENEMY));
-	LoadTexture(TEXTURE_EFFECT, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_EFFECT));
-	LoadTexture(TEXTURE_UI, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_UI));
-	LoadTexture(TEXTURE_BLACK, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_BLACK));
-	LoadTexture(TEXTURE_WORLD_1, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_WORLD_1));
-	LoadTexture(TEXTURE_INTRO, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_INTRO));
-	LoadTexture(TEXTURE_PIPE, root->GetFilePathByCategory(CATEGORY_TEXTURE, TEXTURE_PIPE));
+
 }
 
 void CTextureManager::Clear()
@@ -39,7 +27,7 @@ void CTextureManager::Clear()
 	for (auto t : textures)
 	{
 		Texture tex = t.second;
-		//Todo: clear when refactor
+		// TODO: clear when refactor
 		// if (tex != NULL) tex->Release();
 	}
 	textures.clear();
@@ -51,7 +39,7 @@ void CTextureManager::ClearTextureById(std::string texname)
 	if (tex != nullptr)
 	{
 		textures.erase(texname);
-		//Todo: clear when refactor
+		// TODO: clear when refactor
 		//tex->Release();
 		//tex = NULL;
 	}
@@ -86,7 +74,20 @@ void CTextureManager::Add(string id, std::string filePath, Color transparentColo
 	OutputDebugStringW(ToLPCWSTR("[INFO] Texture ID: " + id + "\n"));
 }
 
+void CTextureManager::Add(std::string id, Texture texture) {
+	textures[id] = texture;
+}
+
 CTextureManager::~CTextureManager()
 {
 	
+}
+
+Texture CTextureManager::Get(String id)
+{
+	Texture t = textures[id];
+	if (t == NULL)
+		DebugOut(L"[ERROR] Texture Id %d not found !\n", id);
+	
+	return t;
 }

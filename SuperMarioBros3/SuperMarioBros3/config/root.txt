@@ -1,0 +1,56 @@
+[SETTINGS]
+start	5
+width	720
+height	610
+
+[SCENES]
+#id	file
+world-1-1	Resources/Scenes/World1-1.xml
+world-1-4	Resources/Scenes/World1-4.xml
+ui-camera	Resources/Scenes/UICamera.xml
+world-1	Resources/Scenes/World1.xml
+intro	Resources/Scenes/Intro.xml
+
+[TEXTURES]
+#id	file
+tex-mario	Resources/Textures/mariox3(1).png
+tex-enemy	Resources/Textures/enemy_x3_white.png
+tex-misc	Resources/Textures/misc_x3 (2).png
+tex-fire-ball	Resources/Textures/fire-ball-white.png
+tex-bbox	Resources/Textures/bbox.png
+tex-effect	Resources/Textures/effect_white_254_x3.png
+tex-goal	Resources/Textures/reward_x3.png
+tex-ui	Resources/Textures/UI_x3.png
+tex-black	Resources/Textures/black.png
+tex-world-map-1	Resources/Textures/MapSelection(x3).png
+tex-intro	Resources/Textures/intro_x3.png
+tex-pipe	Resources/Textures/pipe.png
+
+[SPRITES]
+#id	file
+spr-mario	Resources/Sprites/MarioDB.xml
+spr-enemy	Resources/Sprites/EnemyDB.xml
+spr-misc	Resources/Sprites/MiscDB.xml
+spr-fire-ball	Resources/Sprites/MiscDB.xml
+spr-effect	Resources/Sprites/MiscDB.xml
+spr-reward	Resources/Sprites/MiscDB.xml
+spr-ui	Resources/Sprites/UiDB.xml
+spr-world-map-1	Resources/Sprites/MapSelectionDB.xml
+spr-intro	Resources/Sprites/IntroDB.xml
+spr-pipe	Resources/Sprites/MiscDB.xml
+
+[ANIMATION]
+#id	file
+ani-mario	Resources/Animations/MarioAnim.xml
+ani-enemy	Resources/Animations/EnemyAnim.xml
+ani-misc	Resources/Animations/MiscAnim.xml
+ani-fire-ball	Resources/Animations/MiscAnim.xml
+ani-reward	Resources/Animations/MiscAnim.xml
+ani-effect	Resources/Animations/MiscAnim.xml
+ani-ui	Resources/Animations/UiAnim.xml
+ani-world-map-1	Resources/Animations/MapSelectionAnim.xml
+ani-intro	Resources/Animations/IntroAnim.xml
+
+[Config]
+#id	file
+global-config	Resources/config.xml

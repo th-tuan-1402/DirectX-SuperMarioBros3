@@ -3,6 +3,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Type.h"
 #include "D3DHelper.h"
 #include <dinput.h>
 #include <unordered_map>
@@ -36,6 +37,10 @@ private:
 
 	LPKeyEventHandler keyHandler;
 
+	unordered_map<std::string, LPScene> scenes;
+	String current_scene="";
+	String next_scene="";
+
 public:
 	static CGame* GetInstance();
 	~CGame();
@@ -64,7 +69,14 @@ public:
 	float GetFixedDeltaTime() { return 20; }
 	DWORD GetDeltaTime() { return deltaTime;  }
 
-	bool ImportGameSource();
+	//=========================================
+	// Resource related functions
+	//=========================================
+	void _ParseSection_SETTINGS(string line);
+	void _ParseSection_SCENES(string line);
+	void _ParseSection_TEXTURES(string line);
+	bool Load(String path);
+	void _Load(String gameFile);
 	String GetFilePathByCategory(String category, String id);
 
 	//=========================================
@@ -76,6 +88,13 @@ public:
 	bool IsKeyDown(int KeyCode);
 	bool IsKeyUp(int KeyCode);
 	bool CheckESCKey();
+
+	//========================================
+	// Scenes related functions
+	//========================================
+	void SwitchScene();
+	void SetNextScene(String sceneName) { next_scene = sceneName; }
+
 };
 
 #endif

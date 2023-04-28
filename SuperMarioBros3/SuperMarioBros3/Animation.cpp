@@ -43,7 +43,7 @@ void CAnimation::Render(Point position, int alpha)
 {
 	if (animFrames.size() == 0) return;
 	
-	DWORD now = GetTickCount64();
+	DWORD now = (DWORD)GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;

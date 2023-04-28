@@ -24,7 +24,9 @@ public:
 	void LoadTexture(std::string texName, std::string texPath);
 	Texture GetTexture(std::string id);
 	void Add(std::string id, std::string filePath, Color transparentColor);
+	void Add(std::string id, Texture texture);
 	~CTextureManager();
+	Texture Get(String id);
 };
 
 #endif
