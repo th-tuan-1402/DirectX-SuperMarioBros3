@@ -1,6 +1,12 @@
 *.suo
+.vs/*
+.vscode/*
 SuperMarioBros3/.vs/
 SuperMarioBros3/Debug/
+SuperMarioBros3/x64/
+SuperMarioBros3/packages/
+SuperMarioBros3/SuperMarioBros3/.vs/
+SuperMarioBros3/SuperMarioBros3/.vscode/
 SuperMarioBros3/SuperMarioBros3/Debug/
 SuperMarioBros3/SuperMarioBros3/x64/Debug/
 SuperMarioBros3/SuperMarioBros3/Resources/GridTool/node_modules/
