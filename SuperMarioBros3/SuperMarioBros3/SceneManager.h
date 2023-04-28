@@ -21,7 +21,7 @@ public:
 	CSceneManager();
 	static LPSceneManager GetInstance();
 
-	void Init();
+	void Init(String filePath);
 
 	void Load(LPScene scene);
 	void Unload(std::string sceneId);
@@ -39,6 +39,8 @@ public:
 	void UnloadRequestScene();
 	void SwitchScene(LPScene scene);
 	~CSceneManager();
+
+	LPScene Add(String id, String path);
 };
 
 #endif

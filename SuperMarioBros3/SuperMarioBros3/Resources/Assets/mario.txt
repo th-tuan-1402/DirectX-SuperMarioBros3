@@ -1,0 +1,246 @@
+[SPRITES]
+#id	left	top	width	height	frameTime	texture-id	xPivot
+spr-small-mario-map-0	220	8	14	16	50	tex-mario	
+spr-small-mario-map-1	237	8	14	16	50	tex-mario	
+spr-small-mario-walk-0	254	9	12	15	50	tex-mario	
+spr-small-mario-walk-1	269	8	15	16	50	tex-mario	
+spr-small-mario-skid-0	287	8	14	16	50	tex-mario	
+spr-small-mario-jump-0	304	8	16	16	50	tex-mario	
+spr-small-mario-run-0	323	8	16	16	50	tex-mario	
+spr-small-mario-run-1	341	8	16	16	50	tex-mario	
+spr-small-mario-high-jump-0	360	8	16	16	50	tex-mario	
+spr-small-mario-slide-0	379	8	15	16	50	tex-mario	
+spr-small-mario-die-0	416	8	16	16	50	tex-mario	
+spr-small-mario-hold-0	435	8	14	16	50	tex-mario	
+spr-small-mario-hold-1	452	8	15	16	50	tex-mario	
+spr-small-mario-kick-0	470	8	16	16	50	tex-mario	
+spr-small-mario-dive-0	489	8	16	16	50	tex-mario	
+spr-small-mario-dive-1	508	9	16	15	50	tex-mario	
+spr-small-mario-swim-0	527	9	14	15	50	tex-mario	
+spr-small-mario-swim-1	544	8	14	16	50	tex-mario	
+spr-small-mario-idle-front-0	397	8	16	16	50	tex-mario	
+spr-small-mario-idle-0	254	9	12	15	50	tex-mario	
+spr-small-mario-climb-0	561	9	14	15	50	tex-mario	
+spr-small-mario-climb-1	578	9	14	15	50	tex-mario	
+spr-big-mario-map-0	159	54	16	21	50	tex-mario	
+spr-big-mario-map-1	178	54	16	21	50	tex-mario	
+spr-big-mario-walk-0	197	48	14	27	50	tex-mario	
+spr-big-mario-walk-1	214	48	16	27	50	tex-mario	
+spr-big-mario-walk-2	233	49	16	26	50	tex-mario	
+spr-big-mario-skid-0	252	47	16	28	50	tex-mario	
+spr-big-mario-jump-0	271	49	16	26	50	tex-mario	
+spr-big-mario-fall-0	233	49	16	26	50	tex-mario	
+spr-big-mario-run-0	290	48	19	27	50	tex-mario	
+spr-big-mario-run-1	312	48	19	27	50	tex-mario	
+spr-big-mario-run-2	335	49	19	26	50	tex-mario	
+spr-big-mario-high-jump-0	357	49	19	26	50	tex-mario	
+spr-big-mario-crouch-0	379	57	14	18	50	tex-mario	
+spr-big-mario-slide-0	396	49	16	26	50	tex-mario	
+spr-big-mario-hold-0	434	48	14	27	50	tex-mario	
+spr-big-mario-hold-1	451	48	15	27	50	tex-mario	
+spr-big-mario-hold-2	469	49	16	26	50	tex-mario	
+spr-big-mario-kick-0	488	48	21	27	50	tex-mario	
+spr-big-mario-dive-0	512	48	19	27	50	tex-mario	
+spr-big-mario-dive-1	534	49	19	26	50	tex-mario	
+spr-big-mario-swim-0	556	48	19	27	50	tex-mario	
+spr-big-mario-swim-1	578	48	18	27	50	tex-mario	
+spr-big-mario-swim-2	599	49	19	26	50	tex-mario	
+spr-big-mario-idle-0	197	48	14	27	50	tex-mario	
+spr-big-mario-idle-front-0	415	48	16	27	50	tex-mario	
+spr-big-mario-climb-0	621	50	16	25	50	tex-mario	
+spr-big-mario-climb-1	640	50	16	25	50	tex-mario	
+spr-big-mario-roll-0	320	317	22	20	50	tex-mario	
+spr-big-mario-roll-1	345	317	19	20	50	tex-mario	
+spr-big-mario-roll-2	367	315	20	22	50	tex-mario	
+spr-big-mario-roll-3	390	318	20	19	50	tex-mario	
+spr-big-mario-roll-4	413	317	22	20	50	tex-mario	
+spr-big-mario-roll-5	438	317	19	20	50	tex-mario	
+spr-big-mario-roll-6	460	315	20	22	50	tex-mario	
+spr-big-mario-roll-7	483	318	20	19	50	tex-mario	
+spr-raccoon-mario-map-0	4	146	16	24	50	tex-mario	
+spr-raccoon-mario-map-1	23	146	16	24	50	tex-mario	
+spr-raccoon-mario-walk-0	80	142	21	28	50	tex-mario	14
+spr-raccoon-mario-walk-1	104	142	22	28	50	tex-mario	14
+spr-raccoon-mario-walk-2	129	143	23	27	50	tex-mario	15
+spr-raccoon-mario-skid-0	155	140	16	30	50	tex-mario	
+spr-raccoon-mario-spin-0	80	142	21	28	50	tex-mario	14
+spr-raccoon-mario-spin-1	78	107	23	28	50	tex-mario	14
+spr-raccoon-mario-spin-2	174	142	16	28	50	tex-mario	7
+spr-raccoon-mario-spin-3	193	142	23	28	50	tex-mario	7
+spr-raccoon-mario-spin-4	219	142	16	28	50	tex-mario	7
+spr-raccoon-mario-spin-5	80	142	21	28	50	tex-mario	14
+spr-raccoon-mario-jump-0	257	143	23	27	50	tex-mario	15
+spr-raccoon-mario-fall-0	283	143	23	27	50	tex-mario	15
+spr-raccoon-mario-run-0	283	143	23	27	50	tex-mario	15
+spr-raccoon-mario-run-1	309	143	23	27	50	tex-mario	15
+spr-raccoon-mario-run-2	335	142	22	28	50	tex-mario	14
+spr-raccoon-mario-speed-up-0	360	142	24	28	50	tex-mario	15
+spr-raccoon-mario-speed-up-1	387	142	24	28	50	tex-mario	15
+spr-raccoon-mario-speed-up-2	414	143	24	27	50	tex-mario	15
+spr-raccoon-mario-fly-0	441	143	24	27	50	tex-mario	15
+spr-raccoon-mario-fly-1	468	143	24	27	50	tex-mario	15
+spr-raccoon-mario-fly-2	495	142	24	28	50	tex-mario	15
+spr-raccoon-mario-crouch-0	522	152	22	18	50	tex-mario	15
+spr-raccoon-mario-slide-0	547	143	16	27	50	tex-mario	
+spr-raccoon-mario-hold-0	566	142	21	28	50	tex-mario	14
+spr-raccoon-mario-hold-1	590	142	22	28	50	tex-mario	15
+spr-raccoon-mario-hold-2	615	143	23	27	50	tex-mario	15
+spr-raccoon-mario-kick-0	641	142	22	28	50	tex-mario	14
+spr-raccoon-mario-dive-0	666	142	24	28	50	tex-mario	16
+spr-raccoon-mario-dive-1	693	143	24	27	50	tex-mario	16
+spr-raccoon-mario-swim-0	720	142	24	28	50	tex-mario	16
+spr-raccoon-mario-swim-1	747	142	23	28	50	tex-mario	16
+spr-raccoon-mario-swim-2	773	143	24	27	50	tex-mario	16
+spr-raccoon-mario-climb-0	800	142	16	28	50	tex-mario	
+spr-raccoon-mario-climb-1	819	142	16	28	50	tex-mario	
+spr-raccoon-mario-idle-0	80	142	21	28	50	tex-mario	14
+spr-raccoon-mario-idle-front-0	174	142	16	28	50	tex-mario	
+spr-raccoon-mario-roll-0	319	342	22	20	50	tex-mario	
+spr-raccoon-mario-roll-1	344	342	21	20	50	tex-mario	
+spr-raccoon-mario-roll-2	368	340	20	22	50	tex-mario	
+spr-raccoon-mario-roll-3	391	341	20	21	50	tex-mario	
+spr-raccoon-mario-roll-4	414	342	22	20	50	tex-mario	
+spr-raccoon-mario-roll-5	439	342	21	20	50	tex-mario	
+spr-raccoon-mario-roll-6	462	340	20	22	50	tex-mario	
+spr-raccoon-mario-roll-7	485	341	20	21	50	tex-mario	
+spr-fire-mario-map-0	124	115	16	21	50	tex-mario	
+spr-fire-mario-map-1	143	115	16	21	50	tex-mario	
+spr-fire-mario-idle-front-0	458	109	16	27	50	tex-mario	
+spr-fire-mario-idle-side-0	206	109	14	27	50	tex-mario	
+spr-fire-mario-walk-0	206	109	14	27	50	tex-mario	
+spr-fire-mario-walk-1	223	109	16	27	50	tex-mario	
+spr-fire-mario-walk-2	242	110	16	26	50	tex-mario	
+spr-fire-mario-skid-0	261	108	16	28	50	tex-mario	
+spr-fire-mario-throw-0	280	109	14	27	50	tex-mario	
+spr-fire-mario-throw-1	297	109	14	27	50	tex-mario	
+spr-fire-mario-jump-0	314	110	16	26	50	tex-mario	
+spr-fire-mario-fall-0	242	110	16	26	50	tex-mario	
+spr-fire-mario-run-0	333	109	19	27	50	tex-mario	
+spr-fire-mario-run-1	355	109	19	27	50	tex-mario	
+spr-fire-mario-run-2	378	110	19	26	50	tex-mario	
+spr-fire-mario-hold-0	477	109	14	27	50	tex-mario	
+spr-fire-mario-hold-1	494	109	15	27	50	tex-mario	
+spr-fire-mario-hold-2	512	110	16	26	50	tex-mario	
+spr-fire-mario-high-jump-0	400	110	19	26	50	tex-mario	
+spr-fire-mario-crouch-0	422	118	14	18	50	tex-mario	
+spr-fire-mario-slide-0	439	110	16	26	50	tex-mario	
+spr-fire-mario-kick-0	531	109	21	27	50	tex-mario	
+spr-fire-mario-dive-0	555	109	19	27	50	tex-mario	
+spr-fire-mario-dive-1	577	110	19	26	50	tex-mario	
+spr-fire-mario-swim-0	599	109	19	27	50	tex-mario	
+spr-fire-mario-swim-1	621	109	18	27	50	tex-mario	
+spr-fire-mario-swim-2	642	110	19	26	50	tex-mario	
+spr-fire-mario-climb-0	664	111	16	25	50	tex-mario	
+spr-fire-mario-climb-1	683	111	16	25	50	tex-mario	
+spr-hammer-small-mario-map-idle-front-0	145	220	14	16	50	tex-mario	
+spr-hammer-mario-map-idle-front-0	162	215	16	21	50	tex-mario	
+spr-hammer-mario-map-idle-front-1	181	215	16	21	50	tex-mario	
+spr-hammer-mario-idle-front-0	450	209	16	27	50	tex-mario	
+spr-hammer-mario-idle-side-0	211	208	16	28	50	tex-mario	
+spr-hammer-mario-walk-0	211	208	16	28	50	tex-mario	
+spr-hammer-mario-walk-1	229	208	16	28	50	tex-mario	
+spr-hammer-mario-walk-2	248	209	16	27	50	tex-mario	
+spr-hammer-mario-skid-0	267	208	16	28	50	tex-mario	
+spr-hammer-mario-throw-0	286	208	16	28	50	tex-mario	
+spr-hammer-mario-throw-1	305	208	16	28	50	tex-mario	
+spr-hammer-mario-jump-0	324	209	16	27	50	tex-mario	
+spr-hammer-mario-fall-0	248	209	16	27	50	tex-mario	
+spr-hammer-mario-run-0	343	208	19	28	50	tex-mario	
+spr-hammer-mario-run-1	365	208	19	28	50	tex-mario	
+spr-hammer-mario-run-2	387	209	19	27	50	tex-mario	
+spr-hammer-mario-hold-0	469	208	16	28	50	tex-mario	
+spr-hammer-mario-hold-1	488	208	16	28	50	tex-mario	
+spr-hammer-mario-hold-2	507	209	16	27	50	tex-mario	
+spr-hammer-mario-high-jump-0	409	209	19	27	50	tex-mario	
+spr-hammer-mario-crouch-0	431	220	16	16	50	tex-mario	
+spr-hammer-mario-kick-0	526	208	21	28	50	tex-mario	
+spr-hammer-mario-dive-0	550	208	19	28	50	tex-mario	
+spr-hammer-mario-dive-1	572	208	19	28	50	tex-mario	
+spr-hammer-mario-swim-0	594	208	19	28	50	tex-mario	
+spr-hammer-mario-swim-1	615	208	18	28	50	tex-mario	
+spr-hammer-mario-swim-2	636	209	19	27	50	tex-mario	
+spr-hammer-mario-climb-0	658	210	16	26	50	tex-mario	
+spr-hammer-mario-climb-1	677	210	16	26	50	tex-mario	
+spr-hammer-mario-roll-0	371	365	18	19	50	tex-mario	
+spr-hammer-mario-roll-1	392	366	18	18	50	tex-mario	
+spr-hammer-mario-roll-2	413	365	18	19	50	tex-mario	
+spr-hammer-mario-roll-3	434	366	18	18	50	tex-mario	
+spr-frog-small-mario-map-idle-front-0	168	253	16	16	50	tex-mario	
+spr-frog-mario-map-idle-front-0	187	249	16	20	50	tex-mario	
+spr-frog-mario-map-idle-front-1	206	248	16	21	50	tex-mario	
+spr-frog-mario-idle-front-0	293	237	16	31	50	tex-mario	
+spr-frog-mario-idle-side-0	225	245	20	24	50	tex-mario	
+spr-frog-mario-walk-0	312	238	15	31	50	tex-mario	
+spr-frog-mario-walk-1	330	238	15	31	50	tex-mario	
+spr-frog-mario-walk-2	348	239	16	30	50	tex-mario	
+spr-frog-mario-jump-0	225	245	20	24	50	tex-mario	
+spr-frog-mario-jump-1	248	240	20	29	50	tex-mario	
+spr-frog-mario-jump-2	271	240	19	29	50	tex-mario	
+spr-frog-mario-kick-0	367	238	21	31	50	tex-mario	
+spr-frog-mario-swim-idle-0	391	246	24	22	50	tex-mario	
+spr-frog-mario-swim-idle-1	417	246	24	22	50	tex-mario	
+spr-frog-mario-swim-idle-0	391	246	24	22	50	tex-mario	
+spr-frog-mario-swim-idle-1	417	246	24	22	50	tex-mario	
+spr-frog-mario-swim-down-0	444	245	16	25	50	tex-mario	
+spr-frog-mario-swim-down-1	463	246	16	24	50	tex-mario	
+spr-frog-mario-swim-down-2	482	245	16	25	50	tex-mario	
+spr-frog-mario-swim-up-0	501	244	16	26	50	tex-mario	
+spr-frog-mario-swim-up-1	520	245	16	25	50	tex-mario	
+spr-frog-mario-swim-up-2	539	243	16	27	50	tex-mario	
+spr-frog-mario-swim-side-0	558	247	20	23	50	tex-mario	
+spr-frog-mario-swim-side-1	581	247	22	23	50	tex-mario	
+spr-frog-mario-swim-side-2	606	247	24	23	50	tex-mario	
+spr-frog-mario-climb-0	633	243	16	27	50	tex-mario	
+spr-frog-mario-climb-1	652	243	16	27	50	tex-mario	
+spr-tanooki-small-mario-map-???-0	9	291	12	16	50	tex-mario	
+spr-tanooki-mario-map-???-0	24	284	16	23	50	tex-mario	
+spr-tanooki-mario-map-???-1	43	283	16	24	50	tex-mario	
+spr-tanooki-mario-idle-front-0	156	278	16	29	50	tex-mario	
+spr-tanooki-mario-idle-0	62	278	21	29	50	tex-mario	
+spr-tanooki-mario-spin-0	156	278	16	29	50	tex-mario	
+spr-tanooki-mario-spin-1	62	278	21	29	50	tex-mario	
+spr-tanooki-mario-spin-2	175	278	23	29	50	tex-mario	
+spr-tanooki-mario-spin-3	200	278	16	29	50	tex-mario	
+spr-tanooki-mario-walk-0	62	278	21	29	50	tex-mario	
+spr-tanooki-mario-walk-1	86	278	22	29	50	tex-mario	
+spr-tanooki-mario-walk-2	111	280	23	27	50	tex-mario	
+spr-tanooki-mario-skid-0	137	278	16	29	50	tex-mario	
+spr-tanooki-mario-jump-0	238	280	23	27	50	tex-mario	
+spr-tanooki-mario-fall-0	264	280	23	27	50	tex-mario	15
+spr-tanooki-mario-run-0	264	280	23	27	50	tex-mario	15
+spr-tanooki-mario-run-1	290	280	23	27	50	tex-mario	14
+spr-tanooki-mario-run-2	316	279	22	28	50	tex-mario	15
+spr-tanooki-mario-speed-up-0	341	279	23	28	50	tex-mario	15
+spr-tanooki-mario-speed-up-1	367	279	23	28	50	tex-mario	15
+spr-tanooki-mario-speed-up-2	393	280	23	27	50	tex-mario	15
+spr-tanooki-mario-fly-0	419	278	24	28	50	tex-mario	15
+spr-tanooki-mario-fly-1	446	279	24	27	50	tex-mario	15
+spr-tanooki-mario-fly-2	473	279	24	27	50	tex-mario	15
+spr-tanooki-mario-crouch-0	500	288	21	18	50	tex-mario	15
+spr-tanooki-mario-statue-0	524	277	16	29	50	tex-mario	
+spr-tanooki-mario-slide-0	543	279	16	27	50	tex-mario	
+spr-tanooki-mario-hold-0	562	277	22	29	50	tex-mario	14
+spr-tanooki-mario-hold-1	587	277	21	29	50	tex-mario	15
+spr-tanooki-mario-hold-2	611	278	23	28	50	tex-mario	15
+spr-tanooki-mario-kick-0	637	278	21	28	50	tex-mario	14
+spr-tanooki-mario-dive-0	661	278	24	28	50	tex-mario	16
+spr-tanooki-mario-dive-1	688	279	24	27	50	tex-mario	16
+spr-tanooki-mario-swim-0	715	278	24	28	50	tex-mario	16
+spr-tanooki-mario-swim-1	742	279	23	27	50	tex-mario	16
+spr-tanooki-mario-swim-2	768	279	24	27	50	tex-mario	16
+spr-tanooki-mario-climb-0	795	279	16	28	50	tex-mario	
+spr-tanooki-mario-climb-1	814	279	16	28	50	tex-mario	
+spr-tanooki-mario-roll-0	320	390	23	20	50	tex-mario	
+spr-tanooki-mario-roll-1	346	390	21	20	50	tex-mario	
+spr-tanooki-mario-roll-2	370	387	20	23	50	tex-mario	
+spr-tanooki-mario-roll-3	393	389	20	21	50	tex-mario	
+spr-tanooki-mario-roll-4	416	390	23	20	50	tex-mario	
+spr-tanooki-mario-roll-5	442	390	21	20	50	tex-mario	
+spr-tanooki-mario-roll-6	466	387	20	23	50	tex-mario	
+spr-tanooki-mario-roll-7	489	389	20	21	50	tex-mario	
+spr-big-luigi-walk-0	197	78	14	27	50	tex-mario	
+spr-big-luigi-walk-1	214	78	16	27	50	tex-mario	
+spr-big-luigi-walk-2	233	79	16	26	50	tex-mario	
+spr-big-luigi-jump-0	271	79	16	26	50	tex-mario	
+spr-big-luigi-fall-0	233	79	16	26	50	tex-mario	
+spr-big-luigi-fall-0	233	79	16	26	50	tex-mario	

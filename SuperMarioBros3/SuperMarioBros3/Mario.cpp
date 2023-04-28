@@ -1106,8 +1106,10 @@ void CMario::DieProcess(CCamera* cam)
 				physiscBody->SetVelocity(Point(0, DIE_VELOCITY_Y));
 				if (transform.position.y >= cam->GetCurrentBoundary().bottom - DIE_FALL)
 				{
-					auto sceneManager = CSceneManager::GetInstance();
-					sceneManager->SwitchScene(new CWorldMap1());
+					auto gameObj = CGame::GetInstance();
+					gameObj->SetNextScene("world-1");
+					gameObj->SwitchScene();
+
 					isAutogo = false;
 					CGame::GetInstance()->SetTimeScale(1.0f);
 				}

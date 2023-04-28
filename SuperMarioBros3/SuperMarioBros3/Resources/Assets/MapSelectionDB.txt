@@ -1,0 +1,27 @@
+[SPRITES]
+#id	left	top	width	height	texture-id
+spr-help-bubble-0	1	2	16	13	tex-world-map-1
+spr-M-0	18	0	16	16	tex-world-map-1
+spr-M-1	35	0	16	16	tex-world-map-1
+spr-castle-0	52	1	16	15	tex-world-map-1
+spr-castle-1	69	17	16	15	tex-world-map-1
+spr-ship-0	86	1	16	15	tex-world-map-1
+spr-ship-1	103	17	16	15	tex-world-map-1
+spr-tree-0	1	17	16	15	tex-world-map-1
+spr-tree-1	18	17	16	15	tex-world-map-1
+spr-tree-2	35	17	16	15	tex-world-map-1
+spr-tree-3	52	17	16	15	tex-world-map-1
+spr-mushroom-gate-0	69	17	16	15	tex-world-map-1
+spr-domed-gate-0	86	17	16	15	tex-world-map-1
+spr-slave-0	103	17	16	15	tex-world-map-1
+spr-slave-1	120	18	16	14	tex-world-map-1
+spr-start-0	1	33	16	16	tex-world-map-1
+spr-bridge-0	18	33	16	16	tex-world-map-1
+spr-gate-1	35	33	16	15	tex-world-map-1
+spr-gate-2	52	33	16	15	tex-world-map-1
+spr-gate-3	69	33	16	15	tex-world-map-1
+spr-gate-4	86	33	16	15	tex-world-map-1
+spr-gate-5	103	33	16	15	tex-world-map-1
+spr-gate-6	120	33	16	15	tex-world-map-1
+spr-spade-0	120	0	16	15	tex-world-map-1
+spr-spade-1	137	0	16	16	tex-world-map-1

@@ -6,10 +6,10 @@
 #include "MarioConst.h"
 #include "Game.h"
 #include "SceneManager.h"
-CScene4::CScene4()
+CScene4::CScene4(String path): CScene(path)
 {
 	this->id = SC_WOLRD_1_4;
-	this->filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_WOLRD_1_4);
+	this->filePath = "Resources/Scenes/World1-4.xml";
 }
 
 void CScene4::Load()

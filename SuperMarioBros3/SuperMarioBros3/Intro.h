@@ -5,7 +5,7 @@ class CIntro :
 {
 
 public:
-	CIntro();
+	CIntro(String path);
 	void Load();
 	void Unload() override;
 };

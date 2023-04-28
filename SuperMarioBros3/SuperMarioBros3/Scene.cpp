@@ -6,21 +6,19 @@
 #include "Mario.h"
 #include "MarioController.h"
 #include "SceneConst.h"
-#include "Koopa.h"
-#include "CVenus.h"
 #include "ObjectPool.h"
 #include "UICamera.h"
 
 #include <string>
+#include "SpriteManager.h"
 #include "SceneManager.h"
 #include "MarioMap.h"
 #include "Card.h"
-#include "QuestionBlock.h"
-#include "Brick.h"
+#include <fstream>
 
 using namespace std;
 
-CScene::CScene()
+CScene::CScene(String path)
 {
 	camera = NULL;
 	loaded = true;
@@ -28,6 +26,7 @@ CScene::CScene()
 	marioController = NULL;
 	spaceParitioning = true;
 	canRenderForeground = true;
+	filePath = path;
 }
 
 void CScene::SetRenderForeground(bool canRender)
@@ -37,6 +36,8 @@ void CScene::SetRenderForeground(bool canRender)
 
 void CScene::Load()
 {
+	// LoadAssets("Resource/Assets/mario.txt");
+	
 	CMarioController* player = NULL;
 
 	XMLHelper::forEach(
@@ -520,4 +521,79 @@ CGrid* CScene::GetGrid()
 
 CScene::~CScene()
 {
+}
+
+void CScene::_ParseSection_SPRITES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 6) return; // skip invalid lines
+
+	String ID = tokens[0].c_str();
+	int left = atoi(tokens[1].c_str());
+	int top = atoi(tokens[2].c_str());
+	int width = atoi(tokens[3].c_str());
+	int height = atoi(tokens[4].c_str());
+	int frameTime = atoi(tokens[5].c_str());
+	String texID = tokens[6];
+	int xPivot = atoi(tokens[7].c_str());
+
+	Texture tex = CTextureManager::GetInstance()->Get(texID);
+	if (tex == NULL)
+	{
+		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		return; 
+	}
+
+	RECT rect;
+	rect.left = left * 3;
+	rect.top = top * 3;
+	rect.right = (left + width) * 3;
+	rect.bottom = (top + height) * 3;
+
+	CSpriteManager::GetInstance()->Add(ID, rect, tex, xPivot);
+}
+
+#define SCENE_SECTION_UNKNOWN -1
+#define SCENE_SECTION_ASSETS	1
+#define SCENE_SECTION_OBJECTS	2
+
+#define ASSETS_SECTION_UNKNOWN -1
+#define ASSETS_SECTION_SPRITES 1
+#define ASSETS_SECTION_ANIMATIONS 2
+
+#define MAX_SCENE_LINE 1024
+void CScene::LoadAssets(String assetFile)
+{
+	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
+
+	ifstream f;
+	f.open(assetFile);
+
+	int section = ASSETS_SECTION_UNKNOWN;
+
+	char str[MAX_SCENE_LINE];
+	while (f.getline(str, MAX_SCENE_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#') continue;	// skip comment lines	
+
+		if (line == "[SPRITES]") { section = ASSETS_SECTION_SPRITES; continue; };
+		// if (line == "[ANIMATIONS]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
+		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+			case ASSETS_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
+			// case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		}
+	}
+
+	f.close();
+
+	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
 }

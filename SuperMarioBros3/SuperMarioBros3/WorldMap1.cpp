@@ -2,10 +2,10 @@
 #include "Game.h"
 #include "Const.h"
 #include "SceneManager.h"
-CWorldMap1::CWorldMap1()
+CWorldMap1::CWorldMap1(String path): CScene(path)
 {
-	this->id = "World-Map-1";
-	this->filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_WOLRD_1);
+	this->id = SC_WOLRD_1;
+	this->filePath = "Resources/Scenes/World1.xml";
 }
 
 void CWorldMap1::Load()

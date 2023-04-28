@@ -1,0 +1,20 @@
+
+[SPRITES]
+#id	left	top	width	height	texture-id
+spr-full-curtain-0	0	19	287	194	tex-intro
+spr-side-curtain-0	275	19	16	194	tex-intro
+spr-bottom-curtain-0	0	229	287	14	tex-intro
+spr-intro-ground-0	50	317	256	34	tex-intro
+spr-intro-ground-1	50	317	16	34	tex-intro
+spr-intro-ground-2	66	317	16	34	tex-intro
+spr-tree-right	340	132	63	96	tex-intro
+spr-tree-left	332	324	64	64	tex-intro
+spr-title-0	55	371	179	80	tex-intro
+spr-three-0	56	455	42	41	tex-intro
+spr-three-1	102	455	42	41	tex-intro
+spr-three-2	149	455	42	41	tex-intro
+spr-three-3	195	455	42	41	tex-intro
+spr-options-0	72	248	104	40	tex-intro
+spr-menu-arrow-0	64	248	7	8	tex-intro
+spr-big-cloud-0	231	274	32	16	tex-intro
+spr-small-cloud-0	303	278	16	8	tex-intro

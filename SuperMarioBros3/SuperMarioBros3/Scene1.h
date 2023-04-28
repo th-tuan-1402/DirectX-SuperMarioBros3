@@ -8,7 +8,7 @@
 class CScene1: public CScene
 {
 public:
-	CScene1();
+	CScene1(String path);
 	void Load();
 	void Unload() override;
 	~CScene1();

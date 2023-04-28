@@ -204,19 +204,11 @@ void CMarioMap::OnOverlappedEnter(CCollisionBox* selfCollisionBox, CCollisionBox
 
 bool CMarioMap::SwitchScene()
 {
-	if (sceneID.compare("world-1-1") == 0)
-	{
-		CScene1* scene1 = new CScene1();
-		CSceneManager::GetInstance()->SwitchScene(scene1);
-		return true;
-	}
-	if (sceneID.compare("world-1-4") == 0)
-	{
-		CScene4* scene4 = new CScene4();
-		CSceneManager::GetInstance()->SwitchScene(scene4);
-		return true;
-	}
-	return false;
+	auto gameObj = CGame::GetInstance();
+	gameObj->SetNextScene(sceneID);
+	gameObj->SwitchScene();
+
+	return true;
 }
 
 void CMarioMap::OnKeyDown(int KeyCode)

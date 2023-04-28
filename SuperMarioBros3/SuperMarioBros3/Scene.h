@@ -49,7 +49,7 @@ protected:
 	bool spaceParitioning;
 	bool canRenderForeground;
 public:
-	CScene();
+	CScene(String path);
 	void SetRenderForeground(bool canRender);
 	virtual void Load();
 	virtual void Unload();
@@ -57,7 +57,7 @@ public:
 	virtual void Update(DWORD dt); // dt để xác định t va chạm 
 	virtual void Render();
 	virtual void FindUpdateObjects();
-	std::string GetSceneId() { return this->id; }
+	String GetSceneId() { return this->id; }
 	Color GetBackgroundColor() { return backgroundColor; }
 	void SetBackgroundColor(Color color) {
 		this->backgroundColor = color;
@@ -91,5 +91,13 @@ public:
 	std::vector<LPGameObject>  GetKeyboardTargetObject();
 	CGrid* GetGrid();
 	virtual ~CScene();
+
+	void setFilePath(String filePath) { this->filePath = filePath; };
+	
+	void _ParseSection_SPRITES(string line);
+	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_ASSETS(string line);
+	void _ParseSection_OBJECTS(string line);
+	void LoadAssets(String assetFile);
 };
 #endif

@@ -111,9 +111,10 @@ void CUICamera::GoalRouletteProcess()
         if (goalTimer > GOAL_ROULETTE_TIME && this->GetHUD()->GetTimer()->GetTimerState() == 0) // miliseconds
         {
             // Chuyển scene
-            auto sceneManager = CSceneManager::GetInstance();
-            CWorldMap1* wolrdMap1 = new CWorldMap1();
-            sceneManager->SwitchScene(wolrdMap1);
+            auto gameObj = CGame::GetInstance();
+            gameObj->SetNextScene("world-1");
+            gameObj->SwitchScene();
+
             isGoalRoulette = false;
             giftInFont = NULL;
             goalTimer = 0;

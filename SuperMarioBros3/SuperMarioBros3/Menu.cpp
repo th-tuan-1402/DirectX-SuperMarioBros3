@@ -65,8 +65,9 @@ void CMenu::OnKeyDown(int KeyCode)
 		}
 		case DIK_W:
 		{
-			CWorldMap1* world1 = new CWorldMap1();
-			CSceneManager::GetInstance()->SwitchScene(world1);
+			auto gameObj = CGame::GetInstance();
+			gameObj->SetNextScene("world-1-1");
+			gameObj->SwitchScene();
 			break;
 		}
 	}

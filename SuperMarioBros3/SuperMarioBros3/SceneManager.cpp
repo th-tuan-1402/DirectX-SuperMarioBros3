@@ -3,6 +3,10 @@
 #include "Ultis.h"
 #include "Game.h"
 #include "Const.h"
+#include "Intro.h"
+#include "Scene1.h"
+#include "Scene4.h"
+#include "WorldMap1.h"
 
 LPSceneManager CSceneManager::instance = NULL;
 
@@ -17,10 +21,8 @@ LPSceneManager CSceneManager::GetInstance()
 	return instance;
 }
 
-void CSceneManager::Init()
+void CSceneManager::Init(String filePath)
 {
-	auto filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_UI_CAMERA);
-
 	XMLHelper::forEach(
         filePath,
 
@@ -147,4 +149,27 @@ CSceneManager::~CSceneManager()
 		delete s.second;
 	}
 	loadedScenes.clear();
+}
+
+
+LPScene CSceneManager::Add(String id, String path) {
+
+	if (id == "intro")
+	{
+		return new CIntro(path);
+	}
+	if (id == "world-1")
+	{
+		return new CWorldMap1(path);
+	}
+	if (id == "world-1-1")
+	{
+		return new CScene1(path);
+	}
+	if (id == "world-1-4")
+	{
+		return new CScene4(path);
+	}
+
+	return nullptr;
 }

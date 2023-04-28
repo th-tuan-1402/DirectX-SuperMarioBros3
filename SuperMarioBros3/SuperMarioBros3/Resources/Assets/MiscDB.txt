@@ -1,0 +1,68 @@
+[SPRITES]
+#id	left	top	width	height	frameTime	texture-id
+spr-fire-ball-0	0	1	8	8	100	tex-fire-ball
+spr-fire-ball-1	11	0	8	9	100	tex-fire-ball
+spr-fire-ball-2	22	1	8	8	100	tex-fire-ball
+spr-fire-ball-3	33	0	8	9	100	tex-fire-ball
+spr-enemy-damaged-effect-white-left	2	1	16	16	
+spr-enemy-damaged-effect-white-right	20	1	16	16	
+spr-enemy-damaged-effect-red-left	2	19	16	16	
+spr-enemy-damaged-effect-red-right	20	19	16	16	
+spr-mario-damaged-effect-0	38	1	16	16	
+spr-mario-damaged-effect-1	56	1	16	16	
+spr-mario-damaged-effect-2	74	1	16	16	
+spr-mario-damaged-effect-3	92	1	16	16	
+spr-coin-0	294	101	8	14	
+spr-coin-1	311	101	1	14	
+spr-coin-2	321	101	4	14	
+spr-coin-3	334	100	14	16	
+spr-coin-4	357	100	6	16	
+spr-coin-5	372	100	10	16	
+spr-super-mushroom-0	156	121	16	16	
+spr-1-up-mushroom-0	286	121	16	16	
+spr-super-leaf-red-0	180	123	16	14	
+spr-super-leaf-green-0	266	121	15	16	
+spr-star-man-0	201	121	16	16	
+spr-star-man-1	222	121	16	16	
+spr-star-man-2	245	121	16	16	
+spr-fire-flower-0	309	121	16	16	
+spr-magic-wing-0	330	121	14	16	
+spr-hammer-0	350	121	16	16	
+spr-switch-block-blue-0	156	144	16	16	
+spr-switch-block-blue-1	200	153	16	7	
+spr-switch-block-green-0	178	144	16	16	
+spr-switch-block-green-1	200	153	16	7	
+spr-magic-ball-0	223	144	16	16	
+spr-treasure-chest-0	247	144	16	16	
+spr-frog-suit-0	268	144	16	16	
+spr-tanooki-suit-0	288	144	16	16	
+spr-jugem-cloud-0	309	144	16	16	
+spr-magic-whistle-0	336	144	6	16	
+spr-music-box-0	349	144	16	16	
+spr-question-block-0	157	188	16	16	
+spr-question-block-1	176	188	16	16	
+spr-question-block-2	196	188	16	16	
+spr-question-block-3	215	188	16	16	
+spr-empty-block-0	235	188	16	16	
+spr-wood-block-0	254	188	16	16	
+spr-brick-0	274	188	16	16	
+spr-brick-1	293	188	16	16	
+spr-brick-2	312	188	16	16	
+spr-brick-3	331	188	16	16	
+spr-platform-0	352	167	48	16	
+spr-music-note-block-0	352	188	16	16	
+spr-music-note-block-1	371	188	16	16	
+spr-music-note-block-2	390	188	16	16	
+spr-red-music-note-block-0	409	188	16	16	
+spr-debris-0	154	351	11	13	
+spr-debris-1	166	352	13	11	
+spr-debris-2	180	351	11	13	
+spr-debris-3	192	352	13	11	
+spr-goal-mushroom-0	5	7	16	16	
+spr-goal-mushroom-1	67	29	10	15	
+spr-goal-mushroom-2	111	28	1	16	
+spr-goal-flower-0	25	28	16	16	
+spr-goal-flower-1	80	29	10	16	
+spr-goal-star-0	45	27	16	16	
+spr-goal-star-1	95	28	10	16	
+spr-pipe-0	0	0	224	64	

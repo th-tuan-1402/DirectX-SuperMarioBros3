@@ -7,10 +7,10 @@
 #include "Game.h"
 #include "SceneManager.h"
 
-CScene1::CScene1()
+CScene1::CScene1(String path): CScene(path)
 {
 	this->id = "PlayScene";
-	this->filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_WOLRD_1_1);
+	this->filePath = "Resources/Scenes/World1-1.xml";
 }
 
 void CScene1::Load()

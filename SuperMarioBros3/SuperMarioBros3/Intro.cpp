@@ -7,10 +7,10 @@
 #include "Game.h"
 #include "SceneManager.h"
 #include "IntroScript.h"
-CIntro::CIntro()
+CIntro::CIntro(String path): CScene(path)
 {
 	this->id = SC_INTRO;
-	this->filePath = CGame::GetInstance()->GetFilePathByCategory(CATEGORY_SCENE, SC_INTRO);
+	this->filePath = "Resources/Scenes/Intro.xml";
 	spaceParitioning = false;
 }
 
