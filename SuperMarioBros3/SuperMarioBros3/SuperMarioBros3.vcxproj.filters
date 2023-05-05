@@ -358,6 +358,9 @@
     <Filter Include="Game\GameObject\Intro\Menu">
       <UniqueIdentifier>{b9e30745-3971-4a55-8790-688083f8e4c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Game\Core">
+      <UniqueIdentifier>{baf3dbfd-419f-4723-bb17-3de7ef296785}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -425,9 +428,6 @@
     </ClInclude>
     <ClInclude Include="MapConst.h">
       <Filter>Framework\Game\Scene\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardManager.h">
-      <Filter>Framework\Game\Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="GameKeyEventHandler.h">
       <Filter>Framework\Game\Keyboard\KeyEventHandler</Filter>
@@ -834,6 +834,15 @@
     <ClInclude Include="MarioScript.h">
       <Filter>Game\GameObject\Intro\IntroScript\MarioScript</Filter>
     </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>Framework\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DHelper.h">
+      <Filter>Framework\Game\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLHelper.h">
+      <Filter>Framework\Ultis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -892,9 +901,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Game\Scene\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardManager.cpp">
-      <Filter>Framework\Game\Keyboard</Filter>
     </ClCompile>
     <ClCompile Include="GameKeyEventHandler.cpp">
       <Filter>Framework\Game\Keyboard\KeyEventHandler</Filter>
@@ -1324,5 +1330,7 @@
     <None Include="Resources\Maps\Grid\world-1-4-grid.tmx">
       <Filter>Game\Resouces\Grid</Filter>
     </None>
+    <None Include="packages.config" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

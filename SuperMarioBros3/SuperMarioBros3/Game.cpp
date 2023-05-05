@@ -72,9 +72,11 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	animationManager->InitAnAnimationSet(TEXTURE_INTRO, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_INTRO));
 	animationManager->InitAnAnimationSet(TEXTURE_INTRO, GetFilePathByCategory(CATEGORY_ANIMATION, DB_ANIMATION_INTRO));
 
-	CSceneManager::GetInstance()->Init(GetFilePathByCategory(CATEGORY_SCENE, SC_UI_CAMERA));
+	CSceneManager::GetInstance()->Init();
+	CIntro* intro = new CIntro();
+	CSceneManager::GetInstance()->Load(intro);
 	
-	SwitchScene();
+	// SwitchScene();
 	DebugOut(L"[INFO] Init Manager Sucessfully \n");
 }
 
@@ -344,8 +346,8 @@ void CGame::_ParseSection_SCENES(string line)
 	String id = tokens[0];
 	String path = tokens[1];   // file: ASCII format (single-byte char) => Wide Char
 
-	LPScene scene = CSceneManager::GetInstance()->Add(id, path);
-	scenes[id] = scene;
+	//LPScene scene = CSceneManager::GetInstance()->Add(id, path);
+	//scenes[id] = scene;
 }
 
 #define MAX_GAME_LINE 1024
@@ -389,15 +391,13 @@ void CGame::_Load(String gameFile)
 		switch (section)
 		{
 			case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
-			case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
+			//case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
 			case GAME_FILE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
 		}
 	}
 	f.close();
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
-
-	// SwitchScene();
 }
 
 void CGame::SwitchScene()
